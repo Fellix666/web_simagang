@@ -14,8 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => 'admin', // Change this to default to admin guard
+        'passwords' => 'admins', // Add this line
+    
     ],
 
     /*
@@ -41,6 +42,7 @@ return [
             'provider' => 'users',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -71,6 +73,7 @@ return [
         // ],
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
@@ -99,6 +102,7 @@ return [
         ],
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
@@ -112,4 +116,20 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    // config/auth.php
+'guards' => [
+    'admin' => [
+        'driver' => 'session',
+        'provider' => 'admins',
+    ],
+],
+
+'providers' => [
+    'admins' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Admin::class,
+    ],
+],
+
 ];
+
