@@ -84,7 +84,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><!-- Sweet Alert untuk notifikasi yang lebih baik -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Fungsi untuk menampilkan Sweet Alert untuk konfirmasi deletefunction confirmDelete(event) {event.preventDefault();const form = event.target.closest('form');Swal.fire({title: 'Apakah Anda yakin?',text: "Data yang dihapus tidak dapat dikembalikan!",icon: 'warning',showCancelButton: true,confirmButtonColor: '#d33',cancelButtonColor: '#3085d6',confirmButtonText: 'Ya, hapus!',cancelButtonText: 'Batal'}).then((result) => {if (result.isConfirmed) {form.submit();}});}// Fungsi untuk menampilkan notifikasi sukses@if (session('success'))Swal.fire({icon: 'success',title: 'Berhasil!',text: '{{ session('success') }}',timer: 3000,showConfirmButton: false});@endif// Fungsi untuk menampilkan notifikasi error@if (session('error'))Swal.fire({icon: 'error',title: 'Error!',text: '{{ session('error') }}',timer: 3000,showConfirmButton: false});@endif
+        // Fungsi untuk menampilkan Sweet Alert untuk konfirmasi 
+        deletefunction confirmDelete(event) {
+            event.preventDefault();
+            const form = event.target.closest('form');
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        } // Fungsi untuk menampilkan notifikasi sukses
+        @if (session('success'))Swal.fire({icon: 'success',title: 'Berhasil!',text: '{{ session('success') }}',timer: 3000,showConfirmButton: false});@endif
+        // Fungsi untuk menampilkan notifikasi error
+        @if (session('error'))Swal.fire({icon: 'error',title: 'Error!',text: '{{ session('error') }}',timer: 3000,showConfirmButton: false});@endif
     </script><!-- Tempat untuk script tambahan -->@stack('scripts')
 </body>
 
