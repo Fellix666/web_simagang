@@ -68,8 +68,8 @@
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">@csrf<button type="submit"
                                     class="btn btn-link text-white text-decoration-none"><i class="fas fa-sign-out-alt"></i>
                                     Logout</button></form>
-                    </li>@else<li class="nav-item"><a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
-                                href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    {{-- </li>@else<li class="nav-item"><a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
+                                href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li> --}}
                     @endauth
                 </ul>
             </div>
@@ -77,8 +77,7 @@
     </nav> <!-- Main Content -->
     <main class="py-4">@yield('content')</main><!-- Footer -->
     <footer class="bg-light py-3 mt-auto">
-        <div class="container text-center"><span class="text-muted">&copy; {{ date('Y') }} Sistem Informasi Magang.
-                All rights reserved.</span> </div>
+        <div class="container text-center"><span class="text-muted">&copy; {{ date('Y') }} Sistem Informasi Magang.All rights reserved.</span> </div>
     </footer><!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script><!-- jQuery (jika diperlukan) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><!-- Sweet Alert untuk notifikasi yang lebih baik -->
