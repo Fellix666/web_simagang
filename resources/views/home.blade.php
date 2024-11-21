@@ -153,7 +153,11 @@
             </div>
 
             <!-- Footer -->
-
+            <div class="footer-text">
+                <p class="mb-1">&copy; 2024 Diskominfo Kubu Raya</p>
+                <p class="small text-muted">Kelola data magang dengan mudah, efisien, dan terorganisir</p>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
