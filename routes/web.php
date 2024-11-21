@@ -24,6 +24,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('berkas/{id}', [BerkasController::class, 'destroy'])->name('berkas.destroy');
     Route::resource('institusi', InstitusiController::class);
     Route::resource('divisi', DivisiController::class);
+    Route::get('berkas/create', [BerkasController::class, 'create'])->name('berkas.create');
+    Route::get('berkas/{id}/edit', [BerkasController::class, 'edit'])->name('berkas.edit');
+    Route::post('berkas/{id}', [BerkasController::class, 'update'])->name('berkas.update');
+
 });
 
 // Redirect root to login if not authenticated
