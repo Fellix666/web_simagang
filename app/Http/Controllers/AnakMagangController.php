@@ -24,7 +24,15 @@ class AnakMagangController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate(['id_institusi' => 'required', 'id_divisi' => 'required', 'nomor_induk' => 'required|max:15', 'nama_lengkap' => 'required|max:50', 'jenis_kelamin' => 'required|in:l,p', 'jurusan' => 'required|max:50', 'tanggal_mulai' => 'required|date', 'tanggal_selesai' => 'required|date|after:tanggal_mulai', 'status' => 'required|in:mahasiswa,siswa']);
+        $validated = $request->validate(['id_institusi' => 'required',
+        'id_divisi' => 'required',
+        'nomor_induk' => 'required|max:15',
+        'nama_lengkap' => 'required|max:50',
+        'jenis_kelamin' => 'required|in:l,p',
+        'jurusan' => 'required|max:50',
+        'tanggal_mulai' => 'required|date',
+        'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+        'status' => 'required|in:mahasiswa,siswa']);
 
         AnakMagang::create($validated);
         return redirect()->route('magang.index')->with('success', 'Data berhasil ditambahkan');
@@ -52,5 +60,28 @@ class AnakMagangController extends Controller
         $magang = AnakMagang::findOrFail($id);
         $magang->delete();
         return redirect()->route('magang.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function readOnly(Request $request)
+    {
+        $query = AnakMagang::query();
+
+        if ($request->has('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('nama_lengkap', 'like', '%' . $request->search . '%')
+                    ->orWhereHas('institusi', function ($subQuery) use ($request) {
+                        $subQuery->where('nama', 'like', '%' . $request->search . '%');
+                    });
+            });
+        }
+
+        // Gunakan paginate untuk hasil paginasi
+        $magangList = $query->with('institusi')->paginate(10);
+
+        return view('readonly', compact('magangList'));
     }
 }

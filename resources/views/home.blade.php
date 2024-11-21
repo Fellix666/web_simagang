@@ -136,10 +136,11 @@
             <p class="welcome-subtitle lead">Sistem Informasi Manajemen Magang Diskominfo Kubu Raya</p>
 
             <!-- Descriptive Button -->
-            <a href="{{ route('magang.index') }}" class="btn btn-primary btn-lg w-100">
+            <a href="{{ route('readonly') }}" class="btn btn-primary btn-lg w-100">
                 <i class="bi bi-list-check"></i>
                 <span>Lihat Daftar Peserta Magang</span>
             </a>
+
 
             <!-- Additional Button -->
             <a href="{{ route('login') }}" class="btn btn-outline-secondary w-100 mt-3">
