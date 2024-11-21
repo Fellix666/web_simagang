@@ -19,7 +19,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="card-title">Total Magang</h5>
+                            <h5 class="card-title">
+                                <a href="{{ route('magang.index') }}" class="text-white text-decoration-none">Total Magang</a>
+                            </h5>
                             <p class="card-text display-6">{{ $totalMagang }}</p>
                         </div>
                         <i class="fas fa-users fa-3x"></i>
@@ -33,7 +35,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="card-title">Total Institusi</h5>
+                            <h5 class="card-title">
+                                <a href="{{ route('institusi.index') }}" class="text-white text-decoration-none">Total Institusi</a>
+                            </h5>
                             <p class="card-text display-6">{{ $totalInstitusi }}</p>
                         </div>
                         <i class="fas fa-building fa-3x"></i>
@@ -47,7 +51,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="card-title">Total Divisi</h5>
+                            <h5 class="card-title">
+                                <a href="{{ route('divisi.index') }}" class="text-white text-decoration-none">Total Divisi</a>
+                            </h5>
                             <p class="card-text display-6">{{ $totalDivisi }}</p>
                         </div>
                         <i class="fas fa-briefcase fa-3x"></i>
@@ -92,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Bar Chart - Magang per Bulan
     const ctx1 = document.getElementById('magangChart').getContext('2d');
     new Chart(ctx1, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: @json($chartData['labels']),
             datasets: [{
@@ -100,14 +106,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: @json($chartData['data']),
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                borderWidth: 2
             }]
         },
         options: {
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
                 }
             }
         }
@@ -116,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Pie Chart - Status Magang
     const ctx2 = document.getElementById('statusChart').getContext('2d');
     new Chart(ctx2, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: @json($statusMagang->pluck('status')->toArray()),
             datasets: [{

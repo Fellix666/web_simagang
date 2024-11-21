@@ -19,8 +19,8 @@ Route::post('logout', [AdminController::class, 'logout'])->name('logout');
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('dashboard.index');
     Route::resource('magang', AnakMagangController::class);
-    Route::get('berkas/{id_magang}', [BerkasController::class, 'index'])->name('berkas.index');
-    Route::post('berkas/{id_magang}', [BerkasController::class, 'store'])->name('berkas.store');
+    Route::get('berkas/', [BerkasController::class, 'index'])->name('berkas.index');
+    Route::post('berkas/', [BerkasController::class, 'store'])->name('berkas.store');
     Route::delete('berkas/{id}', [BerkasController::class, 'destroy'])->name('berkas.destroy');
     Route::resource('institusi', InstitusiController::class);
     Route::resource('divisi', DivisiController::class);

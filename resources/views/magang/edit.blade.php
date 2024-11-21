@@ -5,7 +5,8 @@
             <h3 class="card-title">Edit Data Anak Magang</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('magang.update', $magang->id_magang) }}" method="POST">@csrf@method('PUT')<div
+            <form action="{{ route('magang.update', $magang->id_magang) }}" method="POST">@csrf
+                @method('PUT')<div
                     class="form-group"><label>Institusi</label><select name="id_institusi"
                         class="form-control @error('id_institusi') is-invalid @enderror">
                         <option value="">Pilih Institusi</option>
