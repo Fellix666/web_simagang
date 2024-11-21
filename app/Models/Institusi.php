@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Institusi extends Model
 {
+    protected $table = 'institusi';
     protected $primaryKey = 'id_institusi';
     protected $fillable = ['nama_institusi', 'alamat', 'website', 'email'];
     public function anakMagang()

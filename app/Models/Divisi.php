@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Divisi extends Model
 {
     protected $primaryKey = 'id_divisi';
+    protected $table = 'divisi';
     protected $fillable = ['nama_divisi', 'kepala_divisi'];
     public function anakMagang()
     {
