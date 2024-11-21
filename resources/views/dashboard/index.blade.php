@@ -64,7 +64,7 @@
     </div>
 
     <div class="row">
-        <!-- Grafik Magang per Bulan -->
+        <!-- Grafik Magang per Bulan (Line Chart) -->
         <div class="col-md-8 mb-4">
             <div class="card">
                 <div class="card-header">
@@ -95,18 +95,20 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Bar Chart - Magang per Bulan
+    // Line Chart - Magang per Bulan
     const ctx1 = document.getElementById('magangChart').getContext('2d');
     new Chart(ctx1, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: @json($chartData['labels']),
             datasets: [{
                 label: 'Jumlah Magang',
                 data: @json($chartData['data']),
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2
+                borderWidth: 2,
+                fill: true, // to create the filled effect
+                tension: 0.4 // for curved lines
             }]
         },
         options: {
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Pie Chart - Status Magang
+    // Doughnut Chart - Status Magang
     const ctx2 = document.getElementById('statusChart').getContext('2d');
     new Chart(ctx2, {
         type: 'doughnut',
@@ -132,7 +134,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: @json($statusMagang->pluck('total')->toArray()),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)'
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)' // Add more colors if necessary
                 ]
             }]
         },

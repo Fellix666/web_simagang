@@ -81,7 +81,7 @@
         <div class="sidebar">
             <nav class="nav flex-column">
                 <a href="{{ route('dashboard.index') }}" class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
-                    <i class="fas fa-home me-2"></i> Dashboard
+                    <i class="fas fa-dashboard me-2"></i> Dashboard
                 </a>
                 <a href="{{ route('magang.index') }}" class="nav-link {{ request()->routeIs('magang.*') ? 'active' : '' }}">
                     <i class="fas fa-users me-2"></i> Data Magang
