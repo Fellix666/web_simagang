@@ -22,3 +22,4 @@ Route::middleware(['auth:admin'])->group(function () {
 // Redirect root to login if not authenticated
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+ 

@@ -128,6 +128,7 @@
             <!-- Logo -->
             <div class="logo-container">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo Diskominfo Kubu Raya" class="img-fluid">
+                <img src="{{ asset('images/logoKubu.png') }}" alt="Kubu Raya">
             </div>
 
             <!-- Welcome Text -->
