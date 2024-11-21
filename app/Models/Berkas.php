@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Berkas extends Model
 {
     protected $primaryKey = 'id_berkas';
-    protected $fillable = ['id_magang', 'nama_berkas', 'jenis_berkas'];
+    protected $fillable = [ 'nama_berkas', 'jenis_berkas', 'file_path'];
 
     public function anakMagang()
     {

@@ -113,7 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true,
+                    beginAtZero: false,
+                    min: 1,
+                    max: 10,
                     ticks: {
                         stepSize: 1
                     }
@@ -137,7 +139,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            cutout: '70%', // Atur ukuran bagian tengah agar lingkaran lebih tipis (70% dari radius total)
+        plugins: {
+            legend: {
+                display: true // Tampilkan legenda jika diperlukan
+            }
+        }
         }
     });
 });

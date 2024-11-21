@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AnakMagang;
+use App\Models\Berkas;
 use App\Models\Institusi;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class AnakMagangController extends Controller
         $magang = AnakMagang::findOrFail($id);
         $institusi = Institusi::all();
         $divisi = Divisi::all();
+        $berkas = Berkas::all();
         return view('magang.edit', compact('magang', 'institusi', 'divisi'));
     }
 
