@@ -31,16 +31,19 @@
                             <td>{{ ucfirst($magang->status) }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
-                            <td><a href="{{ route('magang.edit', $magang->id_magang) }}"
-                                    class="btn btn-sm btn-warning">Edit</a>
-                                <form action="{{ route('magang.destroy', $magang->id_magang) }}" method="POST"
-                                    class="d-inline">@csrf@method('DELETE')<button type="submit"
-                                        class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button></form>
+                            <td>
+                                <a href="{{ route('magang.edit', $magang->id_magang) }}" class="btn btn-sm btn-warning">Edit</a>
+                
+                                <form action="{{ route('magang.destroy', $magang->id_magang) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
+                
             </table>{{ $magangList->links() }}</div< /div>
         </div>
     @endsection

@@ -8,7 +8,7 @@
             <form action="{{ route('magang.store') }}" method="POST">@csrf<div class="form-group">
                     <label>Institusi</label><select name="id_institusi"
                         class="form-control @error('id_institusi') is-invalid @enderror">
-                        <option value="">Pilih Institusi</option>
+                        <option value=""disabled selected>Pilih Institusi</option>
                         @foreach ($institusi as $inst)
                             <option value="{{ $inst->id_institusi }}">{{ $inst->nama_institusi }}</option>
                         @endforeach
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group"><label>Divisi</label><select name="id_divisi"
                         class="form-control @error('id_divisi') is-invalid @enderror">
-                        <option value="">Pilih Divisi</option>
+                        <option value=""disabled selected>Pilih Divisi</option>
                         @foreach ($divisi as $div)
                             <option value="{{ $div->id_divisi }}">{{ $div->nama_divisi }}</option>
                         @endforeach

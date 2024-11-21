@@ -6,7 +6,7 @@ use App\Models\AnakMagang;
 use App\Models\Institusi;
 use App\Models\Divisi;
 
-class DashboardController extends Controller
+class DashboardAdminController extends Controller
 {
     public function index()
     {
