@@ -55,7 +55,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('divisi.index') }}">SI Magang</a>
+            <a class="navbar-brand" href="{{ route('dashboard.index') }}">SI Magang</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -82,9 +82,9 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <nav class="nav flex-column">
-                {{-- <a href="{{ route('dashboard.index') }}" class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
+                <a href="{{ route('dashboard.index') }}" class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
                     <i class="fas fa-home me-2"></i> Dashboard
-                </a> --}}
+                </a>
                 <a href="{{ route('magang.index') }}" class="nav-link {{ request()->routeIs('magang.*') ? 'active' : '' }}">
                     <i class="fas fa-users me-2"></i> Data Magang
                 </a>

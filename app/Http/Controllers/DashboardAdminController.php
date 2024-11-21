@@ -39,7 +39,7 @@ class DashboardAdminController extends Controller
             'data' => $magangPerBulan->pluck('total')
         ];
 
-        return view('dashboard', compact(
+        return view('dashboard.index', compact(
             'totalMagang', 
             'totalInstitusi', 
             'totalDivisi', 
