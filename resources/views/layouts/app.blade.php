@@ -94,6 +94,9 @@
                 <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->routeIs('divisi.*') ? 'active' : '' }}">
                     <i class="fas fa-briefcase me-2"></i> Data Divisi
                 </a>
+                <a href="{{ route('berkas.index') }}" class="nav-link {{ request()->routeIs('berkas.*') ? 'active' : '' }}">
+                    <i class="fas fa-archive me-2"></i>  Data berkas
+                </a>
             </nav>
         </div>
         @endauth
