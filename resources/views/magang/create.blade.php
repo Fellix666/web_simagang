@@ -28,6 +28,18 @@
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label>Berkas</label>
+                    <select name="id_berkas" class="form-control @error('id_berkas') is-invalid @enderror">
+                        <option value="" disabled selected>Pilih Berkas</option>
+                        @foreach ($berkas as $berk)
+                            <option value="{{ $berk->id_berkas }}">{{ $berk->nama_berkas }}</option>
+                        @endforeach
+                    </select>
+                    @error('id_berkas')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group"><label>Nomor Induk</label><input type="text" name="nomor_induk"
                         class="form-control @error('nomor_induk') is-invalid @enderror">
                     @error('nomor_induk')
