@@ -40,6 +40,12 @@
             padding: 20px;
             overflow-y: auto;
         }
+        .content-wrapper-full {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            width: 100%;
+        }
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -53,7 +59,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('dashboard.index') }}">SI Magang</a>
+            <a class="navbar-brand" href="{{ route('dashboard.index') }}">Ganti ke logo simagang</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -80,30 +86,32 @@
     <!-- Main Content -->
     <main>
         @auth('admin')
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <nav class="nav flex-column">
-                <a href="{{ route('dashboard.index') }}" class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
-                    <i class="fas fa-dashboard me-2"></i> Dashboard
-                </a>
-                <a href="{{ route('magang.index') }}" class="nav-link {{ request()->routeIs('magang.*') ? 'active' : '' }}">
-                    <i class="fas fa-users me-2"></i> Data Magang
-                </a>
-                <a href="{{ route('institusi.index') }}" class="nav-link {{ request()->routeIs('institusi.*') ? 'active' : '' }}">
-                    <i class="fas fa-building me-2"></i> Data Institusi
-                </a>
-                <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->routeIs('divisi.*') ? 'active' : '' }}">
-                    <i class="fas fa-briefcase me-2"></i> Data Divisi
-                </a>
-                <a href="{{ route('berkas.index') }}" class="nav-link {{ request()->routeIs('berkas.*') ? 'active' : '' }}">
-                    <i class="fas fa-archive me-2"></i>  Data berkas
-                </a>
-            </nav>
-        </div>
+            @if(!request()->routeIs('login'))
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <nav class="nav flex-column">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
+                        <i class="fas fa-dashboard me-2"></i> Dashboard
+                    </a>
+                    <a href="{{ route('magang.index') }}" class="nav-link {{ request()->routeIs('magang.*') ? 'active' : '' }}">
+                        <i class="fas fa-users me-2"></i> Data Magang
+                    </a>
+                    <a href="{{ route('institusi.index') }}" class="nav-link {{ request()->routeIs('institusi.*') ? 'active' : '' }}">
+                        <i class="fas fa-building me-2"></i> Data Institusi
+                    </a>
+                    <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->routeIs('divisi.*') ? 'active' : '' }}">
+                        <i class="fas fa-briefcase me-2"></i> Data Divisi
+                    </a>
+                    <a href="{{ route('berkas.index') }}" class="nav-link {{ request()->routeIs('berkas.*') ? 'active' : '' }}">
+                        <i class="fas fa-archive me-2"></i>  Data berkas
+                    </a>
+                </nav>
+            </div>
+            @endif
         @endauth
 
         <!-- Content Wrapper -->
-        <div class="content-wrapper">
+        <div class="{{ request()->routeIs('login') ? 'content-wrapper-full' : 'content-wrapper' }}">
             @yield('content')
         </div>
     </main>
