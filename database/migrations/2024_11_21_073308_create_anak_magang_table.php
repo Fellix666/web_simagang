@@ -11,6 +11,7 @@ return new class extends Migration {
             Schema::create('anak_magang', function (Blueprint $table) {
                 $table->integer('id_magang')->autoIncrement();
                 $table->integer('id_institusi');
+                $table->integer('id_berkas');
                 $table->integer('id_divisi');
                 $table->string('nomor_induk', 15);
                 $table->string('nama_lengkap', 50);
@@ -22,6 +23,7 @@ return new class extends Migration {
                 $table->timestamps();
                 $table->foreign('id_institusi')->references('id_institusi')->on('institusi')->onDelete('cascade');
                 $table->foreign('id_divisi')->references('id_divisi')->on('divisi')->onDelete('cascade');
+                $table->foreign('id_berkas')->references('id_berkas')->on('berkas')->onDelete('cascade');
             });
         }
     }
