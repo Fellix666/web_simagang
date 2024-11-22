@@ -37,11 +37,11 @@ class BerkasController extends Controller
         $file = $request->file('file');
         $path = $file->store('berkas_photos', 'public'); // Save file to storage
 
-        // Create the `berkas` entry and associate with `id_magang`
-        Berkas::create([ // Ensure that `id_magang` is passed here
+    
+        Berkas::create([ 
             'nama_berkas' => $validated['nama_berkas'],
             'jenis_berkas' => $validated['jenis_berkas'],
-            'file_path' => Storage::url($path),
+            'file_path' => ($path)
         ]);
 
         return redirect()->route('berkas.index')->with('success', 'Berkas berhasil diunggah');
