@@ -59,6 +59,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <a href="{{ route ('readonly') }}" class="nav-link">
+                        <i class="fas fa-home me-2"></i>
+                    </a>
                     @auth('admin')
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
