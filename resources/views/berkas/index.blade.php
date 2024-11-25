@@ -36,11 +36,11 @@
                                 @endphp
                                 @if($isImage)
                                     <img src="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}" 
-                                         alt="{{ $item->nama_berkas }}" 
-                                         style="max-width: 100px; max-height: 100px;">
+                                            alt="{{ $item->nama_berkas }}" 
+                                            style="max-width: 100px; max-height: 100px;">
                                 @else
                                     <a href="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}" 
-                                       target="_blank">Download</a>
+                                        target="_blank">Download</a>
                                 @endif
                             @else
                                 <span class="text-muted">No file</span>
@@ -48,15 +48,13 @@
                         </td>
                         <td> 
                             <a href="{{ route('berkas.edit', $item->id_berkas) }}" 
-                               class="btn btn-sm btn-warning">Edit</a> 
+                                class="btn btn-sm btn-warning">Edit</a> 
                             <form action="{{ route('berkas.destroy', $item->id_berkas) }}" 
-                                  method="POST" 
-                                  class="d-inline"> 
+                                    method="POST" 
+                                    class="d-inline"> 
                                 @csrf 
                                 @method('DELETE') 
-                                <button type="submit" 
-                                        class="btn btn-sm btn-danger" 
-                                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button> 
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Hapus</button>
                             </form> 
                         </td>
                     </tr> 

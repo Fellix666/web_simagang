@@ -35,10 +35,10 @@
                             <td>
                                 <a href="{{ route('magang.edit', $magang->id_magang) }}" class="btn btn-sm btn-warning">Edit</a>
                 
-                                <form action="{{ route('magang.destroy', $magang->id_magang) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                <form action="{{ route('magang.destroy', $magang->id_magang) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Hapus</button>
                                 </form>
                             </td>
                         </tr>
