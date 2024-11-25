@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group"><label>Jenis Kelamin</label><select name="jenis_kelamin"
                         class="form-control @error('jenis_kelamin') is-invalid @enderror">
-                        <option value="">Pilih Jenis Kelamin</option>
+                        <option value=""disabled selected>Pilih Jenis Kelamin</option>
                         <option value="l">Laki-laki</option>
                         <option value="p">Perempuan</option>
                     </select>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="form-group"><label>Status</label><select name="status"
                         class="form-control @error('status') is-invalid @enderror">
-                        <option value="">Pilih Status</option>
+                        <option value=""disabled selected>Pilih Status</option>
                         <option value="mahasiswa">Mahasiswa</option>
                         <option value="siswa">Siswa</option>
                     </select>
