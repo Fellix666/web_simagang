@@ -9,7 +9,7 @@
         <div class="card-body">
             <form action="{{ route('berkas.update', $berkas->id_berkas) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
+                @method('POST')
                 <div class="form-group mb-3">
                     <label>Nama Berkas</label>
                     <input type="text" name="nama_berkas" class="form-control @error('nama_berkas') is-invalid @enderror" value="{{ old('nama_berkas', $berkas->nama_berkas) }}">
