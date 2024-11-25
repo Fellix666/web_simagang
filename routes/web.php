@@ -32,3 +32,5 @@ Route::middleware(['auth:admin'])->group(function () {
 // Redirect root to login if not authenticated
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('peserta-magang', [AnakMagangController::class, 'readonly'])->name('readonly');
+Route::resource('magang', AnakMagangController::class)->except(['show']);
+Route::resource('magang', AnakMagangController::class);

@@ -99,4 +99,12 @@ class AnakMagangController extends Controller
 
         return view('readonly', compact('magangList'));
     }
+
+    public function show($id)
+    {
+        $magang = AnakMagang::with(['institusi', 'divisi', 'berkas'])
+            ->findOrFail($id);
+
+        return view('magang.show', compact('magang'));
+    }
 }

@@ -32,6 +32,6 @@ class AnakMagang extends Model
 
     public function berkas()
     {
-        return $this->hasMany(Berkas::class, 'id_berkas');
+        return $this->belongsTo(Berkas::class, 'id_berkas');
     }
 }
