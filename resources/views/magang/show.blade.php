@@ -92,7 +92,7 @@
                             $duration = $startDate->diffInDays($endDate);
                         @endphp
                         <div class="alert alert-info">
-                            <h6 class="mb-0">Durasi Magang:</h6>
+                            <h6 class="mb-0">Sisa Durasi Magang:</h6>
                             <p class="mb-0">{{ $duration }} hari</p>
                         </div>
                     </div>

@@ -66,7 +66,9 @@
                         @forelse($berkas->anakMagang as $index => $magang)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $magang->nama_lengkap }}</td>
+                                <td><a href="{{ route('magang.show', $magang->id_magang) }}" class="font-weight-bold nama-lengkap">
+                                    {{ $magang->nama_lengkap }}
+                                </a></td>
                                 <td>{{ $magang->nomor_induk }}</td>
                                 <td>{{ $magang->institusi->nama_institusi }}</td>
                                 <td>{{ ucfirst($magang->status) }}</td>
@@ -107,5 +109,14 @@
 .alert {
     border-radius: 0.5rem;
 }
+.nama-lengkap {
+            color: black;
+            text-decoration: none; /* Menghilangkan garis bawah default */
+            transition: text-decoration 0.3s ease-in-out; /* Menambahkan transisi */
+        }
+
+        .nama-lengkap:hover {
+            text-decoration: underline; /* Menambahkan garis bawah saat hover */
+        }
 </style>
 @endsection

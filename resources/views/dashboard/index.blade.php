@@ -10,6 +10,16 @@
     height: 100%; 
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title:hover {
+    text-decoration: underline;
+}
+
 </style>
 <div class="container-fluid">
     <div class="row">
