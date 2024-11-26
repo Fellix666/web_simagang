@@ -21,6 +21,7 @@
                         <th>Institusi</th>
                         <th>Divisi</th>
                         <th>Status</th>
+                        <th>Berkas</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
                         <th>Aksi</th>
@@ -37,12 +38,13 @@
                             </td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
                             <td>{{ $magang->divisi->nama_divisi }}</td>
+                            <td>{{ $magang->berkas->nama_berkas}}</td>
                             <td>{{ ucfirst($magang->status) }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
                             <td>
                                 <a href="{{ route('magang.edit', $magang->id_magang) }}" class="btn btn-sm btn-warning">Edit</a>
-                
+
                                 <form action="{{ route('magang.destroy', $magang->id_magang) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')

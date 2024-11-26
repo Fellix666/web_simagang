@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
 <head>
     <meta charset="UTF-8">
@@ -88,83 +87,28 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
+            {{-- <button id="sidebarToggle" class="btn btn-primary me-3">
+                <i class="fas fa-bars"></i>
+            </button> --}}
             <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                 <img src="{{ asset('images/logoremove.png') }}" alt="Logo Diskominfo Kubu Raya" class="logo-small">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <a href="{{ route('readonly') }}" class="nav-link">
-                        <i class="fas fa-home me-2"></i>
-                    </a>
-                    @auth('admin')
-                        <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-link text-white text-decoration-none">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
-                                </button>
-                            </form>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
+
         </div>
     </nav>
-=======
-@include('layouts/head')
-<body>
-    <!-- Navbar -->
-    @include('layouts/navbar')
->>>>>>> mc
 
     <!-- Main Content -->
     <main>
         @auth('admin')
-<<<<<<< HEAD
             @if (!request()->routeIs('login'))
-                <!-- Sidebar -->
-                <div class="sidebar">
-                    <nav class="nav flex-column">
-                        <a href="{{ route('dashboard.index') }}"
-                            class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
-                            <i class="fas fa-dashboard me-2"></i> Dashboard
-                        </a>
-                        <a href="{{ route('magang.index') }}"
-                            class="nav-link {{ request()->routeIs('magang.*') ? 'active' : '' }}">
-                            <i class="fas fa-users me-2"></i> Data Magang
-                        </a>
-                        <a href="{{ route('institusi.index') }}"
-                            class="nav-link {{ request()->routeIs('institusi.*') ? 'active' : '' }}">
-                            <i class="fas fa-building me-2"></i> Data Institusi
-                        </a>
-                        <a href="{{ route('divisi.index') }}"
-                            class="nav-link {{ request()->routeIs('divisi.*') ? 'active' : '' }}">
-                            <i class="fas fa-briefcase me-2"></i> Data Divisi
-                        </a>
-                        <a href="{{ route('berkas.index') }}"
-                            class="nav-link {{ request()->routeIs('berkas.*') ? 'active' : '' }}">
-                            <i class="fas fa-archive me-2"></i> Data berkas
-                        </a>
-                    </nav>
-                </div>
-=======
-            @if(!request()->routeIs('login'))
-            @include('layouts/main')
->>>>>>> mc
+                @include('layouts.main')
             @endif
         @endauth
 
         <!-- Content Wrapper -->
-<<<<<<< HEAD
         <div class="{{ request()->routeIs('login') ? 'content-wrapper-full' : 'content-wrapper' }}">
             @yield('content')
         </div>
-=======
-        @include('layouts/wrapper')
->>>>>>> mc
     </main>
 
     <!-- Footer -->
@@ -173,11 +117,7 @@
     <!-- Scripts -->
     @include('layouts/scripts')
     @stack('scripts')
-    
+
 </body>
-<<<<<<< HEAD
 
 </html>
-=======
-</html>
->>>>>>> mc
