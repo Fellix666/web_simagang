@@ -78,7 +78,7 @@ class BerkasController extends Controller
 
         // Store the new file
         $file = $request->file('file');
-        $path = $file->store('berkas');
+        $path = $file->store('berkas_photos', 'public');
 
         // Update the berkas record with the new file path
         $validated['file_path'] = $path;
