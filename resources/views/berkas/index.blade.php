@@ -26,7 +26,11 @@
                     @foreach($berkas as $index => $item) 
                     <tr> 
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->nama_berkas }}</td>
+                        <td>
+                            <a href="{{ route('berkas.show', $item->id_berkas) }}" class="font-weight-bold nama-berkas" style="color: inherit" >
+                            {{ $item->nama_berkas }}
+                            </a>
+                        </td>
                         <td>{{ $item->jenis_berkas }}</td>
                         <td> 
                             @if($item->file_path)
@@ -64,4 +68,19 @@
         </div> 
     </div> 
 </div> 
+@endsection
+
+@section('styles')
+<style>
+    /* Menambahkan efek hover untuk garis bawah pada link */
+    .nama-berkas {
+        color: black;
+        text-decoration: none; /* Menghilangkan garis bawah default */
+        transition: text-decoration 0.3s ease-in-out; /* Menambahkan transisi */
+    }
+
+    .nama-berkas:hover {
+        text-decoration: underline; /* Menambahkan garis bawah saat hover */
+    }
+</style>
 @endsection
