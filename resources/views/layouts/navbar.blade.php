@@ -6,22 +6,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <form action="{{ route('readonly') }}" method="GET" class="d-inline">
-                        <button type="submit" class="btn btn-link text-white text-decoration-none">
-                            <i class="fa-solid fa-house"></i>
-                        </button>
-                    </form>
-                </li>
-                @auth('admin')
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-link text-white text-decoration-none">
-                            <i class="fas fa-sign-out-alt"></i></button>
-                    </form>
-                </li>
-                @endauth
             </ul>
         </div>
     </div>
