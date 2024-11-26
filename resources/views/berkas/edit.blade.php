@@ -34,9 +34,23 @@
                 <div class="form-group mb-3">
                     <label>Current File</label>
                     <div>
-                        <a href="{{ Storage::url($berkas->file_path) }}" target="_blank">View Current File</a>
+                        @php
+                            $extension = pathinfo($berkas->file_path, PATHINFO_EXTENSION);
+                            $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
+                        @endphp
+                
+                        @if($isImage)
+                            <!-- Menampilkan gambar jika file adalah gambar -->
+                            <img src="{{ Storage::url($berkas->file_path) }}" 
+                                 alt="Current File" 
+                                 style="max-width: 200px; max-height: 200px;" 
+                                 class="img-thumbnail">
+                        @else
+                            <!-- Jika file bukan gambar, tetap tampilkan tautan -->
+                            <a href="{{ Storage::url($berkas->file_path) }}" target="_blank">View Current File</a>
+                        @endif
                     </div>
-                </div>
+                </div>                
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('berkas.index') }}" class="btn btn-secondary">Kembali</a>
             </form>
