@@ -8,7 +8,17 @@ class AnakMagang extends Model
 {
     protected $table = 'anak_magang';
     protected $primaryKey = 'id_magang';
-    protected $fillable = ['id_institusi', 'id_divisi', 'nomor_induk', 'nama_lengkap', 'jenis_kelamin', 'jurusan', 'tanggal_mulai', 'tanggal_selesai', 'status'];
+    protected $fillable = [
+    'id_institusi', 
+    'id_divisi', 
+    'id_berkas',
+    'nomor_induk', 
+    'nama_lengkap', 
+    'jenis_kelamin', 
+    'jurusan', 
+    'tanggal_mulai', 
+    'tanggal_selesai', 
+    'status'];
 
     public function institusi()
     {
@@ -22,6 +32,6 @@ class AnakMagang extends Model
 
     public function berkas()
     {
-        return $this->hasMany(Berkas::class, 'id_magang');
+        return $this->belongsTo(Berkas::class, 'id_berkas');
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
     <meta charset="UTF-8">
@@ -112,10 +113,17 @@
             </div>
         </div>
     </nav>
+=======
+@include('layouts/head')
+<body>
+    <!-- Navbar -->
+    @include('layouts/navbar')
+>>>>>>> mc
 
     <!-- Main Content -->
     <main>
         @auth('admin')
+<<<<<<< HEAD
             @if (!request()->routeIs('login'))
                 <!-- Sidebar -->
                 <div class="sidebar">
@@ -142,30 +150,34 @@
                         </a>
                     </nav>
                 </div>
+=======
+            @if(!request()->routeIs('login'))
+            @include('layouts/main')
+>>>>>>> mc
             @endif
         @endauth
 
         <!-- Content Wrapper -->
+<<<<<<< HEAD
         <div class="{{ request()->routeIs('login') ? 'content-wrapper-full' : 'content-wrapper' }}">
             @yield('content')
         </div>
+=======
+        @include('layouts/wrapper')
+>>>>>>> mc
     </main>
 
     <!-- Footer -->
-    <footer class="bg-light py-3 mt-auto">
-        <div class="container text-center">
-            <span class="text-muted">&copy; {{ date('Y') }} Sistem Informasi Magang. All rights reserved.</span>
-        </div>
-    </footer>
+    @include('layouts/footer')
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Sweet Alert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- Scripts -->
+    @include('layouts/scripts')
     @stack('scripts')
+    
 </body>
+<<<<<<< HEAD
 
 </html>
+=======
+</html>
+>>>>>>> mc

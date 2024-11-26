@@ -17,7 +17,7 @@ class AdminController extends Controller
         $credentials = $request->validate(['username' => 'required', 'password' => 'required']);
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/magang');
+            return redirect()->intended('/dashboard');
         }
         return back()->withErrors(['username' => 'Username atau password salah.',]);
     }

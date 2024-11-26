@@ -5,7 +5,6 @@ use App\Http\Controllers\AnakMagangController;
 use App\Http\Controllers\BerkasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardAdminController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\InstitusiController;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +32,5 @@ Route::middleware(['auth:admin'])->group(function () {
 // Redirect root to login if not authenticated
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('peserta-magang', [AnakMagangController::class, 'readonly'])->name('readonly');
-
+Route::resource('magang', AnakMagangController::class)->except(['show']);
+Route::resource('magang', AnakMagangController::class);

@@ -48,5 +48,3 @@
         });
     @endif
 </script>
-
-@stack('scripts')

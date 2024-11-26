@@ -5,6 +5,12 @@
 @endsection
 
 @section('content')
+<style>
+    .card {
+    height: 100%; 
+}
+
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -94,64 +100,60 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Line Chart - Magang per Bulan
-    const ctx1 = document.getElementById('magangChart').getContext('2d');
-    new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: @json($chartData['labels']),
-            datasets: [{
-                label: 'Jumlah Magang',
-                data: @json($chartData['data']),
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2,
-                fill: true, // to create the filled effect
-                tension: 0.4 // for curved lines
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    min: 1,
-                    max: 10,
-                    ticks: {
-                        stepSize: 1
+    document.addEventListener('DOMContentLoaded', function() {
+        // Bar Chart - Magang per Bulan
+        const ctx1 = document.getElementById('magangChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: @json($chartData['labels']),
+                datasets: [{
+                    label: 'Jumlah Magang',
+                    data: @json($chartData['data']),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 0,
+                        max: 10,
+                        ticks: {
+                            stepSize: 1
+                        }
                     }
                 }
             }
-        }
-    });
-
-    // Doughnut Chart - Status Magang
-    const ctx2 = document.getElementById('statusChart').getContext('2d');
-    new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: @json($statusMagang->pluck('status')->toArray()),
-            datasets: [{
-                data: @json($statusMagang->pluck('total')->toArray()),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)' // Add more colors if necessary
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            cutout: '70%', // Atur ukuran bagian tengah agar lingkaran lebih tipis (70% dari radius total)
-        plugins: {
-            legend: {
-                display: true // Tampilkan legenda jika diperlukan
+        });
+    
+        // Pie Chart - Status Magang
+        const ctx2 = document.getElementById('statusChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: @json($statusMagang->pluck('status')->toArray()),
+                datasets: [{
+                    data: @json($statusMagang->pluck('total')->toArray()),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%', 
+            plugins: {
+                legend: {
+                    display: true 
+                }
             }
-        }
-        }
+            }
+        });
     });
-});
-</script>
+    </script>
 @endpush
