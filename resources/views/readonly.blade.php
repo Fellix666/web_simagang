@@ -55,11 +55,22 @@
 
         .table-responsive {
             margin-top: 2rem;
+            overflow-x: auto;
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
+            /* Tabel selalu mengambil lebar penuh */
+            table-layout: auto;
+            /* Kolom akan menyesuaikan kontennya */
+            border-spacing: 0;
+        }
+
+        th,
+        td {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         thead th {
@@ -102,6 +113,11 @@
         }
 
         @media (max-width: 768px) {
+
+            table {
+                font-size: 0.85rem;
+            }
+
             .container {
                 padding: 1.5rem;
             }
@@ -138,7 +154,8 @@
             <div class="col-md-4">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
+                    </option>
                     <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
                 </select>
             </div>
@@ -146,15 +163,15 @@
 
         <!-- Table Section -->
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered text-center table-sm">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Universitas/Sekolah</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Selesai</th>
-                        <th>Role</th>
+                        <th style="min-width: 50px;">No</th>
+                        <th style="min-width: 150px;">Nama</th>
+                        <th style="min-width: 200px;">Universitas/Sekolah</th>
+                        <th style="min-width: 150px;">Tanggal Mulai</th>
+                        <th style="min-width: 150px;">Tanggal Selesai</th>
+                        <th style="min-width: 100px;">Role</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -177,10 +194,14 @@
             {{ $magangList->links() }}
         </div>
 
-        <!-- Back Button -->
         <div class="text-center mt-3">
-            <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
+            @if (auth()->check() && auth()->user() == 'admin')
+                <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Kembali ke Dashboard Admin</a>
+            @else
+                <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
+            @endif
         </div>
+
     </div>
 
     <script>
@@ -197,7 +218,8 @@
                     const text = row.textContent.toLowerCase();
                     const role = row.cells[5].textContent.toLowerCase();
 
-                    row.style.display = (text.includes(searchTerm) && (roleFilter === 'all' || role === roleFilter)) ? '' : 'none';
+                    row.style.display = (text.includes(searchTerm) && (roleFilter === 'all' || role ===
+                        roleFilter)) ? '' : 'none';
                 });
             };
 

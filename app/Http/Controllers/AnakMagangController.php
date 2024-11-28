@@ -27,16 +27,17 @@ class AnakMagangController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-        'id_institusi' => 'required',
-        'id_divisi' => 'required',
-        'id_berkas' => 'required',
-        'nomor_induk' => 'required|max:15',
-        'nama_lengkap' => 'required|max:50',
-        'jenis_kelamin' => 'required|in:l,p',
-        'jurusan' => 'required|max:50',
-        'tanggal_mulai' => 'required|date',
-        'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-        'status' => 'required|in:mahasiswa,siswa']);
+            'id_institusi' => 'required',
+            'id_divisi' => 'required',
+            'id_berkas' => 'required',
+            'nomor_induk' => 'required|max:15',
+            'nama_lengkap' => 'required|max:50',
+            'jenis_kelamin' => 'required|in:l,p',
+            'jurusan' => 'required|max:50',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'status' => 'required|in:mahasiswa,siswa'
+        ]);
 
         AnakMagang::create($validated);
         return redirect()->route('magang.index')->with('success', 'Data berhasil ditambahkan');
@@ -54,16 +55,17 @@ class AnakMagangController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-        'id_institusi' => 'required', 
-        'id_divisi' => 'required',
-        'id_berkas' => 'required', 
-        'nomor_induk' => 'required|max:15', 
-        'nama_lengkap' => 'required|max:50', 
-        'jenis_kelamin' => 'required|in:l,p', 
-        'jurusan' => 'required|max:50', 
-        'tanggal_mulai' => 'required|date', 
-        'tanggal_selesai' => 'required|date|after:tanggal_mulai', 
-        'status' => 'required|in:mahasiswa,siswa']);
+            'id_institusi' => 'required',
+            'id_divisi' => 'required',
+            'id_berkas' => 'required',
+            'nomor_induk' => 'required|max:15',
+            'nama_lengkap' => 'required|max:50',
+            'jenis_kelamin' => 'required|in:l,p',
+            'jurusan' => 'required|max:50',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'status' => 'required|in:mahasiswa,siswa'
+        ]);
 
         $magang = AnakMagang::findOrFail($id);
         $magang->update($validated);
@@ -102,9 +104,12 @@ class AnakMagangController extends Controller
 
     public function show($id)
     {
-        $magang = AnakMagang::with(['institusi', 'divisi', 'berkas'])
-            ->findOrFail($id);
+        $magang = AnakMagang::with(['berkas', 'divisi', 'institusi'])->findOrFail($id);
 
-        return view('magang.show', compact('magang'));
+        $startDate = \Carbon\Carbon::parse($magang->tanggal_mulai);
+        $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai);
+        $totalDuration = $startDate->diffInDays($endDate);
+
+        return view('magang.show', compact('magang', 'totalDuration'));
     }
 }
