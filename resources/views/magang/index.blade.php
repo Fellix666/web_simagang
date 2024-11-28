@@ -13,21 +13,22 @@
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Lengkap</th>
-                        <th>Institusi</th>
-                        <th>Divisi</th>
-                        <th>Status</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Selesai</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($magangList as $index => $magang)
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Lengkap</th>
+                            <th>Institusi</th>
+                            <th>Divisi</th>
+                            <th>Status</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Selesai</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($magangList as $index => $magang)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>
@@ -42,7 +43,7 @@
                             <td>{{ $magang->tanggal_selesai }}</td>
                             <td>
                                 <a href="{{ route('magang.edit', $magang->id_magang) }}" class="btn btn-sm btn-warning">Edit</a>
-                
+                                
                                 <form action="{{ route('magang.destroy', $magang->id_magang) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -50,9 +51,10 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             {{ $magangList->links() }}
         </div>
     </div>

@@ -11,6 +11,8 @@ class Berkas extends Model
 
     public function anakMagang()
     {
-        return $this->belongsTo(AnakMagang::class, 'id_magang');
+        return $this->hasMany(AnakMagang::class, 'id_berkas');
     }
+
+    
 }

@@ -106,4 +106,11 @@ class BerkasController extends Controller
 
         return back()->with('success', 'Berkas berhasil dihapus');
     }
+
+    public function show($id)
+    {
+        $berkas = Berkas::with('anakMagang.institusi',)->findOrFail($id); // Corrected 'anak_magang' to 'anakMagang'
+        return view('berkas.show', compact('berkas'));
+    }
+
 }
