@@ -21,10 +21,26 @@
                                     $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
                                 @endphp
                                 @if($isImage)
-                                    <img src="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}" 
-                                        alt="{{ $magang->berkas->nama_berkas }}" 
-                                        class="img-thumbnail mb-3"
-                                        style="max-width: 100%; max-height: 250px; object-fit: cover;">
+                                    <div class="image-container">
+                                        <img src="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}" 
+                                            alt="{{ $magang->berkas->nama_berkas }}" 
+                                            class="img-thumbnail mb-3 image-hover"
+                                            style="max-width: 100%; max-height: 250px; object-fit: cover;">
+                                        <div class="image-overlay">
+                                            <div class="overlay-buttons">
+                                                <a href="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}" 
+                                                   class="btn btn-primary btn-sm" 
+                                                   target="_blank">
+                                                    <i class="fas fa-eye"></i> Lihat Detail
+                                                </a>
+                                                <a href="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}" 
+                                                   class="btn btn-success btn-sm ml-2" 
+                                                   download>
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @else
                                     <div class="alert alert-info">
                                         <i class="fas fa-file-alt fa-2x mb-2"></i>
@@ -92,7 +108,7 @@
                             $duration = $startDate->diffInDays($endDate);
                         @endphp
                         <div class="alert alert-info">
-                            <h6 class="mb-0">Sisa Durasi Magang:</h6>
+                            <h6 class="mb-0">Durasi Magang:</h6>
                             <p class="mb-0">{{ $duration }} hari</p>
                         </div>
                     </div>
@@ -135,6 +151,38 @@ strong {
 .badge {
     padding: 0.5em 1em;
     font-size: 0.875rem;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.image-hover {
+    transition: opacity 0.3s ease;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-overlay {
+    opacity: 1;
+}
+
+.overlay-buttons {
+    display: flex;
+    gap: 10px;
 }
 </style>
 @endsection
