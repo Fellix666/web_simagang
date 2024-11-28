@@ -195,11 +195,11 @@
         </div>
 
         <div class="text-center mt-3">
-            @if (auth()->check() && auth()->user() == 'admin')
-                <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Kembali ke Dashboard Admin</a>
+            @auth
+                <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Kembali Ke Dashboard</a>
             @else
-                <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
-            @endif
+                <a href="{{ route('home') }}" class="btn btn-primary">Kembali Ke Halaman Utama</a>
+            @endauth
         </div>
 
     </div>
