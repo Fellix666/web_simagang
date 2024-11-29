@@ -12,56 +12,77 @@
             @if(session('success')) 
                 <div class="alert alert-success">{{ session('success') }}</div> 
             @endif 
-            <table class="table table-bordered"> 
-                <thead> 
-                    <tr> 
-                        <th>No</th>
-                        <th>Nama Berkas</th>
-                        <th>Jenis Berkas</th>
-                        <th>File</th>
-                        <th>Aksi</th>
-                    </tr> 
-                </thead> 
-                <tbody> 
-                    @foreach($berkas as $index => $item) 
-                    <tr> 
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->nama_berkas }}</td>
-                        <td>{{ $item->jenis_berkas }}</td>
-                        <td> 
-                            @if($item->file_path)
+            <div class="table-responsive">
+                <table class="table table-bordered"> 
+                    <thead> 
+                        <tr> 
+                            <th>No</th>
+                            <th>Nama Berkas</th>
+                            <th>Jenis Berkas</th>
+                            <th>File</th>
+                            <th>Aksi</th>
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        @foreach($berkas as $index => $item) 
+                        <tr> 
+                            <td>{{ $index + 1 }}</td>
+                            <td>
+                                <a href="{{ route('berkas.show', $item->id_berkas) }}" class="font-weight-bold nama-berkas" style="color: inherit" >
+                                    {{ $item->nama_berkas }}
+                                </a>
+                            </td>
+                            <td>{{ $item->jenis_berkas }}</td>
+                            <td> 
+                                @if($item->file_path)
                                 @php
                                     $extension = pathinfo($item->file_path, PATHINFO_EXTENSION);
                                     $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
-                                @endphp
+                                    @endphp
                                 @if($isImage)
-                                    <img src="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}" 
-                                            alt="{{ $item->nama_berkas }}" 
-                                            style="max-width: 100px; max-height: 100px;">
+                                <img src="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}" 
+                                alt="{{ $item->nama_berkas }}" 
+                                style="max-width: 100px; max-height: 100px;">
                                 @else
-                                    <a href="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}" 
-                                        target="_blank">Download</a>
-                                @endif
-                            @else
-                                <span class="text-muted">No file</span>
-                            @endif
-                        </td>
-                        <td> 
-                            <a href="{{ route('berkas.edit', $item->id_berkas) }}" 
-                                class="btn btn-sm btn-warning">Edit</a> 
-                            <form action="{{ route('berkas.destroy', $item->id_berkas) }}" 
-                                    method="POST" 
-                                    class="d-inline"> 
-                                @csrf 
-                                @method('DELETE') 
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Hapus</button>
-                            </form> 
-                        </td>
-                    </tr> 
-                    @endforeach 
-                </tbody> 
-            </table> 
+                                <a href="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}" 
+                                    target="_blank">Download</a>
+                                    @endif
+                                    @else
+                                    <span class="text-muted">No file</span>
+                                    @endif
+                                </td>
+                                <td> 
+                                    <a href="{{ route('berkas.edit', $item->id_berkas) }}" 
+                                        class="btn btn-sm btn-warning">Edit</a> 
+                                        <form action="{{ route('berkas.destroy', $item->id_berkas) }}" 
+                                            method="POST" 
+                                            class="d-inline"> 
+                                            @csrf 
+                                            @method('DELETE') 
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Hapus</button>
+                                        </form> 
+                                    </td>
+                                </tr> 
+                                @endforeach 
+                            </tbody> 
+                        </table> 
+                    </div>
         </div> 
     </div> 
 </div> 
+@endsection
+
+@section('styles')
+<style>
+    /* Menambahkan efek hover untuk garis bawah pada link */
+    .nama-berkas {
+        color: black;
+        text-decoration: none; /* Menghilangkan garis bawah default */
+        transition: text-decoration 0.3s ease-in-out; /* Menambahkan transisi */
+    }
+
+    .nama-berkas:hover {
+        text-decoration: underline; /* Menambahkan garis bawah saat hover */
+    }
+</style>
 @endsection

@@ -13,34 +13,35 @@
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Divisi</th>
-                        <th>Kepala Divisi</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($divisi as $index => $item)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->nama_divisi }}</td>
-                        <td>{{ $item->kepala_divisi }}</td>
-                        <td>
-                            <a href="{{ route('divisi.edit', $item->id_divisi) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('divisi.destroy', $item->id_divisi) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Divisi</th>
+                            <th>Kepala Divisi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($divisi as $index => $item)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->nama_divisi }}</td>
+                            <td>{{ $item->kepala_divisi }}</td>
+                            <td>
+                                <a href="{{ route('divisi.edit', $item->id_divisi) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <form action="{{ route('divisi.destroy', $item->id_divisi) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
             {{ $divisi->links() }}
         </div>
