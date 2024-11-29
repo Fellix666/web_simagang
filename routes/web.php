@@ -34,7 +34,3 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('peserta-magang', [AnakMagangController::class, 'readonly'])->name('readonly');
 Route::resource('magang', AnakMagangController::class)->except(['show']);
 Route::resource('magang', AnakMagangController::class);
-<<<<<<< HEAD
-=======
-Route::get('/{id}', [BerkasController::class, 'show'])->name('berkas.show');
->>>>>>> mc
