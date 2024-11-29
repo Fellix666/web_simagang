@@ -6,7 +6,6 @@
         <a class="navbar-brand" href="{{ route('dashboard.index') }}">Ganti ke logo simagang</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Your existing navbar items -->
             </ul>
         </div>
     </div>

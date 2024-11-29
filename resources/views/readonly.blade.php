@@ -246,9 +246,12 @@
             {{ $magangList->links() }}
         </div>
 
-        <!-- Back Button -->
         <div class="text-center mt-4">
-            <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
+            @auth('admin')
+                <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Kembali ke Dashboard Admin</a>
+            @else
+                <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
+            @endauth
         </div>
     </div>
 
