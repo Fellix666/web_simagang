@@ -85,17 +85,18 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    {{-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            {{-- <button id="sidebarToggle" class="btn btn-primary me-3">
+            <button id="sidebarToggle" class="btn btn-primary me-3">
                 <i class="fas fa-bars"></i>
-            </button> --}}
+            </button>
             <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                 <img src="{{ asset('images/logoremove.png') }}" alt="Logo Diskominfo Kubu Raya" class="logo-small">
             </a>
 
         </div>
-    </nav>
+    </nav> --}}
+    @include('layouts.navbar')
 
     <!-- Main Content -->
     <main>
