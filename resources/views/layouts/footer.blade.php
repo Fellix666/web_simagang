@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Footer</title>
+    <title>Responsive Footer Diskominfo Kubu Raya</title>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -21,11 +21,6 @@
             line-height: 1.6;
         }
 
-        img {
-            width: auto;
-
-        }
-
         /* Footer Styling */
         footer {
             background-color: #f3f4f6;
@@ -39,6 +34,17 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
+        }
+
+        footer .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        footer .logo-section img {
+            max-width: 200px;
+            height: auto;
         }
 
         footer h4 {
@@ -83,11 +89,15 @@
             border-top: 1px solid #d1d5db;
         }
 
-        /* Enhanced Responsiveness */
+        /* Responsive Design */
         @media (max-width: 768px) {
             footer .container {
                 grid-template-columns: 1fr;
                 text-align: center;
+            }
+
+            footer .logo-section {
+                justify-content: center;
             }
 
             footer .footer-section {
@@ -96,6 +106,10 @@
 
             footer i {
                 margin-right: 0.5rem;
+            }
+
+            footer .logo-section img {
+                max-width: 150px;
             }
         }
 
@@ -122,14 +136,16 @@
 <body>
     <footer>
         <div class="container">
-            <!-- About Us Section -->
-            <div class="footer-section">
-                <img src="{{ asset ('images/logoKubu.png')}}" alt="Logo Kubu Raya" class="float: left; margin-right: 10px;">
+            <!-- Logo Section -->
+            <div class="footer-section logo-section">
+                <img src="{{ asset ('images/logoKubu.png')}}" alt="Logo Kubu Raya">
             </div>
+
+            <!-- About Us Section -->
             <div class="footer-section">
                 <h4>About Us</h4>
                 <p>Sistem Informasi Magang adalah platform untuk mengelola data magang dengan efisien di Diskominfo Kubu Raya.</p>
-                <p>Kami berdedikasi untuk memberikan layanan terbaik kepada siswa , mahasiswa dan institusi.</p>
+                <p>Kami berdedikasi untuk memberikan layanan terbaik kepada siswa, mahasiswa dan institusi.</p>
             </div>
 
             <!-- Connect & Contact Us Section -->
@@ -157,7 +173,8 @@
                 <h4>Location</h4>
                 <p>
                     <i class="fas fa-map-marker-alt"></i>
-                    <a href="https://maps.app.goo.gl/5A613qYP1bMfx2Kz5" target="_blank"> Jl. Arteri Supadio, Kecamatan Sungai Raya, Kab. Kubu Raya
+                    <a href="https://maps.app.goo.gl/5A613qYP1bMfx2Kz5" target="_blank">
+                        Jl. Arteri Supadio, Kecamatan Sungai Raya, Kab. Kubu Raya
                     </a>
                 </p>
             </div>
