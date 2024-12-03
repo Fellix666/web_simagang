@@ -148,7 +148,7 @@
     <div class="welcome-container">
         <!-- Logo -->
         <div class="logo-container">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo Diskominfo Kubu Raya" class="img-fluid mb-3">
+            <img src="{{ asset('images/simagang.png') }}" alt="Logo Diskominfo Kubu Raya" class="img-fluid mb-3">
             <img src="{{ asset('images/logoKubu.png') }}" alt="Logo Kubu Raya" class="img-fluid">
         </div>
 

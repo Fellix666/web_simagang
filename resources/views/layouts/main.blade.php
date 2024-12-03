@@ -14,7 +14,7 @@
             <i class="fas fa-briefcase me-2"></i> Data Divisi
         </a>
         <a href="{{ route('berkas.index') }}" class="nav-link {{ request()->routeIs('berkas.*') ? 'active' : '' }}">
-            <i class="fas fa-archive me-2"></i> Data berkas
+            <i class="fas fa-archive me-2"></i> Data Berkas
         </a>
         <hr>
         <a href="{{ route('readonly') }}" class="nav-link {{ request()->routeIs('readonly.*') ? 'active' : '' }}">
@@ -52,7 +52,7 @@
                 <i class="fas fa-briefcase me-2"></i> Data Divisi
             </a>
             <a href="{{ route('berkas.index') }}" class="nav-link {{ request()->routeIs('berkas.*') ? 'active' : '' }}">
-                <i class="fas fa-archive me-2"></i> Data berkas
+                <i class="fas fa-archive me-2"></i> Data Berkas
             </a>
             <hr>
             <a href="{{ route('readonly') }}" class="nav-link {{ request()->routeIs('readonly.*') ? 'active' : '' }}">
@@ -71,6 +71,35 @@
 </div>
 
 <style>
+    /* Sidebar Styling */
+    .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-size: 1rem;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .nav-link i {
+        width: 20px; /* Membuat ikon sejajar */
+        text-align: center;
+        margin-right: 10px;
+    }
+
+    .nav-link.active {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .nav-link:hover {
+        background-color: #f0f0f0;
+        color: #000;
+    }
+
     @media (max-width: 991.98px) {
         .sidebar {
             display: none;
