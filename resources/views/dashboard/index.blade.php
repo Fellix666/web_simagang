@@ -7,7 +7,7 @@
 @section('content')
 <style>
     .card {
-    height: 100%; 
+    height: 100%;
 }
 
 .card-body {
@@ -139,7 +139,7 @@
                 }
             }
         });
-    
+
         // Pie Chart - Status Magang
         const ctx2 = document.getElementById('statusChart').getContext('2d');
         new Chart(ctx2, {
@@ -156,10 +156,10 @@
             },
             options: {
                 responsive: true,
-                cutout: '70%', 
+                cutout: '70%',
             plugins: {
                 legend: {
-                    display: true 
+                    display: true
                 }
             }
             }
