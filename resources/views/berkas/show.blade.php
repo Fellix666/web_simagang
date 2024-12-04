@@ -5,7 +5,9 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="mb-0">Detail Berkas</h3>
-            <a href="{{ route('berkas.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('berkas.index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-circle-left me-2"></i> Kembali
+            </a>
         </div>
         <div class="card-body">
             <!-- Bagian Informasi Berkas -->
