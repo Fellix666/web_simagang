@@ -9,142 +9,196 @@
     <link rel="stylesheet" href="">
     <style>
         :root {
-            --primary-color: #3b82f6;
-            --secondary-color: #6366f1;
-            --accent-color: #10b981;
-            --background-color: #f0f9ff;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --border-color: #e2e8f0;
-            --border-radius: 16px;
-            --transition-speed: 0.4s;
-            --box-shadow-smooth: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --primary-color: #2563eb;
+            --secondary-color: #6c6d6f;
+            --background-color: #5a6579dc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-radius: 12px;
+            --transition-speed: 0.3s;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --hover-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
         body {
-            background: linear-gradient(135deg, var(--background-color), #e6f2ff);
-            font-family: 'Poppins', 'Inter', sans-serif;
+            background-color: var(--background-color);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
+            padding: 2rem 0;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: #ffffff;
             border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow-smooth);
+            box-shadow: var(--card-shadow);
             padding: 2rem;
-            margin: 1rem auto;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: box-shadow var(--transition-speed);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container:hover {
+            box-shadow: var(--hover-shadow);
         }
 
         h1 {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
         }
 
-        .form-control,
-        .form-select {
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .form-control, .form-select {
             border-radius: var(--border-radius);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
             font-size: 0.95rem;
             transition: all var(--transition-speed);
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .table-responsive {
-            margin-top: 2rem;
-            overflow-x: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            margin: 2rem 0;
         }
 
         table {
-            width: 100%;
-            /* Tabel selalu mengambil lebar penuh */
-            table-layout: auto;
-            /* Kolom akan menyesuaikan kontennya */
-            border-spacing: 0;
+            margin-bottom: 0 !important;
         }
 
-        th,
-        td {
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
-        thead th {
-            background: var(--primary-color);
-            color: #fff;
+        table thead th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
             font-size: 0.85rem;
+            letter-spacing: 0.5px;
             padding: 1rem;
+            border: none;
         }
 
-        tbody tr {
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.3s;
+        table tbody tr {
+            transition: background-color var(--transition-speed);
         }
 
-        tbody tr:hover {
-            background: rgba(37, 99, 235, 0.1);
+        table tbody tr:hover {
+            background-color: rgba(37, 99, 235, 0.05);
         }
 
-        tbody td {
+        table td {
             padding: 1rem;
             color: var(--text-secondary);
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
-            background: var(--primary-color);
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
             border-radius: var(--border-radius);
             font-weight: 600;
-            padding: 0.75rem 1.5rem;
             transition: all var(--transition-speed);
         }
 
         .btn-primary:hover {
-            background: #1d4ed8;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -1px rgba(37, 99, 235, 0.06);
+        }
+
+        .pagination {
+            margin-top: 2rem;
+            gap: 0.5rem;
         }
 
         .pagination .page-link {
             border-radius: var(--border-radius);
-            transition: background var(--transition-speed);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            transition: all var(--transition-speed);
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         @media (max-width: 768px) {
-
-            table {
-                font-size: 0.85rem;
-            }
-
             .container {
-                padding: 1.5rem;
+                padding: 1rem;
+                margin: 1rem;
             }
 
             h1 {
                 font-size: 1.5rem;
             }
 
-            .form-control,
-            .form-select {
-                padding: 0.6rem;
-                font-size: 0.85rem;
-            }
-
-            table thead th,
-            table tbody td {
-                font-size: 0.8rem;
+            table thead th {
+                font-size: 0.75rem;
                 padding: 0.75rem;
             }
+
+            table td {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Data Peserta Magang</h1>
+        <h1 class="mb-4 text-center">Data Peserta Magang</h1>
 
         <!-- Filter Section -->
         <form method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
@@ -164,7 +218,7 @@
 
         <!-- Table Section -->
         <div class="table-responsive">
-            <table class="table table-bordered text-center table-sm">
+            <table class="table table-bordered table-striped" id="dataTable">
                 <thead>
                     <tr>
                         <th style="min-width: 50px;">No</th>
