@@ -197,9 +197,11 @@
 
         <div class="text-center mt-3">
             @auth
-                <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Kembali Ke Dashboard</a>
-            @else
-                <a href="{{ route('home') }}" class="btn btn-primary">Kembali Ke Halaman Utama</a>
+                @if(auth()) {{-- Assuming user ID 1 is the admin --}}
+                    <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Dashboard Admin</a>
+                    @endif
+                @else
+                    <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
             @endauth
         </div>
 
