@@ -30,8 +30,8 @@ class DashboardAdminController extends Controller
         $chartData = [
             'labels' => $magangPerBulan->pluck('bulan')->map(function($bulan) {
                 $namaBulan = [
-                    1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr',
-                    5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Ags',
+                    1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 
+                    5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Ags', 
                     9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'
                 ];
                 return $namaBulan[$bulan];
@@ -39,13 +39,11 @@ class DashboardAdminController extends Controller
             'data' => $magangPerBulan->pluck('total')
         ];
 
-
-
         return view('dashboard.index', compact(
-            'totalMagang',
-            'totalInstitusi',
-            'totalDivisi',
-            'chartData',
+            'totalMagang', 
+            'totalInstitusi', 
+            'totalDivisi', 
+            'chartData', 
             'statusMagang'
         ));
     }
