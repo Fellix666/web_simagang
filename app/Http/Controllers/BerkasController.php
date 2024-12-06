@@ -31,28 +31,27 @@ class BerkasController extends Controller
             'asal_berkas' => 'required|max:50',
             'nomor_berkas' => 'required|max:50',
             'tanggal_berkas' => 'required|date',
-            'file' => 'required|file|mimes:pdf,jpg,png|max:2048', // Ensure valid file types and size
+            'file' => 'required|file|mimes:pdf,jpg,png|max:2048'
         ]);
 
-        // Process file upload
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $path = $file->store('berkas_photos', 'public'); // Save file to 'storage/app/public/berkas_photos'
+        try {
+            // Store file
+            $filePath = $request->file('file')->store('berkas', 'public');
 
-            // Create a new berkas record
+            // Create berkas record
             Berkas::create([
-                'id_magang' => $request->id_magang, // Assuming id_magang is passed in the request
                 'nama_berkas' => $validated['nama_berkas'],
                 'asal_berkas' => $validated['asal_berkas'],
                 'nomor_berkas' => $validated['nomor_berkas'],
                 'tanggal_berkas' => $validated['tanggal_berkas'],
-                'file_path' => $path,
+                'file_path' => $filePath
             ]);
 
-            return redirect()->route('berkas.index')->with('success', 'Berkas berhasil diunggah');
+            return redirect()->route('berkas.index')
+                ->with('success', 'Berkas berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal mengunggah berkas: ' . $e->getMessage());
         }
-
-        return back()->with('error', 'Gagal mengunggah berkas');
     }
 
     // Show the form for editing the specified resource
