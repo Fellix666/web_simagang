@@ -8,7 +8,7 @@
             <i class="fas fa-users me-2"></i> Data Magang
         </a>
         <a href="{{ route('institusi.index') }}" class="nav-link {{ request()->routeIs('institusi.*') ? 'active' : '' }}">
-            <i class="fas fa-building me-2"></i> Data Institusi
+            <i class="fas fa-building me-2"></i> Data Instansi
         </a>
         <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->routeIs('divisi.*') ? 'active' : '' }}">
             <i class="fas fa-briefcase me-2"></i> Data Divisi
@@ -46,7 +46,7 @@
                 <i class="fas fa-users me-2"></i> Data Magang
             </a>
             <a href="{{ route('institusi.index') }}" class="nav-link {{ request()->routeIs('institusi.*') ? 'active' : '' }}">
-                <i class="fas fa-building me-2"></i> Data Institusi
+                <i class="fas fa-building me-2"></i> Data Instansi
             </a>
             <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->routeIs('divisi.*') ? 'active' : '' }}">
                 <i class="fas fa-briefcase me-2"></i> Data Divisi

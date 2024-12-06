@@ -4,9 +4,9 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Institusi</h3>
+            <h3 class="card-title">Data Instansi</h3>
             <div class="card-tools">
-                <a href="{{ route('institusi.create') }}" class="btn btn-primary">Tambah Institusi</a>
+                <a href="{{ route('institusi.create') }}" class="btn btn-primary">Tambah Instansi</a>
             </div>
         </div>
         <div class="card-body">
@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Institusi</th>
+                            <th>Nama Instansi</th>
                             <th>Alamat</th>
                             <th>Website</th>
                             <th>Email</th>
@@ -45,7 +45,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>     
+            </div>
                 {{ $institusi->links() }}
         </div>
     </div>
