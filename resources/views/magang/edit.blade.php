@@ -7,7 +7,7 @@
         <div class="card-body">
             <form action="{{ route('magang.update', $magang->id_magang) }}" method="POST">@csrf
                 @method('PUT')<div
-                    class="form-group"><label>Institusi</label><select name="id_institusi"
+                    class="form-group"><label>Instansi</label><select name="id_institusi"
                         class="form-control @error('id_institusi') is-invalid @enderror">
                         <option value="">Pilih Institusi</option>
                         @foreach ($institusi as $inst)

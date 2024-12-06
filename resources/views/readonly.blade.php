@@ -10,8 +10,8 @@
     <style>
         :root {
             --primary-color: #2563eb;
-            --secondary-color: #6c6d6f;
-            --background-color: #5a6579dc;
+            --secondary-color: #2563eb;
+            --background-color: #c2e9f7;
             --text-primary: #1e293b;
             --text-secondary: #64748b;
             --border-radius: 12px;

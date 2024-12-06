@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+@include('layouts/head')
+<body>
+    <!-- Main Content -->
+    <main>
+        @auth('admin')
+            @if(!request()->routeIs('login'))
+            @include('layouts/main')
+            @endif
+        @endauth
+
+        <!-- Content Wrapper -->
+        @include('layouts/wrapper')
+    </main>
+    <!-- Scripts -->
+    @include('layouts/scripts')
+    @stack('scripts')
+    
+</body>
+</html>

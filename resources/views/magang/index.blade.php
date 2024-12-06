@@ -19,8 +19,8 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Lengkap</th>
-                            <th>Institusi</th>
-                            <th>Divisi</th>
+                            <th>Instansi</th>
+                            <th>Jurusan</th>
                             <th>Status</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Selesai</th>
@@ -37,7 +37,7 @@
                                 </a>
                             </td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
-                            <td>{{ $magang->divisi->nama_divisi }}</td>
+                            <td>{{ $magang->jurusan }}</td>
                             <td>{{ ucfirst($magang->status) }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>

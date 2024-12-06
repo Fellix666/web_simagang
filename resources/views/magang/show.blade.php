@@ -82,7 +82,7 @@
                                 </p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Institusi:</strong><br>{{ $magang->institusi->nama_institusi }}</p>
+                                <p><strong>Instansi:</strong><br>{{ $magang->institusi->nama_institusi }}</p>
                                 <p><strong>Jurusan:</strong><br>{{ $magang->jurusan }}</p>
                                 <p><strong>Status:</strong><br>{{ ucfirst($magang->status) }}</p>
                             </div>

@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <form action="{{ route('magang.store') }}" method="POST">@csrf<div class="form-group">
-                        <label>Institusi</label><select name="id_institusi"
+                        <label>Instansi</label><select name="id_institusi"
                             class="form-control @error('id_institusi') is-invalid @enderror">
                             <option value=""disabled selected>Pilih Institusi</option>
                             @foreach ($institusi as $inst)
