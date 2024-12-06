@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('nama_divisi', 50);
             $table->string('kepala_divisi', 50);
             $table->string('pangkat', length:50);
-            $table->string('Golongan',length:50);
+            $table->string('golongan',length:50);
             $table->timestamps();
         });
     }
