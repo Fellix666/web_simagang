@@ -24,6 +24,20 @@
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="form-group mb-3">
+                    <label>Pangkat</label>
+                    <input type="text" name="pangkat" class="form-control @error('pangkat') is-invalid @enderror" value="{{ old('pangkat') }}">
+                    @error('pangkat')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label>Golongan</label>
+                    <input type="text" name="golongan" class="form-control @error('golongan') is-invalid @enderror" value="{{ old('golongan') }}">
+                    @error('golongan')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('divisi.index') }}" class="btn btn-secondary">Kembali</a>
             </form>

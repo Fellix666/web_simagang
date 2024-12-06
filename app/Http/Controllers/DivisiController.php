@@ -22,7 +22,9 @@ class DivisiController extends Controller
     {
         $validated = $request->validate([
             'nama_divisi' => 'required|max:50',
-            'kepala_divisi' => 'required|max:50'
+            'kepala_divisi' => 'required|max:50',
+            'pangkat' => 'required|max:50',
+            'golongan' => 'required|max:50',
         ]);
 
         Divisi::create($validated);
@@ -39,7 +41,9 @@ class DivisiController extends Controller
     {
         $validated = $request->validate([
             'nama_divisi' => 'required|max:50',
-            'kepala_divisi' => 'required|max:50'
+            'kepala_divisi' => 'required|max:50',
+            'pangkat' => 'required|max:50',
+            'golongan' => 'required|max:50',
         ]);
 
         $divisi = Divisi::findOrFail($id);

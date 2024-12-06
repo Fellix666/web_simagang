@@ -18,9 +18,23 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label>Jenis Berkas</label>
-                    <input type="text" name="jenis_berkas" class="form-control @error('jenis_berkas') is-invalid @enderror" value="{{ old('jenis_berkas', $berkas->jenis_berkas) }}">
-                    @error('jenis_berkas')
+                    <label>Asal Berkas</label>
+                    <input type="text" name="asal_berkas" class="form-control @error('asal_berkas') is-invalid @enderror" value="{{ old('asal_berkas', $berkas->asal_berkas) }}">
+                    @error('asal_berkas')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label>Nomor Berkas</label>
+                    <input type="text" name="nomor_berkas" class="form-control @error('nomor_berkas') is-invalid @enderror" value="{{ old('nomor_berkas', $berkas->nomor_berkas) }}">
+                    @error('nomor_berkas')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label>Tanggal Berkas</label>
+                    <input type="text" name="tanggal_berkas" class="form-control @error('tanggal_berkas') is-invalid @enderror" value="{{ old('tanggal_berkas', $berkas->tanggal_berkas) }}">
+                    @error('tanggal_berkas')
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>
@@ -38,19 +52,19 @@
                             $extension = pathinfo($berkas->file_path, PATHINFO_EXTENSION);
                             $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
                         @endphp
-                
+
                         @if($isImage)
                             <!-- Menampilkan gambar jika file adalah gambar -->
-                            <img src="{{ Storage::url($berkas->file_path) }}" 
-                                 alt="Current File" 
-                                 style="max-width: 200px; max-height: 200px;" 
+                            <img src="{{ Storage::url($berkas->file_path) }}"
+                                 alt="Current File"
+                                 style="max-width: 200px; max-height: 200px;"
                                  class="img-thumbnail">
                         @else
                             <!-- Jika file bukan gambar, tetap tampilkan tautan -->
                             <a href="{{ Storage::url($berkas->file_path) }}" target="_blank">View Current File</a>
                         @endif
                     </div>
-                </div>                
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('berkas.index') }}" class="btn btn-secondary">Kembali</a>
             </form>

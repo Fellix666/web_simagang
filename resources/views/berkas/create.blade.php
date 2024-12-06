@@ -18,28 +18,43 @@
                 <!-- Hidden field for id_magang (this can be passed from a parent view or controller) -->
                 <input type="hidden" name="id_magang" value="{{ $id_magang ?? '' }}">
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="nama_berkas">Nama Berkas</label>
-                    <input type="text" name="nama_berkas" id="nama_berkas" class="form-control" value="{{ old('nama_berkas') }}" required>
+                    <input type="text" name="nama_berkas" id="nama_berkas" class="form-control @error('nama_berkas') is-invalid @enderror" value="{{ old('nama_berkas') }}" required>
                     @error('nama_berkas')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                
-
-                <div class="form-group">
-                    <label for="jenis_berkas">Jenis Berkas</label>
-                    <input type="text" name="jenis_berkas" id="jenis_berkas" class="form-control" value="{{ old('jenis_berkas') }}" required>
-                    @error('jenis_berkas')
-                        <div class="text-danger">{{ $message }}</div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
+                    <label>Asal Berkas</label>
+                    <input type="text" name="asal_berkas" class="form-control @error('asal_berkas') is-invalid @enderror" value="{{ old('asal_berkas') }}" required>
+                    @error('asal_berkas')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label>Nomor Berkas</label>
+                    <input type="text" name="nomor_berkas" class="form-control @error('nomor_berkas') is-invalid @enderror" value="{{ old('nomor_berkas') }}" required>
+                    @error('nomor_berkas')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label>Tanggal Berkas</label>
+                    <input type="date" name="tanggal_berkas" class="form-control @error('tanggal_berkas') is-invalid @enderror" value="{{ old('tanggal_berkas') }}" required>
+                    @error('tanggal_berkas')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
                     <label for="file">File</label>
-                    <input type="file" name="file" id="file" class="form-control">
-                    @error('file')
-                        <div class="text-danger">{{ $message }}</div>
+                    <input type="file" name="file_path" id="file" class="form-control @error('file_path') is-invalid @enderror">
+                    @error('file_path')
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 

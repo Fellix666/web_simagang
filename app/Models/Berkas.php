@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Berkas extends Model
 {
     protected $primaryKey = 'id_berkas';
-    protected $fillable = [ 'nama_berkas', 'jenis_berkas', 'file_path'];
+    protected $fillable = [ 'nama_berkas', 'asal_berkas','nomor_berkas','tanggal_berkas', 'file_path'];
 
     public function anakMagang()
     {
         return $this->hasMany(AnakMagang::class, 'id_berkas');
     }
 
-    
+
 }
