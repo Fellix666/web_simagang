@@ -224,10 +224,10 @@
                         <th style="min-width: 50px;">No</th>
                         <th style="min-width: 150px;">Nama</th>
                         <th style="min-width: 200px;">Universitas/Sekolah</th>
+                        <th style="min-width: 100px;">Jurusan</th>
                         <th style="min-width: 150px;">Tanggal Mulai</th>
                         <th style="min-width: 150px;">Tanggal Selesai</th>
-                        <th style="min-width: 100px;">Role</th>
-                        <th style="min-width: 100px;">Jurusan</th>
+                        <th style="min-width: 100px;">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -236,10 +236,10 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $magang->nama_lengkap }}</td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
+                            <td>{{ $magang->jurusan }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
                             <td>{{ ucfirst($magang->status) }}</td>
-                            <td>{{ $magang->jurusan }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -288,7 +288,6 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 
 </body>
 
