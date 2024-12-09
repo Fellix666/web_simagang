@@ -23,14 +23,14 @@
 
         /* Footer Styling */
         footer {
-
-            border-top: 1px solid #d1d5db;
+            background-color: #c2e9f7;
+            border-top: 1px solid #c2e9f7;
             padding: 2.5rem 1rem;
         }
 
         footer .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 100px auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
@@ -39,11 +39,11 @@
         footer .logo-section {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
         }
 
         footer .logo-section img {
-            max-width: 200px;
+            max-width: 150px;
             height: auto;
         }
 
@@ -55,7 +55,8 @@
             padding-bottom: 0.5rem;
         }
 
-        footer p, footer a {
+        footer p,
+        footer a {
             color: #6b7280;
             text-decoration: none;
             margin-bottom: 0.5rem;
@@ -84,9 +85,9 @@
             text-align: center;
             margin-top: 2rem;
             color: #9ca3af;
-            font-size: 0.875rem;
+            font-size: 0.675rem;
             padding-top: 1rem;
-            border-top: 1px solid #d1d5db;
+            border-top: 1px solid #b9b9b9;
         }
 
         /* Responsive Design */
@@ -103,21 +104,13 @@
             footer .footer-section {
                 align-items: center;
             }
-
-            footer i {
-                margin-right: 0.5rem;
-            }
-
-            footer .logo-section img {
-                max-width: 150px;
-            }
         }
 
         /* Accessibility and Touch-friendly Improvements */
         footer a {
             display: inline-flex;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         footer a:focus {
@@ -125,7 +118,7 @@
             outline-offset: 2px;
         }
 
-        /* Slight hover and focus effect */
+        /* Hover and focus effect */
         footer a:hover,
         footer a:focus {
             transform: translateX(5px);
@@ -138,14 +131,14 @@
         <div class="container">
             <!-- Logo Section -->
             <div class="footer-section logo-section">
-                <img src="{{ asset ('images/diskominfo.png')}}" alt="Logo Kubu Raya">
+                <img src="{{ asset('images/diskominfo.png') }}" alt="Logo Diskominfo Kubu Raya">
             </div>
 
             <!-- About Us Section -->
             <div class="footer-section">
                 <h4>About Us</h4>
                 <p>Sistem Informasi Magang adalah platform untuk mengelola data magang dengan efisien di Diskominfo Kubu Raya.</p>
-                <p>Kami berdedikasi untuk memberikan layanan terbaik kepada siswa, mahasiswa dan instansi.</p>
+                <p>Kami berdedikasi untuk memberikan layanan terbaik kepada siswa, mahasiswa, dan instansi.</p>
             </div>
 
             <!-- Connect & Contact Us Section -->
@@ -153,11 +146,11 @@
                 <h4>Connect & Contact Us</h4>
                 <p>
                     <i class="fab fa-instagram"></i>
-                    <a href="https://www.instagram.com/diskominfokuburaya" target="_blank">@diskominfokuburaya</a>
+                    <a href="https://www.instagram.com/diskominfokuburaya" target="_blank" rel="noopener noreferrer">@diskominfokuburaya</a>
                 </p>
                 <p>
                     <i class="fas fa-globe"></i>
-                    <a href="https://kominfo.kuburaya.go.id/" target="_blank">kominfo.kuburaya.go.id</a>
+                    <a href="https://kominfo.kuburaya.go.id/" target="_blank" rel="noopener noreferrer">kominfo.kuburaya.go.id</a>
                 </p>
                 <p>
                     <i class="fas fa-envelope"></i>
@@ -173,17 +166,18 @@
                 <h4>Location</h4>
                 <p>
                     <i class="fas fa-map-marker-alt"></i>
-                    <a href="https://maps.app.goo.gl/5A613qYP1bMfx2Kz5" target="_blank">
+                    <a href="https://maps.app.goo.gl/5A613qYP1bMfx2Kz5" target="_blank" rel="noopener noreferrer">
                         Jl. Arteri Supadio, Kecamatan Sungai Raya, Kab. Kubu Raya
                     </a>
                 </p>
             </div>
-
-            <!-- Copyright Section -->
-            <div class="footer-bottom">
+            <div class="footer-section">
                 <p>&copy; 2024 Sistem Informasi Magang. All rights reserved.</p>
             </div>
         </div>
+
+        <!-- Footer Bottom -->
+
     </footer>
 </body>
 
