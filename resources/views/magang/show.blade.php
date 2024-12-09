@@ -24,17 +24,17 @@
                                     @endphp
                                     @if ($isImage)
                                         <div class="image-container">
-                                            <img src="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}"
+                                            <img src="{{ asset('storage/berkas/' . basename($magang->berkas->file_path)) }}"
                                                 alt="{{ $magang->berkas->nama_berkas }}"
                                                 class="img-thumbnail mb-3 image-hover"
                                                 style="max-width: 100%; max-height: 250px; object-fit: cover;">
                                             <div class="image-overlay">
                                                 <div class="overlay-buttons">
-                                                    <a href="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}"
+                                                    <a href="{{ asset('storage/berkas/' . basename($magang->berkas->file_path)) }}"
                                                         class="btn btn-primary btn-sm" target="_blank">
                                                         <i class="fas fa-eye"></i> Lihat Detail
                                                     </a>
-                                                    <a href="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}"
+                                                    <a href="{{ asset('storage/berkas/' . basename($magang->berkas->file_path)) }}"
                                                         class="btn btn-success btn-sm ml-2" download>
                                                         <i class="fas fa-download"></i> Download
                                                     </a>
@@ -45,7 +45,7 @@
                                         <div class="alert alert-info">
                                             <i class="fas fa-file-alt fa-2x mb-2"></i>
                                             <p class="mb-0">Berkas tersedia</p>
-                                            <a href="{{ asset('storage/berkas_photos/' . basename($magang->berkas->file_path)) }}"
+                                            <a href="{{ asset('storage/berkas/' . basename($magang->berkas->file_path)) }}"
                                                 class="btn btn-sm btn-primary mt-2" target="_blank">
                                                 Download Berkas
                                             </a>

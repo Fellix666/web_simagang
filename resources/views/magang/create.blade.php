@@ -110,8 +110,9 @@
                         @error('status')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
-                    </div><button type="submit" class="btn btn-primary">Simpan</button><a
-                        href="{{ route('magang.index') }}" class="btn btn-secondary">Kembali</a>
+                        <br>
+                    </div><button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="{{ route('magang.index') }}" class="btn btn-secondary">Kembali</a>
                 </form>
             </div>
         </div>

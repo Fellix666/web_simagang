@@ -20,16 +20,16 @@
                             @endphp
                             @if ($isImage)
                                 <div class="image-container">
-                                    <img src="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
+                                    <img src="{{ asset('storage/berkas/' . basename($berkas->file_path)) }}"
                                         alt="{{ $berkas->nama_berkas }}" class="img-thumbnail image-hover"
                                         style="max-width: 100%; max-height: 250px; object-fit: cover;">
                                     <div class="image-overlay">
                                         <div class="overlay-buttons">
-                                            <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
+                                            <a href="{{ asset('storage/berkas/' . basename($berkas->file_path)) }}"
                                                 class="btn btn-primary btn-sm" target="_blank">
                                                 <i class="fas fa-eye"></i> Lihat Detail
                                             </a>
-                                            <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
+                                            <a href="{{ asset('storage/berkas/' . basename($berkas->file_path)) }}"
                                                 class="btn btn-success btn-sm ml-2" download>
                                                 <i class="fas fa-download"></i> Download
                                             </a>
@@ -50,11 +50,13 @@
                         @endif
                     </div>
                     <div class="col-md-8">
-                        <h5><strong>Nama Berkas:</strong></h5>
-                        <h6>{{ $berkas->nama_berkas }}</h6>
+                        <p><strong>Nama Berkas:</strong><br>{{ $berkas->nama_berkas }}</p>
 
-                        <h5><strong>Jenis Berkas:</strong></h5>
-                        <h6>{{ $berkas->jenis_berkas }}</h6>
+                        <p><strong>Asal Berkas:</strong><br>{{ $berkas->asal_berkas }}</p>
+
+                        <p><strong>Nomor Berkas:</strong><br>{{ $berkas->nomor_berkas }}</p>
+
+                        <p><strong>Tanggal Berkas :</strong><br>{{ $berkas->tanggal_berkas }}</p>
                     </div>
                 </div>
 
@@ -162,6 +164,10 @@
 
         .nama-lengkap:hover {
             text-decoration: underline;
+        }
+
+        h6{
+            color: #a6a6a7;
         }
     </style>
 @endsection

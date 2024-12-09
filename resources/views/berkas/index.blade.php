@@ -45,11 +45,11 @@
                                     $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
                                     @endphp
                                 @if($isImage)
-                                <img src="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}"
+                                <img src="{{ asset('storage/berkas/' . basename($item->file_path)) }}"
                                 alt="{{ $item->nama_berkas }}"
                                 style="max-width: 100px; max-height: 100px;">
                                 @else
-                                <a href="{{ asset('storage/berkas_photos/' . basename($item->file_path)) }}"
+                                <a href="{{ asset('storage/berkas/' . basename($item->file_path)) }}"
                                     target="_blank">Download</a>
                                     @endif
                                     @else
