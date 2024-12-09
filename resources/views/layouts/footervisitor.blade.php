@@ -179,9 +179,10 @@
                 </p>
             </div>
 
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Sistem Informasi Magang. All rights reserved.</p>
+            <!-- Copyright Section -->
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sistem Informasi Magang. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 </body>
