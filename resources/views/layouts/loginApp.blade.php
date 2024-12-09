@@ -2,8 +2,6 @@
 <html lang="en">
 @include('layouts/head')
 <body>
-    <!-- Navbar -->
-    @include('layouts/navbar')
 
     <!-- Main Content -->
     <main>
