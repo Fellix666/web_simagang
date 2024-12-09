@@ -138,7 +138,7 @@
         <div class="container">
             <!-- Logo Section -->
             <div class="footer-section logo-section">
-                <img src="{{ asset ('images/logoKubu.png')}}" alt="Logo Kubu Raya">
+                <img src="{{ asset ('images/diskominfo.png')}}" alt="Logo Kubu Raya">
             </div>
 
             <!-- About Us Section -->

@@ -10,10 +10,10 @@
     <style>
         :root {
             --primary-color: #2563eb;
-            --secondary-color: #6c6d6f;
+            --secondary-color: #999999;
             --background-color: #c2e9f7;
             --text-primary: #1e293b;
-            --text-secondary: #64748b;
+            --text-secondary: #999999;
             --border-radius: 12px;
             --transition-speed: 0.3s;
             --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -204,7 +204,7 @@
         <form method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
             <div class="col-md-6">
                 <input type="text" name="search" id="searchBox" class="form-control"
-                    placeholder="Cari nama atau institusi..." value="{{ request('search') }}">
+                    placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
             </div>
             <div class="col-md-4">
                 <select name="status" id="filterRole" class="form-select">
@@ -288,7 +288,6 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
