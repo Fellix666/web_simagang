@@ -24,16 +24,9 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label>Pangkat</label>
+                    <label>Pangkat Golongan</label>
                     <input type="text" name="pangkat" class="form-control @error('pangkat') is-invalid @enderror" value="{{ old('pangkat') }}">
                     @error('pangkat')
-                        <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label>Golongan</label>
-                    <input type="text" name="golongan" class="form-control @error('golongan') is-invalid @enderror" value="{{ old('golongan') }}">
-                    @error('golongan')
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>

@@ -20,8 +20,7 @@
                                 <th>No</th>
                                 <th>Nama Divisi</th>
                                 <th>Kepala Divisi</th>
-                                <th>Pangkat</th>
-                                <th>Golongan</th>
+                                <th>Pangkat Golongan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -32,7 +31,6 @@
                                     <td>{{ $item->nama_divisi }}</td>
                                     <td>{{ $item->kepala_divisi }}</td>
                                     <td>{{ $item->pangkat }}</td>
-                                    <td>{{ $item->golongan }}</td>
                                     <td>
                                         <a href="{{ route('divisi.edit', $item->id_divisi) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
