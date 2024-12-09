@@ -4,7 +4,8 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Tambah Instansi</h3>
+
+            <h3 class="card-title">Tambah Instansi Pendidikan</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('institusi.store') }}" method="POST">

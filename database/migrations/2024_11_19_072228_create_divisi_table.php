@@ -12,6 +12,7 @@ return new class extends Migration
             $table->integer('id_divisi')->autoIncrement();
             $table->string('nama_divisi', 50);
             $table->string('kepala_divisi', 50);
+            $table->string('pangkat', 50)->nullable(); // Allow NULL
             $table->timestamps();
         });
     }

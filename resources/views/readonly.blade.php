@@ -10,7 +10,7 @@
     <style>
         :root {
             --primary-color: #2563eb;
-            --secondary-color: #2563eb;
+            --secondary-color: #6c6d6f;
             --background-color: #c2e9f7;
             --text-primary: #1e293b;
             --text-secondary: #64748b;
@@ -227,6 +227,7 @@
                         <th style="min-width: 150px;">Tanggal Mulai</th>
                         <th style="min-width: 150px;">Tanggal Selesai</th>
                         <th style="min-width: 100px;">Role</th>
+                        <th style="min-width: 100px;">Jurusan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -238,6 +239,7 @@
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
                             <td>{{ ucfirst($magang->status) }}</td>
+                            <td>{{ $magang->jurusan }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -249,12 +251,13 @@
             {{ $magangList->links() }}
         </div>
 
-        <div class="text-center mt-4">
-            @auth('admin')
-                <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Kembali ke Dashboard Admin</a>
-            @else
-                <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
-
+        <div class="text-center mt-3">
+            @auth
+                @if(auth()) {{-- Assuming user ID 1 is the admin --}}
+                    <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Dashboard Admin</a>
+                    @endif
+                @else
+                    <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
             @endauth
         </div>
     </div>

@@ -17,7 +17,9 @@ return new class extends Migration
         Schema::create('berkas', function (Blueprint $table) {
             $table->integer('id_berkas')->autoIncrement();
             $table->string('nama_berkas', 50);
-            $table->string('jenis_berkas', 50);
+            $table->string('asal_berkas', 50);
+            $table->string(column:'nomor_berkas', length:50);
+            $table->date('tanggal_berkas');
             $table->string('file_path')->nullable();
             $table->timestamps();
 

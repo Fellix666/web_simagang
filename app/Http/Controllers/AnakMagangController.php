@@ -54,15 +54,15 @@ class AnakMagangController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-        'id_institusi' => 'required', 
+        'id_institusi' => 'required',
         'id_divisi' => 'required',
-        'id_berkas' => 'required', 
-        'nomor_induk' => 'required|max:15', 
-        'nama_lengkap' => 'required|max:50', 
-        'jenis_kelamin' => 'required|in:l,p', 
-        'jurusan' => 'required|max:50', 
-        'tanggal_mulai' => 'required|date', 
-        'tanggal_selesai' => 'required|date|after:tanggal_mulai', 
+        'id_berkas' => 'required',
+        'nomor_induk' => 'required|max:15',
+        'nama_lengkap' => 'required|max:50',
+        'jenis_kelamin' => 'required|in:l,p',
+        'jurusan' => 'required|max:50',
+        'tanggal_mulai' => 'required|date',
+        'tanggal_selesai' => 'required|date|after:tanggal_mulai',
         'status' => 'required|in:mahasiswa,siswa']);
 
         $magang = AnakMagang::findOrFail($id);

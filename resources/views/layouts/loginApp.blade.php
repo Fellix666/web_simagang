@@ -13,9 +13,13 @@
         <!-- Content Wrapper -->
         @include('layouts/wrapper')
     </main>
+
+    {{-- <!-- Footer -->
+    @include('layouts/footer') --}}
+
     <!-- Scripts -->
     @include('layouts/scripts')
     @stack('scripts')
-    
+
 </body>
 </html>

@@ -9,7 +9,7 @@
                 @method('PUT')<div
                     class="form-group"><label>Instansi</label><select name="id_institusi"
                         class="form-control @error('id_institusi') is-invalid @enderror">
-                        <option value="">Pilih Institusi</option>
+                        <option value="">Pilih Instansi</option>
                         @foreach ($institusi as $inst)
                             <option value="{{ $inst->id_institusi }}"
                                 {{ $magang->id_institusi == $inst->id_institusi ? 'selected' : '' }}>

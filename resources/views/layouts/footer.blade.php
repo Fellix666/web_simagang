@@ -145,7 +145,7 @@
             <div class="footer-section">
                 <h4>About Us</h4>
                 <p>Sistem Informasi Magang adalah platform untuk mengelola data magang dengan efisien di Diskominfo Kubu Raya.</p>
-                <p>Kami berdedikasi untuk memberikan layanan terbaik kepada siswa, mahasiswa dan institusi.</p>
+                <p>Kami berdedikasi untuk memberikan layanan terbaik kepada siswa, mahasiswa dan instansi.</p>
             </div>
 
             <!-- Connect & Contact Us Section -->

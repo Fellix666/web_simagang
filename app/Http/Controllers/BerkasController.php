@@ -9,108 +9,109 @@ use Illuminate\Support\Facades\Storage;
 
 class BerkasController extends Controller
 {
-    // Method to show the list of berkas
+    // Display a listing of the resource
     public function index()
     {
-        // Retrieve all berkas (without filtering by id_magang)
-        $berkas = Berkas::all(); // Adjust this query as needed
-
+        // Retrieve all berkas
+        $berkas = Berkas::paginate(10); // Paginate for better performance
         return view('berkas.index', compact('berkas'));
     }
 
-    // Method to show the form for creating a new berkas
+    // Show the form for creating a new resource
     public function create()
     {
         return view('berkas.create');
     }
 
-    // Method to store a new berkas
+    // Store a newly created resource in storage
     public function store(Request $request)
-{
-    $validated = $request->validate([
-        'nama_berkas' => 'required|max:50',
-        'jenis_berkas' => 'required|max:50',
-        'file' => 'required|file|max:2048' // Max 2MB
-    ]);
-
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-        $path = $file->store('berkas_photos', 'public'); // Save file to storage
-
-    
-        Berkas::create([ 
-            'nama_berkas' => $validated['nama_berkas'],
-            'jenis_berkas' => $validated['jenis_berkas'],
-            'file_path' => ($path)
+    {
+        $validated = $request->validate([
+            'nama_berkas' => 'required|max:50',
+            'asal_berkas' => 'required|max:50',
+            'nomor_berkas' => 'required|max:50',
+            'tanggal_berkas' => 'required|date',
+            'file' => 'required|file|mimes:pdf,jpg,png|max:2048'
         ]);
 
-        return redirect()->route('berkas.index')->with('success', 'Berkas berhasil diunggah');
+        try {
+            // Store file
+            $filePath = $request->file('file')->store('berkas', 'public');
+
+            // Create berkas record
+            Berkas::create([
+                'nama_berkas' => $validated['nama_berkas'],
+                'asal_berkas' => $validated['asal_berkas'],
+                'nomor_berkas' => $validated['nomor_berkas'],
+                'tanggal_berkas' => $validated['tanggal_berkas'],
+                'file_path' => $filePath
+            ]);
+
+            return redirect()->route('berkas.index')
+                ->with('success', 'Berkas berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal mengunggah berkas: ' . $e->getMessage());
+        }
     }
 
-    return back()->with('error', 'Gagal mengunggah berkas');
-}
-
-
-    // Method to show the form for editing a berkas
+    // Show the form for editing the specified resource
     public function edit($id)
     {
         $berkas = Berkas::findOrFail($id);
         return view('berkas.edit', compact('berkas'));
     }
 
-    // Method to update an existing berkas
+    // Update the specified resource in storage
     public function update(Request $request, $id)
-{
-    $berkas = Berkas::findOrFail($id);
+    {
+        $berkas = Berkas::findOrFail($id);
 
-    $validated = $request->validate([
-        'nama_berkas' => 'required|max:50',
-        'jenis_berkas' => 'required|max:50',
-        'file' => 'nullable|file|max:2048', // Optional file validation
-    ]);
+        $validated = $request->validate([
+            'nama_berkas' => 'required|max:50',
+            'asal_berkas' => 'required|max:50',
+            'nomor_berkas' => 'required|max:50',
+            'tanggal_berkas' => 'required|date',
+            'file' => 'nullable|file|mimes:pdf,jpg,png|max:2048', // Optional file upload
+        ]);
 
-    // If a new file is uploaded
-    if ($request->hasFile('file')) {
-        // Delete the old file from storage
-        if (Storage::exists($berkas->file_path)) {
-            Storage::delete($berkas->file_path);
+        if ($request->hasFile('file')) {
+            // Delete the old file from storage
+            if (Storage::disk('public')->exists($berkas->file_path)) {
+                Storage::disk('public')->delete($berkas->file_path);
+            }
+
+            // Store the new file
+            $file = $request->file('file');
+            $path = $file->store('berkas_photos', 'public');
+            $validated['file_path'] = $path;
         }
 
-        // Store the new file
-        $file = $request->file('file');
-        $path = $file->store('berkas_photos', 'public');
+        // Update the berkas record
+        $berkas->update($validated);
 
-        // Update the berkas record with the new file path
-        $validated['file_path'] = $path;
+        return redirect()->route('berkas.index')->with('success', 'Berkas berhasil diperbarui');
     }
 
-    // Update other fields
-    $berkas->update($validated);
-
-    return redirect()->route('berkas.index')->with('success', 'Berkas berhasil diperbarui');
-}
-
-
-    // Method to delete a berkas
+    // Remove the specified resource from storage
     public function destroy($id)
     {
         $berkas = Berkas::findOrFail($id);
 
         // Delete the file from storage
-        if (Storage::exists($berkas->file_path)) {
-            Storage::delete($berkas->file_path);
+        if (Storage::disk('public')->exists($berkas->file_path)) {
+            Storage::disk('public')->delete($berkas->file_path);
         }
 
-        // Delete the berkas record from the database
+        // Delete the berkas record
         $berkas->delete();
 
-        return back()->with('success', 'Berkas berhasil dihapus');
+        return redirect()->route('berkas.index')->with('success', 'Berkas berhasil dihapus');
     }
 
+    // Display the specified resource
     public function show($id)
     {
-        $berkas = Berkas::with('anakMagang.institusi',)->findOrFail($id); // Corrected 'anak_magang' to 'anakMagang'
+        $berkas = Berkas::with('anakMagang.institusi')->findOrFail($id);
         return view('berkas.show', compact('berkas'));
     }
-
 }

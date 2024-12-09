@@ -28,7 +28,7 @@ class InstitusiController extends Controller
         ]);
 
         Institusi::create($validated);
-        return redirect()->route('institusi.index')->with('success', 'Institusi berhasil ditambahkan');
+        return redirect()->route('institusi.index')->with('success', 'Instansi berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -48,13 +48,13 @@ class InstitusiController extends Controller
 
         $institusi = Institusi::findOrFail($id);
         $institusi->update($validated);
-        return redirect()->route('institusi.index')->with('success', 'Institusi berhasil diperbarui');
+        return redirect()->route('institusi.index')->with('success', 'Instansi berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $institusi = Institusi::findOrFail($id);
         $institusi->delete();
-        return redirect()->route('institusi.index')->with('success', 'Institusi berhasil dihapus');
+        return redirect()->route('institusi.index')->with('success', 'Instansi berhasil dihapus');
     }
 }
