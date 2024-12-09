@@ -9,15 +9,15 @@
     }
 
     select:hover {
-        background-color: #e6f7ff; 
-        cursor: pointer; 
+        background-color: #e6f7ff;
+        cursor: pointer;
     }
 
     select:focus {
-        background-color: #e6f7ff; 
-        outline: none; 
-        border-color: #80bdff; 
-        box-shadow: 0 0 4px rgba(128, 189, 255, 0.5); 
+        background-color: #e6f7ff;
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 4px rgba(128, 189, 255, 0.5);
     }
     </style>
     <div class="container">
@@ -27,9 +27,9 @@
             </div>
             <div class="card-body">
                 <form action="{{ route('magang.store') }}" method="POST">@csrf<div class="form-group">
-                        <label>Institusi</label><select name="id_institusi"
+                        <label>Instansi</label><select name="id_institusi"
                             class="form-control @error('id_institusi') is-invalid @enderror">
-                            <option value=""disabled selected>Pilih Institusi</option>
+                            <option value=""disabled selected>Pilih Instansi</option>
                             @foreach ($institusi as $inst)
                                 <option value="{{ $inst->id_institusi }}">{{ $inst->nama_institusi }}</option>
                             @endforeach
