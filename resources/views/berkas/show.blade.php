@@ -20,19 +20,19 @@
                         @endphp
                         @if($isImage)
                             <div class="image-container">
-                                <img src="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}" 
-                                     alt="{{ $berkas->nama_berkas }}" 
+                                <img src="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
+                                     alt="{{ $berkas->nama_berkas }}"
                                      class="img-thumbnail image-hover"
                                      style="max-width: 100%; max-height: 250px; object-fit: cover;">
                                 <div class="image-overlay">
                                     <div class="overlay-buttons">
-                                        <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}" 
-                                           class="btn btn-primary btn-sm" 
+                                        <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
+                                           class="btn btn-primary btn-sm"
                                            target="_blank">
                                             <i class="fas fa-eye"></i> Lihat Detail
                                         </a>
-                                        <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}" 
-                                           class="btn btn-success btn-sm ml-2" 
+                                        <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
+                                           class="btn btn-success btn-sm ml-2"
                                            download>
                                             <i class="fas fa-download"></i> Download
                                         </a>
@@ -56,8 +56,14 @@
                     <h5><strong>Nama Berkas:</strong></h5>
                     <h6>{{ $berkas->nama_berkas }}</h6>
 
-                    <h5><strong>Jenis Berkas:</strong></h5>
-                    <h6>{{ $berkas->jenis_berkas }}</h6>
+                    <h5><strong>Asal Berkas:</strong></h5>
+                    <h6>{{ $berkas->asal_berkas }}</h6>
+
+                    <h5><strong>Nomor Berkas:</strong></h5>
+                    <h6>{{ $berkas->nomor_berkas}}</h6>
+
+                    <h5><strong>Tanggal Berkas:</strong></h5>
+                    <h6>{{ $berkas->tanggal_berkas}}</h6>
                 </div>
             </div>
 
