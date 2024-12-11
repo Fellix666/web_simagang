@@ -64,7 +64,8 @@
             border-radius: 2px;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: var(--border-radius);
             border: 1px solid #e2e8f0;
             padding: 0.75rem 1rem;
@@ -73,7 +74,8 @@
             box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
@@ -219,9 +221,13 @@
                     <option value="all" {{ request('year') == 'all' ? 'selected' : '' }}>Semua Tahun</option>
                     @php
                         // Get unique years from the internship data
-                        $uniqueYears = $magangList->map(function ($magang) {
-                            return \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
-                        })->unique()->sort()->values();
+                        $uniqueYears = $magangList
+                            ->map(function ($magang) {
+                                return \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                            })
+                            ->unique()
+                            ->sort()
+                            ->values();
                     @endphp
                     @foreach ($uniqueYears as $year)
                         <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
@@ -273,80 +279,83 @@
 
         <div class="text-center mt-3">
             @auth
-                @if(auth()) {{-- Assuming user ID 1 is the admin --}}
+                @if (auth())
+                    {{-- Assuming user ID 1 is the admin --}}
                     <a href="{{ route('dashboard.index') }}" class="btn btn-primary">Dashboard Admin</a>
-                    @endif
-                @else
-                    <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
+                @endif
+            @else
+                <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Halaman Utama</a>
             @endauth
         </div>
     </div>
 
     <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const searchBox = document.getElementById('searchBox');
-    const filterRole = document.getElementById('filterRole');
-    const filterYear = document.getElementById('filterYear');
-    const tableBody = document.querySelector('tbody');
-    const rows = Array.from(document.querySelectorAll('tbody tr'));
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBox = document.getElementById('searchBox');
+            const filterRole = document.getElementById('filterRole');
+            const filterYear = document.getElementById('filterYear');
+            const tableBody = document.querySelector('tbody');
+            const rows = Array.from(document.querySelectorAll('tbody tr'));
 
-    // Fungsi untuk mengurutkan baris berdasarkan tahun (terbaru ke terlama)
-    const sortRowsByYear = () => {
-        const sortedRows = rows.sort((a, b) => {
-            const yearA = parseInt(a.getAttribute('data-year'));
-            const yearB = parseInt(b.getAttribute('data-year'));
-            return yearB - yearA; // Descending order (terbaru ke terlama)
+            // Fungsi untuk mengurutkan baris berdasarkan tahun (terbaru ke terlama)
+            const sortRowsByYear = () => {
+                const sortedRows = rows.sort((a, b) => {
+                    const yearA = parseInt(a.getAttribute('data-year'));
+                    const yearB = parseInt(b.getAttribute('data-year'));
+                    return yearB - yearA; // Descending order (terbaru ke terlama)
+                });
+
+                // Hapus semua baris dari tbody
+                tableBody.innerHTML = '';
+
+                // Tambahkan kembali baris yang sudah diurutkan
+                sortedRows.forEach((row, index) => {
+                    // Reset nomor urut
+                    row.querySelector('td:first-child').textContent = index + 1;
+                    tableBody.appendChild(row);
+                });
+            };
+
+            // Jalankan pengurutan saat halaman dimuat
+            sortRowsByYear();
+
+            // Tambahkan event listener untuk mencegah form submission
+            const form = searchBox.closest('form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); // Mencegah form submit
+                filterTable();
+            });
+
+            const filterTable = () => {
+                const searchTerm = searchBox.value.toLowerCase();
+                const roleFilter = filterRole.value;
+                const yearFilter = filterYear.value;
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    const role = row.cells[5].textContent.toLowerCase();
+                    const rowYear = row.getAttribute('data-year');
+
+                    row.style.display = (
+                        text.includes(searchTerm) &&
+                        (roleFilter === 'all' || role === roleFilter) &&
+                        (yearFilter === 'all' || rowYear === yearFilter)
+                    ) ? '' : 'none';
+                });
+
+                // Setelah filter, urutkan kembali baris yang terlihat
+                sortRowsByYear();
+            };
+
+            searchBox.addEventListener('input', filterTable);
+            filterRole.addEventListener('change', filterTable);
+            filterYear.addEventListener('change', filterTable);
         });
-
-        // Hapus semua baris dari tbody
-        tableBody.innerHTML = '';
-
-        // Tambahkan kembali baris yang sudah diurutkan
-        sortedRows.forEach((row, index) => {
-            // Reset nomor urut
-            row.querySelector('td:first-child').textContent = index + 1;
-            tableBody.appendChild(row);
-        });
-    };
-
-    // Jalankan pengurutan saat halaman dimuat
-    sortRowsByYear();
-
-    // Tambahkan event listener untuk mencegah form submission
-    const form = searchBox.closest('form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Mencegah form submit
-        filterTable();
-    });
-
-    const filterTable = () => {
-        const searchTerm = searchBox.value.toLowerCase();
-        const roleFilter = filterRole.value;
-        const yearFilter = filterYear.value;
-
-        rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            const role = row.cells[5].textContent.toLowerCase();
-            const rowYear = row.getAttribute('data-year');
-
-            row.style.display = (
-                text.includes(searchTerm) &&
-                (roleFilter === 'all' || role === roleFilter) &&
-                (yearFilter === 'all' || rowYear === yearFilter)
-            ) ? '' : 'none';
-        });
-
-        // Setelah filter, urutkan kembali baris yang terlihat
-        sortRowsByYear();
-    };
-
-    searchBox.addEventListener('input', filterTable);
-    filterRole.addEventListener('change', filterTable);
-    filterYear.addEventListener('change', filterTable);
-});
     </script>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @extends('layouts.footerreadonly')
 </body>
 
 </html>
