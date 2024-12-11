@@ -155,6 +155,10 @@
         .image-container {
             position: relative;
             display: inline-block;
+            width: 250px; 
+            height: 250px; 
+            overflow: hidden; 
+            border-radius: 0.5rem;
         }
 
         .image-hover {
