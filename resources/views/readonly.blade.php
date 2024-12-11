@@ -202,16 +202,32 @@
 
         <!-- Filter Section -->
         <form method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <input type="text" name="search" id="searchBox" class="form-control"
                     placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
                     <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
                     </option>
                     <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="year" id="filterYear" class="form-select">
+                    <option value="all" {{ request('year') == 'all' ? 'selected' : '' }}>Semua Tahun</option>
+                    @php
+                        // Get unique years from the internship data
+                        $uniqueYears = $magangList->map(function ($magang) {
+                            return \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                        })->unique()->sort()->values();
+                    @endphp
+                    @foreach ($uniqueYears as $year)
+                        <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                            {{ $year }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
         </form>
@@ -226,7 +242,7 @@
                         <th style="min-width: 200px;">Universitas/Sekolah</th>
                         <th style="min-width: 150px;">Tanggal Mulai</th>
                         <th style="min-width: 150px;">Tanggal Selesai</th>
-                        <th style="min-width: 100px;">Role</th>
+                        <th style="min-width: 100px;">Status</th>
                         <th style="min-width: 100px;">Jurusan</th>
                     </tr>
                 </thead>
@@ -234,8 +250,9 @@
                     @foreach ($magangList as $index => $magang)
                         @php
                             $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
+                            $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
                         @endphp
-                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}">
+                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $magang->nama_lengkap }}</td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
@@ -266,28 +283,67 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchBox = document.getElementById('searchBox');
-            const filterRole = document.getElementById('filterRole');
-            const rows = Array.from(document.querySelectorAll('tbody tr'));
+document.addEventListener('DOMContentLoaded', () => {
+    const searchBox = document.getElementById('searchBox');
+    const filterRole = document.getElementById('filterRole');
+    const filterYear = document.getElementById('filterYear');
+    const tableBody = document.querySelector('tbody');
+    const rows = Array.from(document.querySelectorAll('tbody tr'));
 
-            const filterTable = () => {
-                const searchTerm = searchBox.value.toLowerCase();
-                const roleFilter = filterRole.value;
-
-                rows.forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    const role = row.cells[5].textContent.toLowerCase();
-
-                    row.style.display = (text.includes(searchTerm) && (roleFilter === 'all' || role ===
-                        roleFilter)) ? '' : 'none';
-                });
-            };
-
-            searchBox.addEventListener('input', filterTable);
-            filterRole.addEventListener('change', filterTable);
+    // Fungsi untuk mengurutkan baris berdasarkan tahun (terbaru ke terlama)
+    const sortRowsByYear = () => {
+        const sortedRows = rows.sort((a, b) => {
+            const yearA = parseInt(a.getAttribute('data-year'));
+            const yearB = parseInt(b.getAttribute('data-year'));
+            return yearB - yearA; // Descending order (terbaru ke terlama)
         });
 
+        // Hapus semua baris dari tbody
+        tableBody.innerHTML = '';
+
+        // Tambahkan kembali baris yang sudah diurutkan
+        sortedRows.forEach((row, index) => {
+            // Reset nomor urut
+            row.querySelector('td:first-child').textContent = index + 1;
+            tableBody.appendChild(row);
+        });
+    };
+
+    // Jalankan pengurutan saat halaman dimuat
+    sortRowsByYear();
+
+    // Tambahkan event listener untuk mencegah form submission
+    const form = searchBox.closest('form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Mencegah form submit
+        filterTable();
+    });
+
+    const filterTable = () => {
+        const searchTerm = searchBox.value.toLowerCase();
+        const roleFilter = filterRole.value;
+        const yearFilter = filterYear.value;
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            const role = row.cells[5].textContent.toLowerCase();
+            const rowYear = row.getAttribute('data-year');
+
+            row.style.display = (
+                text.includes(searchTerm) &&
+                (roleFilter === 'all' || role === roleFilter) &&
+                (yearFilter === 'all' || rowYear === yearFilter)
+            ) ? '' : 'none';
+        });
+
+        // Setelah filter, urutkan kembali baris yang terlihat
+        sortRowsByYear();
+    };
+
+    searchBox.addEventListener('input', filterTable);
+    filterRole.addEventListener('change', filterTable);
+    filterYear.addEventListener('change', filterTable);
+});
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
