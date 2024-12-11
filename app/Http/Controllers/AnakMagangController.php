@@ -20,7 +20,10 @@ class AnakMagangController extends Controller
     {
         $institusi = Institusi::all();
         $divisi = Divisi::all();
-        $berkas = Berkas::all();
+        $berkas = Berkas::with('institusi')
+        ->orderBy('created_at', 'desc')
+        ->take(20) // Limit to 20 most recent berkas
+        ->get();
         return view('magang.create', compact('institusi', 'divisi', 'berkas'));
     }
 
@@ -73,8 +76,13 @@ class AnakMagangController extends Controller
     public function destroy($id)
     {
         $magang = AnakMagang::findOrFail($id);
-        $magang->delete();
-        return redirect()->route('magang.index')->with('success', 'Data berhasil dihapus');
+        $institusi = Institusi::all();
+        $divisi = Divisi::all();
+        $berkas = Berkas::with('institusi')
+            ->orderBy('created_at', 'desc')
+            ->take(20) // Limit to 20 most recent berkas
+            ->get();
+        return view('magang.edit', compact('magang', 'institusi', 'divisi', 'berkas'));
     }
 
     public function readOnly(Request $request)

@@ -35,11 +35,14 @@
                 </div>
                 <div class="form-group">
                     <label>Berkas</label>
-                    <select name="id_berkas" class="form-control @error('id_berkas') is-invalid @enderror">
+                    <select name="id_berkas" id="berkas" class="form-control @error('id_berkas') is-invalid @enderror">
                         <option value="">Pilih Berkas</option>
                         @foreach ($berkas as $berk)
-                            <option value="{{ $berk->id_berkas }}" {{ $magang->id_berkas == $berk->id_berkas ? 'selected' : '' }}>
-                                {{ $berk->nama_berkas }}
+                            <option value="{{ $berk->id_berkas }}" 
+                                data-institusi="{{ $berk->asal_berkas }}"
+                                {{ $magang->id_berkas == $berk->id_berkas ? 'selected' : '' }}>
+                                {{ $berk->nomor_berkas }} - 
+                                {{ $berk->institusi ? $berk->institusi->nama_institusi : 'Institusi Tidak Tersedia' }}
                             </option>
                         @endforeach
                     </select>
@@ -102,4 +105,38 @@
         </div>
     </div>
 </div>
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const institusiSelect = document.getElementById('institusi');
+        const berkasSelect = document.getElementById('berkas');
+        const berkasOptions = berkasSelect.querySelectorAll('option');
+
+        // Function to filter berkas options
+        function filterBerkasOptions() {
+            const selectedInstitusi = institusiSelect.value;
+            
+            berkasOptions.forEach(option => {
+                if (option.value === '') return; // Keep the default option
+                
+                const optionInstitusi = option.getAttribute('data-institusi');
+                
+                if (selectedInstitusi === optionInstitusi) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        }
+
+        // Initially filter options if an institusi is pre-selected
+        if (institusiSelect.value) {
+            filterBerkasOptions();
+        }
+
+        // Add event listener to filter options when institusi changes
+        institusiSelect.addEventListener('change', filterBerkasOptions);
+    });
+</script>
+@endsection
 @endsection

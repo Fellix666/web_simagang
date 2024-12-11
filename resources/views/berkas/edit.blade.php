@@ -18,10 +18,18 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label>Asal Berkas</label>
-                    <input type="text" name="asal_berkas" class="form-control @error('asal_berkas') is-invalid @enderror" value="{{ old('asal_berkas', $berkas->asal_berkas) }}">
+                    <label>Asal Berkas (Instansi)</label>
+                    <select name="asal_berkas" class="form-control @error('asal_berkas') is-invalid @enderror" required>
+                        <option value="" disabled selected>Pilih Instansi</option>
+                        @foreach ($institusi as $inst)
+                            <option value="{{ $inst->id_institusi }}" 
+                                {{ old('asal_berkas', $berkas->asal_berkas) == $inst->id_institusi ? 'selected' : '' }}>
+                                {{ $inst->nama_institusi }}
+                            </option>
+                        @endforeach
+                    </select>
                     @error('asal_berkas')
-                        <span class="invalid-feedback">{{ $message }}</span>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
