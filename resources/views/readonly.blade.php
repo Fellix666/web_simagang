@@ -226,7 +226,7 @@
                         <th style="min-width: 200px;">Universitas/Sekolah</th>
                         <th style="min-width: 150px;">Tanggal Mulai</th>
                         <th style="min-width: 150px;">Tanggal Selesai</th>
-                        <th style="min-width: 100px;">Role</th>
+                        <th style="min-width: 100px;">Status</th>
                         <th style="min-width: 100px;">Jurusan</th>
                     </tr>
                 </thead>
