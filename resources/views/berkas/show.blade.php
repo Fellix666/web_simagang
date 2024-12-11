@@ -38,23 +38,21 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="alert alert-info">
+                                    <i class="fas fa-file-alt fa-3x mb-2"></i>
+                                    <p class="mb-0">File Tersedia</p>
+                                </div>
+                            @endif
                         @else
-                            <div class="alert alert-info">
-                                <i class="fas fa-file-alt fa-3x mb-2"></i>
-                                <p class="mb-0">File Tersedia</p>
+                            <div class="alert alert-secondary">
+                                <i class="fas fa-file fa-3x mb-2"></i>
+                                <p>Berkas tidak tersedia</p>
                             </div>
                         @endif
-                    @else
-                        <div class="alert alert-secondary">
-                            <i class="fas fa-file fa-3x mb-2"></i>
-                            <p>Berkas tidak tersedia</p>
-                        </div>
-                    @endif
-                </div>
-                <div class="col-md-8">
-                    <h5><strong>Nama Berkas:</strong></h5>
-                    <h6>{{ $berkas->nama_berkas }}</h6>
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong>Nama Berkas:</strong><br>{{ $berkas->nama_berkas }}</p>
 
                     <h5><strong>Asal Berkas:</strong></h5>
                     <h6>{{ $berkas->asal_berkas }}</h6>
@@ -67,105 +65,113 @@
                 </div>
             </div>
 
-            <!-- Bagian Informasi Terkait -->
-            <h5 class="border-bottom pb-2">Informasi anak magang</h5>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Nomor induk</th>
-                            <th>Institusi</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($berkas->anakMagang as $index => $magang)
+                        <p><strong>Nomor Berkas:</strong><br>{{ $berkas->nomor_berkas }}</p>
+
+                        <p><strong>Tanggal Berkas :</strong><br>{{ $berkas->tanggal_berkas }}</p>
+                    </div>
+                </div>
+
+                <!-- Bagian Informasi Terkait -->
+                <h5 class="border-bottom pb-2">Informasi anak magang</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td><a href="{{ route('magang.show', $magang->id_magang) }}" class="font-weight-bold nama-lengkap">
-                                    {{ $magang->nama_lengkap }}
-                                </a></td>
-                                <td>{{ $magang->nomor_induk }}</td>
-                                <td>{{ $magang->institusi->nama_institusi }}</td>
-                                <td>{{ ucfirst($magang->status) }}</td>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Nomor induk</th>
+                                <th>Instansi</th>
+                                <th>Status</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">Tidak ada data terkait</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse($berkas->anakMagang as $index => $magang)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td><a href="{{ route('magang.show', $magang->id_magang) }}"
+                                            class="font-weight-bold nama-lengkap">
+                                            {{ $magang->nama_lengkap }}
+                                        </a></td>
+                                    <td>{{ $magang->nomor_induk }}</td>
+                                    <td>{{ $magang->institusi->nama_institusi }}</td>
+                                    <td>{{ ucfirst($magang->status) }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data terkait</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('styles')
-<style>
-.card {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-}
+    <style>
+        .card {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
 
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #eee;
-}
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
 
-.img-thumbnail {
-    border-radius: 0.5rem;
-    margin-bottom: 15px;
-    transition: opacity 0.3s ease;
-}
+        .img-thumbnail {
+            border-radius: 0.5rem;
+            margin-bottom: 15px;
+            transition: opacity 0.3s ease;
+        }
 
-.image-container {
-    position: relative;
-    display: inline-block;
-}
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
 
-.image-hover {
-    transition: opacity 0.3s ease;
-}
+        .image-hover {
+            transition: opacity 0.3s ease;
+        }
 
-.image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.image-container:hover .image-overlay {
-    opacity: 1;
-}
+        .image-container:hover .image-overlay {
+            opacity: 1;
+        }
 
-.overlay-buttons {
-    display: flex;
-    gap: 10px;
-}
+        .overlay-buttons {
+            display: flex;
+            gap: 10px;
+        }
 
-.table th, .table td {
-    vertical-align: middle;
-}
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
 
-.alert {
-    border-radius: 0.5rem;
-}
+        .alert {
+            border-radius: 0.5rem;
+        }
 
-.nama-lengkap {
-    color: black;
-    text-decoration: none;
-    transition: text-decoration 0.3s ease-in-out;
-}
+        .nama-lengkap {
+            color: black;
+            text-decoration: none;
+            transition: text-decoration 0.3s ease-in-out;
+        }
 
 .nama-lengkap:hover {
     text-decoration: underline;

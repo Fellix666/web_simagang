@@ -232,7 +232,10 @@
                 </thead>
                 <tbody>
                     @foreach ($magangList as $index => $magang)
-                        <tr>
+                        @php
+                            $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
+                        @endphp
+                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $magang->nama_lengkap }}</td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
@@ -288,7 +291,6 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @extends('layouts.footervisitor')
 </body>
 
 </html>

@@ -26,7 +26,7 @@
                 <div class="form-group mb-3">
                     <label>Pangkat Golongan</label>
                     <select name="pangkat" class="form-control @error('pangkat') is-invalid @enderror">
-                        <option value="">Pilih Pangkat Golongan</option>
+                        <option value="" disabled selected>Pilih Pangkat Golongan</option>
                         <option value="I/a" {{ old('pangkat') == 'I/a' ? 'selected' : '' }}>I/a - Juru Muda</option>
                         <option value="I/b" {{ old('pangkat') == 'I/b' ? 'selected' : '' }}>I/b - Juru Muda Tingkat I</option>
                         <option value="I/c" {{ old('pangkat') == 'I/c' ? 'selected' : '' }}>I/c - Juru</option>

@@ -52,7 +52,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h5 class="card-title">
-                                <a href="{{ route('institusi.index') }}" class="text-white text-decoration-none">Total Institusi</a>
+                                <a href="{{ route('institusi.index') }}" class="text-white text-decoration-none">Total Instansi</a>
                             </h5>
                             <p class="card-text display-6">{{ $totalInstitusi }}</p>
                         </div>

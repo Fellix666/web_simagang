@@ -19,7 +19,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Lengkap</th>
-                            <th>Institusi</th>
+                            <th>Instansi</th>
                             <th>Status</th>
                             <th>Jurusan</th>
                             <th>Tanggal Mulai</th>
