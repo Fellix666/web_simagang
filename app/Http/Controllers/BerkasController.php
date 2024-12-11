@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berkas;
-use App\Models\AnakMagang;
+use App\Models\Institusi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,15 +20,19 @@ class BerkasController extends Controller
     // Show the form for creating a new resource
     public function create()
     {
-        return view('berkas.create');
+        $institusi = Institusi::all();
+        $berkas = Berkas::with('institusi')
+            ->orderBy('created_at', 'desc')
+            ->take(20) // Limit to 20 most recent berkas
+            ->get();
+        return view('berkas.create', compact('institusi'));
     }
 
-    // Store a newly created resource in storage
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama_berkas' => 'required|max:50',
-            'asal_berkas' => 'required|max:50',
+            'asal_berkas' => 'required|exists:institusi,id_institusi', // Changed validation
             'nomor_berkas' => 'required|max:50',
             'tanggal_berkas' => 'required|date',
             'file' => 'required|file|mimes:pdf,jpg,png|max:2048'
@@ -41,7 +45,7 @@ class BerkasController extends Controller
             // Create berkas record
             Berkas::create([
                 'nama_berkas' => $validated['nama_berkas'],
-                'asal_berkas' => $validated['asal_berkas'],
+                'asal_berkas' => $validated['asal_berkas'], // Now storing institusi ID
                 'nomor_berkas' => $validated['nomor_berkas'],
                 'tanggal_berkas' => $validated['tanggal_berkas'],
                 'file_path' => $filePath
@@ -58,7 +62,8 @@ class BerkasController extends Controller
     public function edit($id)
     {
         $berkas = Berkas::findOrFail($id);
-        return view('berkas.edit', compact('berkas'));
+    $institusi = Institusi::all();
+    return view('berkas.edit', compact('berkas', 'institusi'));
     }
 
     // Update the specified resource in storage

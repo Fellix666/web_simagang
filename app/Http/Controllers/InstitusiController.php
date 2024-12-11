@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institusi;
+use App\Models\Berkas;
 use Illuminate\Http\Request;
 
 class InstitusiController extends Controller
@@ -56,5 +57,9 @@ class InstitusiController extends Controller
         $institusi = Institusi::findOrFail($id);
         $institusi->delete();
         return redirect()->route('institusi.index')->with('success', 'Instansi berhasil dihapus');
+    }
+    public function getInstitusi()
+    {
+        return Institusi::all();
     }
 }
