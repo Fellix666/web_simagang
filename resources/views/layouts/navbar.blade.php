@@ -9,6 +9,9 @@
     <style>
         :root {
             --navbar-height: 60px;
+            --navbar-bg: #007bff; /* Blue color for navbar */
+            --navbar-bg-hover: #0056b3; /* Darker blue for hover */
+            --navbar-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Shadow effect */
         }
 
         body {
@@ -17,12 +20,15 @@
         }
 
         .navbar {
+            background-color: var(--navbar-bg);
             transition:
                 transform 0.3s ease-in-out,
                 position 0.3s ease-in-out,
                 box-shadow 0.3s ease-in-out;
+            z-index: 20;
         }
 
+        /* Navbar Hide on Scroll */
         .navbar-hide {
             transform: translateY(-100%);
         }
@@ -31,10 +37,24 @@
             position: relative !important;
         }
 
+        /* Navbar Brand */
         .navbar-brand img {
-            max-height: 100px;
+            max-height: 80px;
             width: auto;
             object-fit: contain;
+        }
+
+        /* Navbar Links */
+        .navbar-nav .nav-link {
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: var(--navbar-bg-hover);
+            border-radius: 0.25rem;
         }
 
         /* Enhanced responsiveness */
@@ -48,19 +68,25 @@
             }
 
             .navbar-brand img {
-                max-height: 100px;
+                max-height: 60px;
             }
         }
 
-        /* Improved scroll behavior */
+        /* Scrolled navbar effect */
         .navbar.scrolled {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: var(--navbar-shadow);
+            background-color: #0056b3;
+        }
+
+        /* Active navbar link styling */
+        .navbar-nav .nav-link.active {
+            background-color: var(--navbar-bg-hover);
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid">
             <!-- Responsive Toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,9 +95,42 @@
 
             <!-- Centered Logo -->
             <a class="navbar-brand mx-auto mx-lg-0 d-flex align-items-center" href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('images/1.png') }}" alt="Logo Diskominfo Kubu Raya" class="img-fluid" style="max-height: 70px; min-height: 30px; width: auto; object-fit: contain;">
+                <img src="{{ asset('images/1.png') }}" alt="Logo Diskominfo Kubu Raya" class="img-fluid width">
             </a>
 
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dashboard.index') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('magang.index') }}">Data Magang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('institusi.index') }}">Data Instansi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('divisi.index') }}">Data Divisi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('berkas.index') }}">Data Berkas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('readonly') }}">Home</a>
+                    </li>
+                    @auth('admin')
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-white text-decoration-none nav-link">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
         </div>
     </nav>
 

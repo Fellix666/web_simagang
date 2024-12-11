@@ -1,41 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">Detail Berkas</h3>
-            <a href="{{ route('berkas.index') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-circle-left me-2"></i> Kembali
-            </a>
-        </div>
-        <div class="card-body">
-            <!-- Bagian Informasi Berkas -->
-            <div class="row mb-4">
-                <div class="col-md-4 text-center">
-                    @if($berkas->file_path)
-                        @php
-                            $extension = pathinfo($berkas->file_path, PATHINFO_EXTENSION);
-                            $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
-                        @endphp
-                        @if($isImage)
-                            <div class="image-container">
-                                <img src="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
-                                     alt="{{ $berkas->nama_berkas }}"
-                                     class="img-thumbnail image-hover"
-                                     style="max-width: 100%; max-height: 250px; object-fit: cover;">
-                                <div class="image-overlay">
-                                    <div class="overlay-buttons">
-                                        <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
-                                           class="btn btn-primary btn-sm"
-                                           target="_blank">
-                                            <i class="fas fa-eye"></i> Lihat Detail
-                                        </a>
-                                        <a href="{{ asset('storage/berkas_photos/' . basename($berkas->file_path)) }}"
-                                           class="btn btn-success btn-sm ml-2"
-                                           download>
-                                            <i class="fas fa-download"></i> Download
-                                        </a>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Detail Berkas</h3>
+                <a href="{{ route('berkas.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-circle-left me-2"></i> Kembali
+                </a>
+            </div>
+            <div class="card-body">
+                <!-- Bagian Informasi Berkas -->
+                <div class="row mb-4">
+                    <div class="col-md-4 text-center">
+                        @if ($berkas->file_path)
+                            @php
+                                $extension = pathinfo($berkas->file_path, PATHINFO_EXTENSION);
+                                $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif']);
+                            @endphp
+                            @if ($isImage)
+                                <div class="image-container">
+                                    <img src="{{ asset('storage/berkas/' . basename($berkas->file_path)) }}"
+                                        alt="{{ $berkas->nama_berkas }}" class="img-thumbnail image-hover"
+                                        style="max-width: 100%; max-height: 250px; object-fit: cover;">
+                                    <div class="image-overlay">
+                                        <div class="overlay-buttons">
+                                            <a href="{{ asset('storage/berkas/' . basename($berkas->file_path)) }}"
+                                                class="btn btn-primary btn-sm" target="_blank">
+                                                <i class="fas fa-eye"></i> Lihat Detail
+                                            </a>
+                                            <a href="{{ asset('storage/berkas/' . basename($berkas->file_path)) }}"
+                                                class="btn btn-success btn-sm ml-2" download>
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             @else
@@ -54,16 +52,7 @@
                     <div class="col-md-8">
                         <p><strong>Nama Berkas:</strong><br>{{ $berkas->nama_berkas }}</p>
 
-                    <h5><strong>Asal Berkas:</strong></h5>
-                    <h6>{{ $berkas->asal_berkas }}</h6>
-
-                    <h5><strong>Nomor Berkas:</strong></h5>
-                    <h6>{{ $berkas->nomor_berkas}}</h6>
-
-                    <h5><strong>Tanggal Berkas:</strong></h5>
-                    <h6>{{ $berkas->tanggal_berkas}}</h6>
-                </div>
-            </div>
+                        <p><strong>Asal Berkas:</strong><br>{{ $berkas->asal_berkas }}</p>
 
                         <p><strong>Nomor Berkas:</strong><br>{{ $berkas->nomor_berkas }}</p>
 
@@ -173,8 +162,12 @@
             transition: text-decoration 0.3s ease-in-out;
         }
 
-.nama-lengkap:hover {
-    text-decoration: underline;
-}
-</style>
+        .nama-lengkap:hover {
+            text-decoration: underline;
+        }
+
+        h6{
+            color: #a6a6a7;
+        }
+    </style>
 @endsection
