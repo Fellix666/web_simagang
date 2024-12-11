@@ -202,16 +202,32 @@
 
         <!-- Filter Section -->
         <form method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <input type="text" name="search" id="searchBox" class="form-control"
                     placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
                     <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
                     </option>
                     <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="year" id="filterYear" class="form-select">
+                    <option value="all" {{ request('year') == 'all' ? 'selected' : '' }}>Semua Tahun</option>
+                    @php
+                        // Get unique years from the internship data
+                        $uniqueYears = $magangList->map(function ($magang) {
+                            return \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                        })->unique()->sort()->values();
+                    @endphp
+                    @foreach ($uniqueYears as $year)
+                        <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                            {{ $year }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
         </form>
@@ -234,8 +250,9 @@
                     @foreach ($magangList as $index => $magang)
                         @php
                             $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
+                            $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
                         @endphp
-                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}">
+                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $magang->nama_lengkap }}</td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
@@ -269,25 +286,31 @@
         document.addEventListener('DOMContentLoaded', () => {
             const searchBox = document.getElementById('searchBox');
             const filterRole = document.getElementById('filterRole');
+            const filterYear = document.getElementById('filterYear');
             const rows = Array.from(document.querySelectorAll('tbody tr'));
 
             const filterTable = () => {
                 const searchTerm = searchBox.value.toLowerCase();
                 const roleFilter = filterRole.value;
+                const yearFilter = filterYear.value;
 
                 rows.forEach(row => {
                     const text = row.textContent.toLowerCase();
                     const role = row.cells[5].textContent.toLowerCase();
+                    const rowYear = row.getAttribute('data-year');
 
-                    row.style.display = (text.includes(searchTerm) && (roleFilter === 'all' || role ===
-                        roleFilter)) ? '' : 'none';
+                    row.style.display = (
+                        text.includes(searchTerm) && 
+                        (roleFilter === 'all' || role === roleFilter) &&
+                        (yearFilter === 'all' || rowYear === yearFilter)
+                    ) ? '' : 'none';
                 });
             };
 
             searchBox.addEventListener('input', filterTable);
             filterRole.addEventListener('change', filterTable);
+            filterYear.addEventListener('change', filterTable);
         });
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
