@@ -55,8 +55,8 @@ class AnakMagangController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
+{
+    $validated = $request->validate([
         'id_institusi' => 'required',
         'id_divisi' => 'required',
         'id_berkas' => 'required',
@@ -66,24 +66,20 @@ class AnakMagangController extends Controller
         'jurusan' => 'required|max:50',
         'tanggal_mulai' => 'required|date',
         'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-        'status' => 'required|in:mahasiswa,siswa']);
+        'status' => 'required|in:mahasiswa,siswa'
+    ]);
 
-        $magang = AnakMagang::findOrFail($id);
-        $magang->update($validated);
-        return redirect()->route('magang.index')->with('success', 'Data berhasil diperbarui');
-    }
+    $magang = AnakMagang::findOrFail($id);
+    $magang->update($validated);
+    return redirect()->route('magang.index')->with('success', 'Data berhasil diperbarui');
+}
 
     public function destroy($id)
-    {
-        $magang = AnakMagang::findOrFail($id);
-        $institusi = Institusi::all();
-        $divisi = Divisi::all();
-        $berkas = Berkas::with('institusi')
-            ->orderBy('created_at', 'desc')
-            ->take(20) // Limit to 20 most recent berkas
-            ->get();
-        return view('magang.edit', compact('magang', 'institusi', 'divisi', 'berkas'));
-    }
+{
+    $magang = AnakMagang::findOrFail($id);
+    $magang->delete();
+    return redirect()->route('magang.index')->with('success', 'Data berhasil dihapus');
+}
 
     public function readOnly(Request $request)
     {
