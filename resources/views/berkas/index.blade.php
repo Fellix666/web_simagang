@@ -34,7 +34,7 @@
                                     {{ $item->nama_berkas }}
                                 </a>
                             </td>
-                            <td>{{ $item->asal_berkas }}</td>
+                            <td>{{ $item->institusi->nama_institusi }}</td>
                             <td>{{ $item->nomor_berkas }}</td>
                             <td>{{ $item->tanggal_berkas }}</td>
 

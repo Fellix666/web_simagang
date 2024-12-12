@@ -35,7 +35,7 @@ class BerkasController extends Controller
             'asal_berkas' => 'required|exists:institusi,id_institusi', // Changed validation
             'nomor_berkas' => 'required|max:50',
             'tanggal_berkas' => 'required|date',
-            'file' => 'required|file|mimes:pdf,jpg,png|max:2048'
+            'file' => 'required|file|mimes:pdf,jpg,png|max:5048'
         ]);
 
         try {
@@ -76,7 +76,7 @@ class BerkasController extends Controller
             'asal_berkas' => 'required|max:50',
             'nomor_berkas' => 'required|max:50',
             'tanggal_berkas' => 'required|date',
-            'file' => 'nullable|file|mimes:pdf,jpg,png|max:2048', // Optional file upload
+            'file' => 'nullable|file|mimes:pdf,jpg,png|max:5048', // Optional file upload
         ]);
 
         if ($request->hasFile('file')) {
