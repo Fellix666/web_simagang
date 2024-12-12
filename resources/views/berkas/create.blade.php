@@ -25,7 +25,7 @@
                 <select name="asal_berkas" class="form-control @error('asal_berkas') is-invalid @enderror" required>
                     <option value="" disabled selected>Pilih Instansi</option>
                     @foreach ($institusi as $inst)
-                        <option value="{{ $inst->id_institusi }}" 
+                        <option value="{{ $inst->id_institusi }}"
                             {{ old('asal_berkas') == $inst->id_institusi ? 'selected' : '' }}>
                             {{ $inst->nama_institusi }}
                         </option>
