@@ -16,7 +16,7 @@ return new class extends Migration
         // Pastikan tabel 'anak_magang' sudah ada sebelum membuat tabel 'berkas'
         Schema::create('berkas', function (Blueprint $table) {
             $table->integer('id_berkas')->autoIncrement();
-            $table->string('nama_berkas', 50);
+            $table->string('nama_berkas', 100);
             $table->string('asal_berkas', 50);
             $table->string(column:'nomor_berkas', length:50);
             $table->date('tanggal_berkas');

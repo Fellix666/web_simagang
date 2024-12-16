@@ -31,11 +31,11 @@ class BerkasController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_berkas' => 'required|max:50',
+            'nama_berkas' => 'required|max:100',
             'asal_berkas' => 'required|exists:institusi,id_institusi', // Changed validation
             'nomor_berkas' => 'required|max:50',
             'tanggal_berkas' => 'required|date',
-            'file' => 'required|file|mimes:pdf,jpg,png|max:5048'
+            'file' => 'required|file|mimes:pdf,jpg,png|max:9048'
         ]);
 
         try {
@@ -72,11 +72,11 @@ class BerkasController extends Controller
         $berkas = Berkas::findOrFail($id);
 
         $validated = $request->validate([
-            'nama_berkas' => 'required|max:50',
+            'nama_berkas' => 'required|max:100',
             'asal_berkas' => 'required|max:50',
             'nomor_berkas' => 'required|max:50',
             'tanggal_berkas' => 'required|date',
-            'file' => 'nullable|file|mimes:pdf,jpg,png|max:5048', // Optional file upload
+            'file' => 'nullable|file|mimes:pdf,jpg,png|max:9048', // Optional file upload
         ]);
 
         if ($request->hasFile('file')) {

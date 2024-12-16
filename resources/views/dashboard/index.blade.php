@@ -41,9 +41,10 @@
     }
 </style>
 
-<div class="container-fluid dashboard-container">
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column" style="min-height: 100vh;">
+    <div class="dashboard-container">
     <!-- Total Cards -->
-    <div class="row">
+    <div class="row">   
         <div class="col-md-4 mb-4">
             <div class="card shadow">
                 <div class="card-body">
