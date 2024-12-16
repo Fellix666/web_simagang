@@ -18,9 +18,6 @@ Route::post('logout', [AdminController::class, 'logout'])->name('logout');
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('dashboard.index');
     Route::resource('magang', AnakMagangController::class);
-    Route::get('/magang/{id}/edit', [AnakMagangController::class, 'edit'])->name('magang.edit');
-    Route::put('/magang/{id}', [AnakMagangController::class, 'update'])->name('magang.update');
-    Route::delete('/magang/{id}', [AnakMagangController::class, 'destroy'])->name('magang.destroy');
     Route::get('berkas/', [BerkasController::class, 'index'])->name('berkas.index');
     Route::post('berkas/', [BerkasController::class, 'store'])->name('berkas.store');
     Route::delete('berkas/{id}', [BerkasController::class, 'destroy'])->name('berkas.destroy');
@@ -29,6 +26,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('berkas/create', [BerkasController::class, 'create'])->name('berkas.create');
     Route::get('berkas/{id}/edit', [BerkasController::class, 'edit'])->name('berkas.edit');
     Route::post('berkas/{id}', [BerkasController::class, 'update'])->name('berkas.update');
+
 });
 
 // Redirect root to login if not authenticated
