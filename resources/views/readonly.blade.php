@@ -30,13 +30,18 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
-            display: flex; /* Tambahkan */
-            justify-content: center; /* Pusatkan secara horizontal */
-            align-items: center; /* Pusatkan secara vertikal */
-            padding: 2rem; /* Pastikan ada ruang jika di mobile */
-            margin: 0; /* Hilangkan margin bawaan */
+            display: flex;
+            /* Tambahkan */
+            justify-content: center;
+            /* Pusatkan secara horizontal */
+            align-items: center;
+            /* Pusatkan secara vertikal */
+            padding: 2rem;
+            /* Pastikan ada ruang jika di mobile */
+            margin: 0;
+            /* Hilangkan margin bawaan */
         }
-
+        
         .container {
             background: #ffffff;
             border-radius: var(--border-radius);
@@ -305,65 +310,66 @@
             const tableBody = document.querySelector('tbody');
             const rows = Array.from(document.querySelectorAll('tbody tr'));
 
-            // Fungsi untuk mengurutkan baris berdasarkan tahun (terbaru ke terlama)
+            // Elemen untuk pesan "Data tidak ditemukan"
+            const noDataRow = document.createElement('tr');
+            noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
+            noDataRow.style.display = 'none';
+            tableBody.appendChild(noDataRow);
+
             const sortRowsByYear = () => {
                 const sortedRows = rows.sort((a, b) => {
                     const yearA = parseInt(a.getAttribute('data-year'));
                     const yearB = parseInt(b.getAttribute('data-year'));
-                    return yearB - yearA; // Descending order (terbaru ke terlama)
+                    return yearB - yearA;
                 });
 
-                // Hapus semua baris dari tbody
-                tableBody.innerHTML = '';
-
-                // Tambahkan kembali baris yang sudah diurutkan
+                tableBody.innerHTML = ''; // Bersihkan semua baris
                 sortedRows.forEach((row, index) => {
-                    // Reset nomor urut
-                    row.querySelector('td:first-child').textContent = index + 1;
+                    row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
                     tableBody.appendChild(row);
                 });
+
+                tableBody.appendChild(noDataRow); // Tambahkan elemen "Data tidak ditemukan" di akhir
             };
-
-            // Jalankan pengurutan saat halaman dimuat
-            sortRowsByYear();
-
-            // Tambahkan event listener untuk mencegah form submission
-            const form = searchBox.closest('form');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault(); // Mencegah form submit
-                filterTable();
-            });
 
             const filterTable = () => {
                 const searchTerm = searchBox.value.toLowerCase();
                 const roleFilter = filterRole.value;
                 const yearFilter = filterYear.value;
+                let visibleRowCount = 0;
 
                 rows.forEach(row => {
                     const text = row.textContent.toLowerCase();
                     const role = row.cells[5].textContent.toLowerCase();
                     const rowYear = row.getAttribute('data-year');
 
-                    row.style.display = (
+                    const isVisible = (
                         text.includes(searchTerm) &&
                         (roleFilter === 'all' || role === roleFilter) &&
                         (yearFilter === 'all' || rowYear === yearFilter)
-                    ) ? '' : 'none';
+                    );
+
+                    row.style.display = isVisible ? '' : 'none';
+                    if (isVisible) visibleRowCount++;
                 });
 
-                // Setelah filter, urutkan kembali baris yang terlihat
-                sortRowsByYear();
+                // Tampilkan/hilangkan pesan "Data tidak ditemukan"
+                noDataRow.style.display = visibleRowCount === 0 ? '' : 'none';
             };
 
             searchBox.addEventListener('input', filterTable);
             filterRole.addEventListener('change', filterTable);
             filterYear.addEventListener('change', filterTable);
+
+            // Jalankan pengurutan awal
+            sortRowsByYear();
         });
     </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @extends('layouts.footerreadonly')
+
+
 </body>
 
 </html>
