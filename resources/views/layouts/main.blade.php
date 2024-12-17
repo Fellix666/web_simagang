@@ -80,7 +80,7 @@
             margin-top: var(--navbar-height); /* Memberikan margin atas untuk menghindari navbar */
             padding: 20px;
             min-height: calc(100vh - var(--navbar-height)); /* Mengatur tinggi konten utama */
-            background-color: #ffffff;
+            /* background-color: #ffffff; */
         }
 
         /* Atur tampilan sidebar pada layar kecil */
