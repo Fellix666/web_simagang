@@ -44,4 +44,17 @@
             position: static;
         }
     }
+
+    .navbar-brand img {
+    max-height: 40px;
+    max-width: 150px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        max-height: 30px;
+        max-width: 120px;
+    }
+}
 </style>
