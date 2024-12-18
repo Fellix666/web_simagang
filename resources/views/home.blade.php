@@ -371,8 +371,8 @@
                         <div class="carousel-item">
                             <div class="text-center">
                                 <i class="bi bi-headset mb-3"
-                                    style="font-size: 4rem; color: var(--secondary-color);"></i>
-                                <h3 class="mb-3" style="color: var(--secondary-color);">Hubungi Kami</h3>
+                                    style="font-size: 4rem; color: var(--primary-color);"></i>
+                                <h3 class="mb-3" style="color: var(--primary-color);">Hubungi Kami</h3>
                                 <p><strong>Telepon:</strong> (0561) 123456</p>
                                 <p><strong>Email:</strong> diskominfo@kuburaya.go.id</p>
                             </div>
@@ -380,10 +380,11 @@
                         <div class="carousel-item">
                             <div class="text-center">
                                 <i class="bi bi-pin-map-fill mb-3"
-                                    style="font-size: 4rem; color: var(--accent-color);"></i>
-                                <h3 class="mb-3" style="color: var(--accent-color);">Lokasi Kami</h3>
+                                    style="font-size: 4rem; color: var(--primary-color);"></i>
+                                <h3 class="mb-3" style="color: var(--primary-color);">Lokasi Kami</h3>
                                 <p>
-                                    Jl. Arteri Supadio, Kecamatan Sungai Raya, Kab. Kubu Raya. Kabupaten Kubu Raya,
+                                    Jl. Arteri Supadio, Kecamatan Sungai Raya, <br>
+                                    Kab. Kubu Raya. Kabupaten Kubu Raya, <br>
                                     Provinsi: Kalimantan Barat</p>
                                 <p><strong>Jam Kerja:</strong> Senin - Jumat, 08.00 - 16.00 WIB</p>
                             </div>
