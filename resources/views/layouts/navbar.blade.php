@@ -3,7 +3,7 @@
         <button class="navbar-toggler me-2 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand mx-auto mx-lg-0 d-flex align-items-center" href="{{ route('dashboard.index') }}">
+        <a class="navbar-brand mx-auto d-flex align-items-center" href="{{ route('dashboard.index') }}">
             <img src="{{ asset('images/1.png') }}" alt="Logo Diskominfo Kubu Raya" class="img-fluid" style="max-height: 40px; max-width: 150px; object-fit: contain;">
         </a>
         <div class="collapse navbar-collapse" id="navbarNav">
