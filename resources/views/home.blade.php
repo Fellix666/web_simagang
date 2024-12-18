@@ -58,7 +58,7 @@
             scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.1); /* Scrollbar color */
 
         }
-        
+
         .main-container::-webkit-scrollbar {
             width: 10px; /* Width of the scrollbar */
         }
