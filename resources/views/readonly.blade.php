@@ -216,7 +216,7 @@
         <h1 class="mb-4 text-center">Data Peserta Magang</h1>
 
         <!-- Filter Section -->
-        <form method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
+        <form id="filterForm" method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
             <div class="col-md-4">
                 <input type="text" name="search" id="searchBox" class="form-control"
                     placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
@@ -224,8 +224,7 @@
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
-                    </option>
+                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
                     <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
                 </select>
             </div>
@@ -233,7 +232,6 @@
                 <select name="year" id="filterYear" class="form-select">
                     <option value="all" {{ request('year') == 'all' ? 'selected' : '' }}>Semua Tahun</option>
                     @php
-                        // Get unique years from the internship data
                         $uniqueYears = $magangList
                             ->map(function ($magang) {
                                 return \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
@@ -304,67 +302,74 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const filterForm = document.getElementById('filterForm');
             const searchBox = document.getElementById('searchBox');
             const filterRole = document.getElementById('filterRole');
             const filterYear = document.getElementById('filterYear');
             const tableBody = document.querySelector('tbody');
             const rows = Array.from(document.querySelectorAll('tbody tr'));
-
+        
+            // Mencegah form submit saat menekan Enter
+            filterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+            });
+        
             // Elemen untuk pesan "Data tidak ditemukan"
             const noDataRow = document.createElement('tr');
             noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
             noDataRow.style.display = 'none';
             tableBody.appendChild(noDataRow);
-
+        
             const sortRowsByYear = () => {
                 const sortedRows = rows.sort((a, b) => {
                     const yearA = parseInt(a.getAttribute('data-year'));
                     const yearB = parseInt(b.getAttribute('data-year'));
                     return yearB - yearA;
                 });
-
+        
                 tableBody.innerHTML = ''; // Bersihkan semua baris
                 sortedRows.forEach((row, index) => {
                     row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
                     tableBody.appendChild(row);
                 });
-
+        
                 tableBody.appendChild(noDataRow); // Tambahkan elemen "Data tidak ditemukan" di akhir
             };
-
+        
             const filterTable = () => {
                 const searchTerm = searchBox.value.toLowerCase();
                 const roleFilter = filterRole.value;
                 const yearFilter = filterYear.value;
                 let visibleRowCount = 0;
-
+        
                 rows.forEach(row => {
                     const text = row.textContent.toLowerCase();
                     const role = row.cells[5].textContent.toLowerCase();
                     const rowYear = row.getAttribute('data-year');
-
+        
                     const isVisible = (
                         text.includes(searchTerm) &&
                         (roleFilter === 'all' || role === roleFilter) &&
                         (yearFilter === 'all' || rowYear === yearFilter)
                     );
-
+        
                     row.style.display = isVisible ? '' : 'none';
                     if (isVisible) visibleRowCount++;
                 });
-
+        
                 // Tampilkan/hilangkan pesan "Data tidak ditemukan"
                 noDataRow.style.display = visibleRowCount === 0 ? '' : 'none';
             };
-
+        
             searchBox.addEventListener('input', filterTable);
             filterRole.addEventListener('change', filterTable);
             filterYear.addEventListener('change', filterTable);
-
+        
             // Jalankan pengurutan awal
             sortRowsByYear();
         });
-    </script>
+        </script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
