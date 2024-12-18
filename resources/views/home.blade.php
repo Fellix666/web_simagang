@@ -52,24 +52,26 @@
             overflow: hidden;
             transform-style: preserve-3d;
             transition: all var(--transition-speed) ease;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 90vh; /* Restrict the maximum height */
-            scrollbar-width: thin; /* Thin scrollbar for Firefox */
-            scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.1); /* Scrollbar color */
-
+            overflow-y: auto;
+            max-height: 90vh;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(49, 133, 167, 0.3) transparent; /* More transparent scrollbar color */
         }
 
         .main-container::-webkit-scrollbar {
-            width: 10px; /* Width of the scrollbar */
+            width: 10px;
+            background-color: transparent; /* Transparent background */
         }
 
         .main-container::-webkit-scrollbar-thumb {
-            background-color: var(--primary-color);
+            background-color: rgba(49, 133, 167, 0.3); /* Very transparent primary color */
             border-radius: 5px;
+            border: 3px solid transparent; /* Creates a border effect */
+            background-clip: content-box; /* Allows border to show through */
         }
 
         .main-container::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.05);
+            background: transparent; /* Completely transparent track */
             border-radius: 5px;
         }
 
