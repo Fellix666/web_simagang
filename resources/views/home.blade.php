@@ -11,9 +11,13 @@
     <style>
         :root {
             --primary-color: #3185a7;
-            --secondary-color: #159895;
+            /* Soft blue */
+            --secondary-color: #3195a7;
+            /* Teal blue */
             --accent-color: #57c5b6;
-            --background-gradient: linear-gradient(135deg, #e8f5e9, #b2dfdb);
+            /* Aqua/mint green */
+            --background-color: #c2e9f7;
+            /* Gradient from light green to light teal-blue */
             --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             --transition-speed: 0.4s;
         }
@@ -31,7 +35,7 @@
         }
 
         body {
-            background: var(--background-gradient);
+            background: var(--background-color);
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: #2c3e50;
@@ -55,23 +59,29 @@
             overflow-y: auto;
             max-height: 90vh;
             scrollbar-width: thin;
-            scrollbar-color: rgba(49, 133, 167, 0.3) transparent; /* More transparent scrollbar color */
+            scrollbar-color: rgba(49, 133, 167, 0.3) transparent;
+            /* More transparent scrollbar color */
         }
 
         .main-container::-webkit-scrollbar {
             width: 10px;
-            background-color: transparent; /* Transparent background */
+            background-color: transparent;
+            /* Transparent background */
         }
 
         .main-container::-webkit-scrollbar-thumb {
-            background-color: rgba(49, 133, 167, 0.3); /* Very transparent primary color */
+            background-color: rgba(49, 133, 167, 0.3);
+            /* Very transparent primary color */
             border-radius: 5px;
-            border: 3px solid transparent; /* Creates a border effect */
-            background-clip: content-box; /* Allows border to show through */
+            border: 3px solid transparent;
+            /* Creates a border effect */
+            background-clip: content-box;
+            /* Allows border to show through */
         }
 
         .main-container::-webkit-scrollbar-track {
-            background: transparent; /* Completely transparent track */
+            background: transparent;
+            /* Completely transparent track */
             border-radius: 5px;
         }
 
@@ -139,12 +149,12 @@
         }
 
         .btn-custom.btn-admin {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             transition: all 0.3s ease;
         }
 
         .btn-custom.btn-admin:hover {
-            background-color: #11707a;
+            background-color: white;
             transform: translateY(-8px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
@@ -163,6 +173,15 @@
 
         .btn-custom:hover::before {
             left: 100%;
+        }
+        .version-footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: var(--primary-color);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
         }
 
         /* Improved Carousel Styles */
@@ -318,6 +337,9 @@
                 style="background-color: rgba(21, 152, 149, 0.05); border-radius: 10px;">
                 <h4 class="mb-2" style="color: var(--primary-color);">Total Peserta Magang</h4>
                 <p class="h3" style="color: var(--secondary-color);">{{ $jumlahPesertaMagang }}</p>
+            </div>
+            <div class="version-footer">
+                version 0.0.0.0
             </div>
         </div>
 
