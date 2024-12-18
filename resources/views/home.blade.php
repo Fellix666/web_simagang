@@ -52,7 +52,27 @@
             overflow: hidden;
             transform-style: preserve-3d;
             transition: all var(--transition-speed) ease;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 90vh; /* Restrict the maximum height */
+            scrollbar-width: thin; /* Thin scrollbar for Firefox */
+            scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.1); /* Scrollbar color */
+
         }
+        
+        .main-container::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+        }
+
+        .main-container::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .main-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+        }
+
 
         .left-panel,
         .right-panel {
