@@ -83,6 +83,8 @@
             background: transparent;
             /* Completely transparent track */
             border-radius: 5px;
+            animation: scaleUp 0.7s ease-in-out;
+
         }
 
 
@@ -108,6 +110,8 @@
             gap: 30px;
             margin-bottom: 35px;
             perspective: 1000px;
+            animation: fadeIn 1s ease-in-out;
+
         }
 
         .logo-container img {
@@ -174,6 +178,7 @@
         .btn-custom:hover::before {
             left: 100%;
         }
+
         .version-footer {
             position: fixed;
             bottom: 10px;
@@ -206,6 +211,7 @@
             opacity: 0;
             transform: scale(0.9) translateY(20px);
             transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.8s ease-in-out;
         }
 
         .carousel-item.active {
@@ -309,6 +315,31 @@
                 width: 30px;
                 height: 30px;
             }
+
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes scaleUp {
+                0% {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
         }
     </style>
 </head>
@@ -370,8 +401,7 @@
                         </div>
                         <div class="carousel-item">
                             <div class="text-center">
-                                <i class="bi bi-headset mb-3"
-                                    style="font-size: 4rem; color: var(--primary-color);"></i>
+                                <i class="bi bi-headset mb-3" style="font-size: 4rem; color: var(--primary-color);"></i>
                                 <h3 class="mb-3" style="color: var(--primary-color);">Hubungi Kami</h3>
                                 <p><strong>Telepon:</strong> (0561) 123456</p>
                                 <p><strong>Email:</strong> diskominfo@kuburaya.go.id</p>
