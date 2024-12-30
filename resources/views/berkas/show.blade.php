@@ -69,7 +69,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Nomor induk</th>
-                                <th>Instansi</th>
+                                <th>Institusi</th>
                                 <th>Status</th>
                             </tr>
                         </thead>

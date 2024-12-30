@@ -18,11 +18,11 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label>Asal Berkas (Instansi)</label>
+                    <label>Asal Berkas (Institusi)</label>
                     <select name="asal_berkas" class="form-control @error('asal_berkas') is-invalid @enderror" required>
-                        <option value="" disabled selected>Pilih Instansi</option>
+                        <option value="" disabled selected>Pilih Institusi</option>
                         @foreach ($institusi as $inst)
-                            <option value="{{ $inst->id_institusi }}" 
+                            <option value="{{ $inst->id_institusi }}"
                                 {{ old('asal_berkas', $berkas->asal_berkas) == $inst->id_institusi ? 'selected' : '' }}>
                                 {{ $inst->nama_institusi }}
                             </option>

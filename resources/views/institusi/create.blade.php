@@ -5,13 +5,13 @@
     <div class="card">
         <div class="card-header">
 
-            <h3 class="card-title">Tambah Instansi Pendidikan</h3>
+            <h3 class="card-title">Tambah Institusi Pendidikan</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('institusi.store') }}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
-                    <label>Nama Instansi</label>
+                    <label>Nama Institusi</label>
                     <input type="text" name="nama_institusi" class="form-control @error('nama_institusi') is-invalid @enderror" value="{{ old('nama_institusi') }}">
                     @error('nama_institusi')
                         <span class="invalid-feedback">{{ $message }}</span>

@@ -79,7 +79,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p><strong>Instansi:</strong><br>{{ $magang->institusi->nama_institusi }}</p>
+                                        <p><strong>:</strong><br>{{ $magang->institusi->nama_institusi }}</p>
                                         <p><strong>Jurusan:</strong><br>{{ $magang->jurusan }}</p>
                                         <p><strong>Status:</strong><br>{{ ucfirst($magang->status) }}</p>
                                     </div>
@@ -155,9 +155,9 @@
         .image-container {
             position: relative;
             display: inline-block;
-            width: 250px; 
-            height: 250px; 
-            overflow: hidden; 
+            width: 250px;
+            height: 250px;
+            overflow: hidden;
             border-radius: 0.5rem;
         }
 

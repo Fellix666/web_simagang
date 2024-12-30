@@ -219,7 +219,7 @@
         <form id="filterForm" method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
             <div class="col-md-4">
                 <input type="text" name="search" id="searchBox" class="form-control"
-                    placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
+                    placeholder="Cari nama atau institusi..." value="{{ request('search') }}">
             </div>
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">

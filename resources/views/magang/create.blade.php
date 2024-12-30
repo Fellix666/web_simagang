@@ -30,9 +30,9 @@
             <form action="{{ route('magang.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>Instansi</label>
+                    <label>Institusi</label>
                     <select name="id_institusi" id="institusi" class="form-control @error('id_institusi') is-invalid @enderror">
-                        <option value="" disabled selected>Pilih Instansi</option>
+                        <option value="" disabled selected>Pilih Institusi</option>
                         @foreach ($institusi as $inst)
                             <option value="{{ $inst->id_institusi }}">{{ $inst->nama_institusi }}</option>
                         @endforeach
@@ -59,9 +59,9 @@
                 <select name="id_berkas" id="berkas" class="form-control @error('id_berkas') is-invalid @enderror">
                     <option value="" disabled selected>Pilih Berkas</option>
                     @foreach ($berkas as $berk)
-                        <option value="{{ $berk->id_berkas }}" 
+                        <option value="{{ $berk->id_berkas }}"
                             data-institusi="{{ $berk->asal_berkas }}">
-                            {{ $berk->nomor_berkas }} - 
+                            {{ $berk->nomor_berkas }} -
                             {{ $berk->institusi ? $berk->institusi->nama_institusi : 'Institusi Tidak Tersedia' }}
                         </option>
                     @endforeach
@@ -137,12 +137,12 @@
         // Function to filter berkas options
         function filterBerkasOptions() {
             const selectedInstitusi = institusiSelect.value;
-            
+
             berkasOptions.forEach(option => {
                 if (option.value === '') return; // Keep the default option
-                
+
                 const optionInstitusi = option.getAttribute('data-institusi');
-                
+
                 if (selectedInstitusi === optionInstitusi) {
                     option.style.display = '';
                 } else {

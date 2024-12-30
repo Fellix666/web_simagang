@@ -43,13 +43,13 @@
         height: 400px;
         width: 100%;
     }
-    
+
 </style>
 
 <div class="container-fluid d-flex justify-content-center align-items-center flex-column" style="min-height: 100vh;">
     <div class="dashboard-container w-100 px-3 px-md-5">
         <!-- Total Cards -->
-        <div class="row">   
+        <div class="row">
             <div class="col-12 col-sm-6 col-md-4 mb-4">
                 <div class="card shadow h-100">
                     <div class="card-body">
@@ -72,7 +72,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 class="card-title text-success">
-                                    <a href="{{ route('institusi.index') }}" class="text-decoration-none text-success">Total Instansi</a>
+                                    <a href="{{ route('institusi.index') }}" class="text-decoration-none text-success">Total Institusi</a>
                                 </h5>
                                 <p class="card-text display-6 text-dark">{{ $totalInstitusi }}</p>
                             </div>
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fungsi Update Charts
     function updateCharts() {
         const chartType = document.getElementById('chart-type').value;
-        
+
         const chartData = chartType === 'monthly' ? monthlyData : yearlyData;
 
         // Update line chart
