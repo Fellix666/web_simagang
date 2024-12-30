@@ -17,8 +17,8 @@
                                 <i class="fas fa-user me-2"></i>Username
                             </label>
                             <div class="input-group has-validation">
-                                <span class="input-group-text bg-light">
-                                    <i class="fas fa-user text-muted"></i>
+                                {{-- <span class="input-group-text bg-light"> --}}
+                                    {{-- <i class="fas fa-user text-muted"></i> --}}
                                 </span>
                                 <input
                                     type="text"
@@ -43,8 +43,8 @@
                                 <i class="fas fa-lock me-2"></i>Password
                             </label>
                             <div class="input-group has-validation">
-                                <span class="input-group-text bg-light">
-                                    <i class="fas fa-lock text-muted"></i>
+                                {{-- <span class="input-group-text bg-light"> --}}
+                                    {{-- <i class="fas fa-lock text-muted"></i> --}}
                                 </span>
                                 <input
                                     type="password"
