@@ -52,7 +52,7 @@
                     <div class="col-md-8">
                         <p><strong>Nama Berkas:</strong><br>{{ $berkas->nama_berkas }}</p>
 
-                        <p><strong>Asal Berkas:</strong><br>{{ $berkas->asal_berkas }}</p>
+                        <p><strong>Asal Berkas:</strong><br>{{ $berkas->institusi->nama_institusi }}</p>
 
                         <p><strong>Nomor Berkas:</strong><br>{{ $berkas->nomor_berkas }}</p>
 
