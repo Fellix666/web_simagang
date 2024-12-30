@@ -384,7 +384,7 @@
 
     // Initial sort
     sortRowsByYear();
-});
+});x
         </script>
 
 
