@@ -264,22 +264,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($magangList as $index => $magang)
-                        @php
-                            $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
-                            $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
-                        @endphp
-                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $magang->nama_lengkap }}</td>
-                            <td>{{ $magang->institusi->nama_institusi }}</td>
-                            <td>{{ $magang->tanggal_mulai }}</td>
-                            <td>{{ $magang->tanggal_selesai }}</td>
-                            <td>{{ ucfirst($magang->status) }}</td>
-                            <td>{{ $magang->jurusan }}</td>
+                    @if ($magangList->isEmpty())
+                        <tr>
+                            <td colspan="7" class="text-center text-secondary">Data belum ada</td>
                         </tr>
-                    @endforeach
-                </tbody>
+                    @else
+                        @foreach ($magangList as $index => $magang)
+                            @php
+                                $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
+                                $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                            @endphp
+                            <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $magang->nama_lengkap }}</td>
+                                <td>{{ $magang->institusi->nama_institusi }}</td>
+                                <td>{{ $magang->tanggal_mulai }}</td>
+                                <td>{{ $magang->tanggal_selesai }}</td>
+                                <td>{{ ucfirst($magang->status) }}</td>
+                                <td>{{ $magang->jurusan }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>                
             </table>
         </div>
 
@@ -301,7 +307,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     const filterForm = document.getElementById('filterForm');
     const searchBox = document.getElementById('searchBox');
     const filterRole = document.getElementById('filterRole');
@@ -311,6 +317,11 @@
     // Store original rows for reference
     const originalRows = Array.from(document.querySelectorAll('tbody tr'));
     let rows = [...originalRows]; // Create a copy of original rows for manipulation
+
+    const noDataRow = document.createElement('tr');
+    noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data belum ada</td>`;
+    noDataRow.style.display = 'none'; // Awalnya tersembunyi
+    tableBody.appendChild(noDataRow);
 
     // Mencegah form submit saat menekan Enter
     filterForm.addEventListener('submit', function(event) {
