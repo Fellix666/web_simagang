@@ -11,13 +11,13 @@
         color: #2c3e50;
     }
     .dashboard-container {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    padding: 30px;
-    margin: 20px;
-    min-height: 80vh; /* Tinggi minimum agar container tetap stabil */
-    overflow: hidden; /* Hindari elemen anak menyebabkan pergeseran */
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin: 20px;
+        min-height: 80vh;
+        overflow: hidden;
     }
 
     .card {
@@ -43,7 +43,6 @@
         height: 400px;
         width: 100%;
     }
-    
 </style>
 
 <div class="container-fluid d-flex justify-content-center align-items-center flex-column" style="min-height: 100vh;">
@@ -105,10 +104,19 @@
                 <div class="card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0 text-dark">Statistik Magang</h5>
-                        <select id="chart-type" class="form-control form-control-sm w-auto bg-white text-dark">
-                            <option value="monthly">Per Bulan</option>
-                            <option value="yearly">Per Tahun</option>
-                        </select>
+                        <div class="d-flex gap-2">
+                            <select id="year-selector" class="form-control form-control-sm w-auto bg-white text-dark me-2">
+                                @foreach($availableYears as $year)
+                                    <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>
+                                        Tahun {{ $year }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <select id="chart-type" class="form-control form-control-sm w-auto bg-white text-dark">
+                                <option value="monthly">Per Bulan</option>
+                                <option value="yearly">Per Tahun</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body chart-container">
                         <canvas id="magangChart"></canvas>
@@ -154,19 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Data Chart
     const monthlyData = @json($chartDataMonthly);
     const yearlyData = @json($chartDataYearly);
-
-    // Fungsi Update Charts
-    function updateCharts() {
-        const chartType = document.getElementById('chart-type').value;
-        
-        const chartData = chartType === 'monthly' ? monthlyData : yearlyData;
-
-        // Update line chart
-        magangChart.data.labels = chartData.labels;
-        magangChart.data.datasets[0].data = chartData.data;
-        magangChart.data.datasets[0].label = chartType === 'monthly' ? 'Jumlah Magang per Bulan' : 'Jumlah Magang per Tahun';
-        magangChart.update();
-    }
+    
+    const yearSelector = document.getElementById('year-selector');
+    const chartTypeSelector = document.getElementById('chart-type');
 
     // Line Chart - Magang
     const ctx1 = document.getElementById('magangChart').getContext('2d');
@@ -253,10 +251,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event Listener untuk Perubahan Tipe Chart
-    document.getElementById('chart-type').addEventListener('change', function() {
+    // Function to toggle year selector visibility
+    function toggleYearSelector(chartType) {
+        if (chartType === 'yearly') {
+            yearSelector.style.display = 'none';
+        } else {
+            yearSelector.style.display = 'block';
+        }
+    }
+
+    // Fungsi Update Charts
+    function updateCharts() {
+        const chartType = chartTypeSelector.value;
+        
+        // Toggle year selector visibility
+        toggleYearSelector(chartType);
+        
+        const chartData = chartType === 'monthly' ? monthlyData : yearlyData;
+
+        // Update line chart
+        magangChart.data.labels = chartData.labels;
+        magangChart.data.datasets[0].data = chartData.data;
+        magangChart.data.datasets[0].label = chartType === 'monthly' ? 'Jumlah Magang per Bulan' : 'Jumlah Magang per Tahun';
+        magangChart.update();
+    }
+
+    // Event Listeners
+    chartTypeSelector.addEventListener('change', function() {
         updateCharts();
     });
+
+    yearSelector.addEventListener('change', function() {
+        window.location.href = `${window.location.pathname}?year=${this.value}`;
+    });
+
+    // Initialize year selector visibility based on initial chart type
+    toggleYearSelector(chartTypeSelector.value);
 });
 </script>
 @endpush
