@@ -59,9 +59,9 @@
                 <select name="id_berkas" id="berkas" class="form-control @error('id_berkas') is-invalid @enderror">
                     <option value="" disabled selected>Pilih Berkas</option>
                     @foreach ($berkas as $berk)
-                        <option value="{{ $berk->id_berkas }}" 
+                        <option value="{{ $berk->id_berkas }}"
                             data-institusi="{{ $berk->asal_berkas }}">
-                            {{ $berk->nomor_berkas }} - 
+                            {{ $berk->nomor_berkas }} -
                             {{ $berk->institusi ? $berk->institusi->nama_institusi : 'Institusi Tidak Tersedia' }}
                         </option>
                     @endforeach
@@ -114,8 +114,8 @@
                     <div class="form-group"><label>Status</label><select name="status"
                             class="form-control @error('status') is-invalid @enderror">
                             <option value=""disabled selected>Pilih Status</option>
-                            <option value="mahasiswa">Mahasiswa</option>
-                            <option value="siswa">Siswa</option>
+                            <option value="aktif">aktif</option>
+                            <option value="tidak aktif">tidak aktif</option>
                         </select>
                         @error('status')
                             <span class="invalid-feedback">{{ $message }}</span>
@@ -137,12 +137,12 @@
         // Function to filter berkas options
         function filterBerkasOptions() {
             const selectedInstitusi = institusiSelect.value;
-            
+
             berkasOptions.forEach(option => {
                 if (option.value === '') return; // Keep the default option
-                
+
                 const optionInstitusi = option.getAttribute('data-institusi');
-                
+
                 if (selectedInstitusi === optionInstitusi) {
                     option.style.display = '';
                 } else {

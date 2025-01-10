@@ -224,8 +224,8 @@
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
-                    <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                    <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>aktif</option>
+                    <option value="tidak aktif" {{ request('status') == 'tidak aktif' ? 'selected' : '' }}>tidak aktif</option>
                 </select>
             </div>
             <div class="col-md-2">

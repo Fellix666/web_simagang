@@ -38,10 +38,10 @@
                     <select name="id_berkas" id="berkas" class="form-control @error('id_berkas') is-invalid @enderror">
                         <option value="">Pilih Berkas</option>
                         @foreach ($berkas as $berk)
-                            <option value="{{ $berk->id_berkas }}" 
+                            <option value="{{ $berk->id_berkas }}"
                                 data-institusi="{{ $berk->asal_berkas }}"
                                 {{ $magang->id_berkas == $berk->id_berkas ? 'selected' : '' }}>
-                                {{ $berk->nomor_berkas }} - 
+                                {{ $berk->nomor_berkas }} -
                                 {{ $berk->institusi ? $berk->institusi->nama_institusi : 'Institusi Tidak Tersedia' }}
                             </option>
                         @endforeach
@@ -92,9 +92,9 @@
                 </div>
                 <div class="form-group"><label>Status</label><select name="status"
                         class="form-control @error('status') is-invalid @enderror">
-                        <option value="mahasiswa" {{ $magang->status == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
+                        <option value="aktif" {{ $magang->status == 'aktif' ? 'selected' : '' }}>aktif
                         </option>
-                        <option value="siswa" {{ $magang->status == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                        <option value="tidak aktif" {{ $magang->status == 'tidak aktif' ? 'selected' : '' }}>tidak aktif</option>
                     </select>
                     @error('status')
                         <span class="invalid-feedback">{{ $message }}</span>
@@ -115,12 +115,12 @@
         // Function to filter berkas options
         function filterBerkasOptions() {
             const selectedInstitusi = institusiSelect.value;
-            
+
             berkasOptions.forEach(option => {
                 if (option.value === '') return; // Keep the default option
-                
+
                 const optionInstitusi = option.getAttribute('data-institusi');
-                
+
                 if (selectedInstitusi === optionInstitusi) {
                     option.style.display = '';
                 } else {
