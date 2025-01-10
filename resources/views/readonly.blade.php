@@ -224,8 +224,8 @@
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
-                    <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -266,16 +266,20 @@
                 <tbody>
                     @foreach ($magangList as $index => $magang)
                         @php
-                            $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
+                            $now = \Carbon\Carbon::now();
+                            $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai);
+                            $isActive = $endDate->isFuture();
                             $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
                         @endphp
-                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
+                        <tr class="{{ !$isActive ? 'table-danger' : '' }}" 
+                            data-year="{{ $startYear }}"
+                            data-status="{{ $isActive ? 'active' : 'inactive' }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $magang->nama_lengkap }}</td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
-                            <td>{{ ucfirst($magang->status) }}</td>
+                            <td>{{ $isActive ? 'Aktif' : 'Tidak Aktif' }}</td>
                             <td>{{ $magang->jurusan }}</td>
                         </tr>
                     @endforeach
@@ -302,96 +306,82 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const filterForm = document.getElementById('filterForm');
-    const searchBox = document.getElementById('searchBox');
-    const filterRole = document.getElementById('filterRole');
-    const filterYear = document.getElementById('filterYear');
-    const tableBody = document.querySelector('tbody');
-
-    // Store original rows for reference
-    const originalRows = Array.from(document.querySelectorAll('tbody tr'));
-    let rows = [...originalRows]; // Create a copy of original rows for manipulation
-
-    // Mencegah form submit saat menekan Enter
-    filterForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-    });
-
-    // Elemen untuk pesan "Data tidak ditemukan"
-    const noDataRow = document.createElement('tr');
-    noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
-    noDataRow.style.display = 'none';
-    tableBody.appendChild(noDataRow);
-
-    const sortRowsByYear = () => {
-        const sortedRows = rows.sort((a, b) => {
-            const yearA = parseInt(a.getAttribute('data-year'));
-            const yearB = parseInt(b.getAttribute('data-year'));
-            return yearB - yearA;
-        });
-
-        tableBody.innerHTML = ''; // Bersihkan semua baris
-        sortedRows.forEach((row, index) => {
-            row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
-            tableBody.appendChild(row);
-        });
-
-        tableBody.appendChild(noDataRow); // Tambahkan elemen "Data tidak ditemukan" di akhir
-    };
-
-    const filterTable = () => {
-        const searchTerm = searchBox.value.toLowerCase();
-        const roleFilter = filterRole.value;
-        const yearFilter = filterYear.value;
-        let visibleRowCount = 0;
-
-        // Reset rows to original state
-        rows = [...originalRows];
-
-        // Apply filters
-        rows = rows.filter(row => {
-            const text = row.textContent.toLowerCase();
-            const role = row.cells[5].textContent.toLowerCase();
-            const rowYear = row.getAttribute('data-year');
-
-            return (
-                text.includes(searchTerm) &&
-                (roleFilter === 'all' || role === roleFilter) &&
-                (yearFilter === 'all' || rowYear === yearFilter)
-            );
-        });
-
-        // Update table display
-        tableBody.innerHTML = ''; // Clear the table
-
-        if (rows.length > 0) {
-            rows.forEach((row, index) => {
-                row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
-                tableBody.appendChild(row);
+            const filterForm = document.getElementById('filterForm');
+            const searchBox = document.getElementById('searchBox');
+            const filterRole = document.getElementById('filterRole');
+            const filterYear = document.getElementById('filterYear');
+            const tableBody = document.querySelector('tbody');
+    
+            const originalRows = Array.from(document.querySelectorAll('tbody tr'));
+            let rows = [...originalRows];
+    
+            filterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
             });
+    
+            const noDataRow = document.createElement('tr');
+            noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
             noDataRow.style.display = 'none';
-        } else {
-            noDataRow.style.display = '';
-        }
-
-        tableBody.appendChild(noDataRow);
-    };
-
-    // Add event listeners
-    searchBox.addEventListener('input', filterTable);
-    filterRole.addEventListener('change', filterTable);
-    filterYear.addEventListener('change', filterTable);
-
-    // Initial sort
-    sortRowsByYear();
-});
+            tableBody.appendChild(noDataRow);
+    
+            const sortRowsByYear = () => {
+                const sortedRows = rows.sort((a, b) => {
+                    const yearA = parseInt(a.getAttribute('data-year'));
+                    const yearB = parseInt(b.getAttribute('data-year'));
+                    return yearB - yearA;
+                });
+    
+                tableBody.innerHTML = '';
+                sortedRows.forEach((row, index) => {
+                    row.querySelector('td:first-child').textContent = index + 1;
+                    tableBody.appendChild(row);
+                });
+    
+                tableBody.appendChild(noDataRow);
+            };
+    
+            const filterTable = () => {
+                const searchTerm = searchBox.value.toLowerCase();
+                const statusFilter = filterRole.value;
+                const yearFilter = filterYear.value;
+    
+                rows = [...originalRows];
+    
+                rows = rows.filter(row => {
+                    const text = row.textContent.toLowerCase();
+                    const status = row.getAttribute('data-status');
+                    const rowYear = row.getAttribute('data-year');
+    
+                    const statusMatch = statusFilter === 'all' || status === statusFilter;
+                    const yearMatch = yearFilter === 'all' || rowYear === yearFilter;
+                    const searchMatch = text.includes(searchTerm);
+    
+                    return searchMatch && statusMatch && yearMatch;
+                });
+    
+                tableBody.innerHTML = '';
+    
+                if (rows.length > 0) {
+                    rows.forEach((row, index) => {
+                        row.querySelector('td:first-child').textContent = index + 1;
+                        tableBody.appendChild(row);
+                    });
+                    noDataRow.style.display = 'none';
+                } else {
+                    noDataRow.style.display = '';
+                }
+    
+                tableBody.appendChild(noDataRow);
+            };
+    
+            searchBox.addEventListener('input', filterTable);
+            filterRole.addEventListener('change', filterTable);
+            filterYear.addEventListener('change', filterTable);
+    
+            sortRowsByYear();
+        });
         </script>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-</body>
-
-</html>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
