@@ -72,6 +72,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {{ $berkas->links('pagination::bootstrap-5') }}
         </div>
     </div>
 </div>

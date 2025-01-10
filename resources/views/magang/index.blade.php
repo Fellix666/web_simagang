@@ -55,7 +55,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $magangList->links() }}
+            {{ $magangList->links('pagination::bootstrap-5') }}
         </div>
     </div>
 </div>

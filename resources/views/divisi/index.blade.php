@@ -48,7 +48,7 @@
                     </table>
                 </div>
 
-                {{ $divisi->links() }}
+                {{ $divisi->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
