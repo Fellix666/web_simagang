@@ -39,7 +39,7 @@ class AnakMagangController extends Controller
         'jurusan' => 'required|max:50',
         'tanggal_mulai' => 'required|date',
         'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-        'status' => 'required|in:aktif,tidak aktif']);
+        'status' => 'required|in:mahasiswa,siswa']);
 
         AnakMagang::create($validated);
         return redirect()->route('magang.index')->with('success', 'Data berhasil ditambahkan');
@@ -66,7 +66,7 @@ class AnakMagangController extends Controller
         'jurusan' => 'required|max:50',
         'tanggal_mulai' => 'required|date',
         'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-        'status' => 'required|in:aktif,tidak aktif'
+        'status' => 'required|in:mahasiswa,siswa'
     ]);
 
     $magang = AnakMagang::findOrFail($id);

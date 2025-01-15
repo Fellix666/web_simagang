@@ -208,6 +208,30 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-color);
         }
+        .status-badge {
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: #dcfce7;
+        color: #166534;
+    }
+
+    .status-inactive {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    .status-note {
+        font-size: 0.75rem;
+        color: #666;
+        display: block;
+        margin-top: 0.25rem;
+    }
+
     </style>
 </head>
 
@@ -224,8 +248,8 @@
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>aktif</option>
-                    <option value="tidak aktif" {{ request('status') == 'tidak aktif' ? 'selected' : '' }}>tidak aktif</option>
+                    <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                    <option value="tidak aktif" {{ request('status') == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -268,6 +292,10 @@
                         @php
                             $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
                             $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                            $status = $isOverdue ? 'tidak aktif' : $magang->status;
+
+                            // Format tanggal untuk keterangan
+                            $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai)->format('d F Y');
                         @endphp
                         <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
                             <td>{{ $loop->iteration }}</td>
@@ -275,7 +303,16 @@
                             <td>{{ $magang->institusi->nama_institusi }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
-                            <td>{{ ucfirst($magang->status) }}</td>
+                            <td>
+                                <span class="status-badge {{ $isOverdue ? 'status-inactive' : 'status-active' }}">
+                                    {{ ucfirst($status) }}
+                                </span>
+                                @if ($isOverdue)
+                                    <span class="status-note">
+                                        Magang telah berakhir pada {{ $endDate }}
+                                    </span>
+                                @endif
+                            </td>
                             <td>{{ $magang->jurusan }}</td>
                         </tr>
                     @endforeach

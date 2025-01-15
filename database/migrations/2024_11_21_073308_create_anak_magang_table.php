@@ -19,7 +19,7 @@ return new class extends Migration {
                 $table->string('jurusan', 50);
                 $table->date('tanggal_mulai');
                 $table->date('tanggal_selesai');
-                $table->enum('status', ['aktif', 'tidak aktif']);
+                $table->enum('status', ['mahasiswa', 'siswa']);
                 $table->timestamps();
                 $table->foreign('id_institusi')->references('id_institusi')->on('institusi')->onDelete('cascade');
                 $table->foreign('id_divisi')->references('id_divisi')->on('divisi')->onDelete('cascade');

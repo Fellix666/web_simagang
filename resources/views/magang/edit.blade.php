@@ -92,9 +92,9 @@
                 </div>
                 <div class="form-group"><label>Status</label><select name="status"
                         class="form-control @error('status') is-invalid @enderror">
-                        <option value="aktif" {{ $magang->status == 'aktif' ? 'selected' : '' }}>aktif
+                        <option value="mahasiswa" {{ $magang->status == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa
                         </option>
-                        <option value="tidak aktif" {{ $magang->status == 'tidak aktif' ? 'selected' : '' }}>tidak aktif</option>
+                        <option value="siswa" {{ $magang->status == 'siswa' ? 'selected' : '' }}>Siswa</option>
                     </select>
                     @error('status')
                         <span class="invalid-feedback">{{ $message }}</span>
