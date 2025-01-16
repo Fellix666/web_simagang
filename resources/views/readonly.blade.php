@@ -313,150 +313,89 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Cache DOM elements
-            const elements = {
-                filterForm: document.getElementById('filterForm'),
-                searchBox: document.getElementById('searchBox'),
-                filterRole: document.getElementById('filterRole'),
-                filterYear: document.getElementById('filterYear'),
-                tableBody: document.querySelector('tbody')
-            };
+            const filterForm = document.getElementById('filterForm');
+            const searchBox = document.getElementById('searchBox');
+            const filterRole = document.getElementById('filterRole');
+            const filterYear = document.getElementById('filterYear');
+            const tableBody = document.querySelector('tbody');
 
-            // Store original table state
-            const originalTableHTML = elements.tableBody.innerHTML;
+            // Simpan state awal tabel
+            const originalRows = Array.from(tableBody.querySelectorAll('tr'));
 
-            // Create no data message
+            // Tampilkan pesan jika tidak ada data
             const noDataMessage = `
-        <tr>
-            <td colspan="7" class="text-center text-secondary">
-                <div class="py-3">
-                    <div class="font-medium">Tidak ada data yang ditemukan</div>
-                </div>
-            </td>
-        </tr>
-    `;
+                <tr>
+                    <td colspan="7" class="text-center text-secondary">
+                        <div class="py-3">
+                            <div class="font-medium">Tidak ada data yang ditemukan</div>
+                            <div class="text-sm text-gray-500">Silakan coba dengan kata kunci lain</div>
+                        </div>
+                    </td>
+                </tr>
+            `;
 
-            // Event Listeners
-            elements.searchBox.addEventListener('input', handleSearch);
-            elements.filterRole.addEventListener('change', handleFilter);
-            elements.filterYear.addEventListener('change', handleFilter);
+            // Event listener pencarian
+            searchBox.addEventListener('input', () => {
+                applyFilters();
+            });
 
-            function handleSearch(e) {
-                const searchTerm = e.target.value.toLowerCase().trim();
-
-                // Reset to original if search is empty
-                if (searchTerm === '') {
-                    resetTableWithFilters();
-                    return;
-                }
-
-                // Client-side filter for short searches
-                if (searchTerm.length < 2) {
-                    filterTable(searchTerm);
-                } else {
-                    // Server-side search
-                    debounce(() => elements.filterForm.submit(), 500)();
-                }
-            }
-
-            function handleFilter() {
-                const searchTerm = elements.searchBox.value.trim();
-
-                if (searchTerm.length >= 2) {
-                    elements.filterForm.submit();
-                } else {
-                    resetTableWithFilters();
-                }
-            }
-
-            function resetTableWithFilters() {
-                // Restore original table content
-                elements.tableBody.innerHTML = originalTableHTML;
-
-                // Get all rows
-                let rows = Array.from(elements.tableBody.querySelectorAll('tr'));
-
-                // Apply current filters
-                const statusFilter = elements.filterRole.value;
-                const yearFilter = elements.filterYear.value;
-
-                rows = rows.filter(row => {
-                    const status = row.getAttribute('data-status');
-                    const year = row.getAttribute('data-year');
-
-                    const statusMatch = statusFilter === 'all' || status === statusFilter;
-                    const yearMatch = yearFilter === 'all' || year === yearFilter;
-
-                    return statusMatch && yearMatch;
+            // Event listener filter status dan tahun
+            [filterRole, filterYear].forEach(filter => {
+                filter.addEventListener('change', () => {
+                    applyFilters();
                 });
+            });
 
-                // Sort by year
-                rows.sort((a, b) => {
+            function applyFilters() {
+                const searchTerm = searchBox.value.toLowerCase().trim();
+                const statusFilter = filterRole.value;
+                const yearFilter = filterYear.value;
+
+                let filteredRows = originalRows;
+
+                // Filter berdasarkan pencarian
+                if (searchTerm) {
+                    filteredRows = filteredRows.filter(row => {
+                        return row.textContent.toLowerCase().includes(searchTerm);
+                    });
+                }
+
+                // Filter berdasarkan status
+                if (statusFilter !== 'all') {
+                    filteredRows = filteredRows.filter(row => {
+                        return row.getAttribute('data-status') === statusFilter;
+                    });
+                }
+
+                // Filter berdasarkan tahun
+                if (yearFilter !== 'all') {
+                    filteredRows = filteredRows.filter(row => {
+                        return row.getAttribute('data-year') === yearFilter;
+                    });
+                }
+
+                // Sortir berdasarkan tahun (desc)
+                filteredRows.sort((a, b) => {
                     const yearA = parseInt(a.getAttribute('data-year'));
                     const yearB = parseInt(b.getAttribute('data-year'));
                     return yearB - yearA;
                 });
 
-                // Update display
-                if (rows.length === 0) {
-                    elements.tableBody.innerHTML = noDataMessage;
-                } else {
-                    elements.tableBody.innerHTML = '';
-                    rows.forEach((row, index) => {
-                        const newRow = row.cloneNode(true);
-                        newRow.querySelector('td:first-child').textContent = index + 1;
-                        elements.tableBody.appendChild(newRow);
+                // Update tabel
+                tableBody.innerHTML = '';
+                if (filteredRows.length > 0) {
+                    filteredRows.forEach((row, index) => {
+                        const clonedRow = row.cloneNode(true);
+                        clonedRow.querySelector('td:first-child').textContent = index + 1;
+                        tableBody.appendChild(clonedRow);
                     });
-                }
-            }
-
-            function filterTable(searchTerm) {
-                let rows = Array.from(elements.tableBody.querySelectorAll('tr'));
-                const statusFilter = elements.filterRole.value;
-                const yearFilter = elements.filterYear.value;
-
-                rows = rows.filter(row => {
-                    const text = row.textContent.toLowerCase();
-                    const status = row.getAttribute('data-status');
-                    const year = row.getAttribute('data-year');
-
-                    const searchMatch = text.includes(searchTerm);
-                    const statusMatch = statusFilter === 'all' || status === statusFilter;
-                    const yearMatch = yearFilter === 'all' || year === yearFilter;
-
-                    return searchMatch && statusMatch && yearMatch;
-                });
-
-                // Sort by year
-                rows.sort((a, b) => {
-                    const yearA = parseInt(a.getAttribute('data-year'));
-                    const yearB = parseInt(b.getAttribute('data-year'));
-                    return yearB - yearA;
-                });
-
-                // Update display
-                if (rows.length === 0) {
-                    elements.tableBody.innerHTML = noDataMessage;
                 } else {
-                    elements.tableBody.innerHTML = '';
-                    rows.forEach((row, index) => {
-                        const newRow = row.cloneNode(true);
-                        newRow.querySelector('td:first-child').textContent = index + 1;
-                        elements.tableBody.appendChild(newRow);
-                    });
+                    tableBody.innerHTML = noDataMessage;
                 }
-            }
-
-            // Utility function
-            function debounce(func, wait) {
-                let timeout;
-                return function(...args) {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
             }
         });
     </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
