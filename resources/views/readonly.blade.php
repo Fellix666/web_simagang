@@ -184,35 +184,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-color);
         }
-
-        .status-badge {
-            font-weight: 500;
-            font-size: 0.675rem;
-            text-align: justify;
-        }
-
-        td.status-cell-inactive {
-            background-color: #e24d4d !important;
-            color: white !important;
-            text-align: justify !important;
-        }
-
-        td.status-cell-active {
-            text-align: justify !important;
-        }
-
-        .status-active {
-            background-color: transparent;
-            color: inherit;
-            text-align: justify !important;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) td.status-cell-inactive,
-        .table-striped tbody tr:nth-of-type(even) td.status-cell-inactive,
-        .table tbody tr:hover td.status-cell-inactive {
-            background-color: #f8d7da !important;
-            color: #721c24 !important;
-        }
     </style>
 </head>
 
@@ -221,8 +192,7 @@
         <h1 class="mb-4 text-center">Data Peserta Magang</h1>
 
         <!-- Filter Section -->
-        <form id="filterForm" method="GET" action="{{ route('readonly') }}"
-            class="row g-2 justify-content-center mb-3">
+        <form id="filterForm" method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
             <div class="col-md-4">
                 <input type="text" name="search" id="searchBox" class="form-control"
                     placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
@@ -231,8 +201,7 @@
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
                     <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
-                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif
-                    </option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -278,15 +247,15 @@
                             $isActive = $endDate->isFuture();
                             $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
                         @endphp
-                        <tr data-year="{{ $startYear }}" data-status="{{ $isActive ? 'active' : 'inactive' }}">
+                        <tr class="{{ !$isActive ? 'table-danger' : '' }}"
+                            data-year="{{ $startYear }}"
+                            data-status="{{ $isActive ? 'active' : 'inactive' }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $magang->nama_lengkap }}</td>
                             <td>{{ $magang->institusi->nama_institusi }}</td>
                             <td>{{ $magang->tanggal_mulai }}</td>
                             <td>{{ $magang->tanggal_selesai }}</td>
-                            <td class="{{ !$isActive ? 'status-cell-inactive' : 'status-cell-active' }}">
-                                {{ $isActive ? 'Aktif' : 'Tidak Aktif' }}
-                            </td>
+                            <td>{{ $isActive ? 'Aktif' : 'Tidak Aktif' }}</td>
                             <td>{{ $magang->jurusan }}</td>
                         </tr>
                     @endforeach
@@ -319,85 +288,76 @@
             const filterYear = document.getElementById('filterYear');
             const tableBody = document.querySelector('tbody');
 
-            // Simpan state awal tabel
-            const originalRows = Array.from(tableBody.querySelectorAll('tr'));
+            const originalRows = Array.from(document.querySelectorAll('tbody tr'));
+            let rows = [...originalRows];
 
-            // Tampilkan pesan jika tidak ada data
-            const noDataMessage = `
-                <tr>
-                    <td colspan="7" class="text-center text-secondary">
-                        <div class="py-3">
-                            <div class="font-medium">Tidak ada data yang ditemukan</div>
-                            <div class="text-sm text-gray-500">Silakan coba dengan kata kunci lain</div>
-                        </div>
-                    </td>
-                </tr>
-            `;
-
-            // Event listener pencarian
-            searchBox.addEventListener('input', () => {
-                applyFilters();
+            filterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
             });
 
-            // Event listener filter status dan tahun
-            [filterRole, filterYear].forEach(filter => {
-                filter.addEventListener('change', () => {
-                    applyFilters();
-                });
-            });
+            const noDataRow = document.createElement('tr');
+            noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
+            noDataRow.style.display = 'none';
+            tableBody.appendChild(noDataRow);
 
-            function applyFilters() {
-                const searchTerm = searchBox.value.toLowerCase().trim();
-                const statusFilter = filterRole.value;
-                const yearFilter = filterYear.value;
-
-                let filteredRows = originalRows;
-
-                // Filter berdasarkan pencarian
-                if (searchTerm) {
-                    filteredRows = filteredRows.filter(row => {
-                        return row.textContent.toLowerCase().includes(searchTerm);
-                    });
-                }
-
-                // Filter berdasarkan status
-                if (statusFilter !== 'all') {
-                    filteredRows = filteredRows.filter(row => {
-                        return row.getAttribute('data-status') === statusFilter;
-                    });
-                }
-
-                // Filter berdasarkan tahun
-                if (yearFilter !== 'all') {
-                    filteredRows = filteredRows.filter(row => {
-                        return row.getAttribute('data-year') === yearFilter;
-                    });
-                }
-
-                // Sortir berdasarkan tahun (desc)
-                filteredRows.sort((a, b) => {
+            const sortRowsByYear = () => {
+                const sortedRows = rows.sort((a, b) => {
                     const yearA = parseInt(a.getAttribute('data-year'));
                     const yearB = parseInt(b.getAttribute('data-year'));
                     return yearB - yearA;
                 });
 
-                // Update tabel
                 tableBody.innerHTML = '';
-                if (filteredRows.length > 0) {
-                    filteredRows.forEach((row, index) => {
-                        const clonedRow = row.cloneNode(true);
-                        clonedRow.querySelector('td:first-child').textContent = index + 1;
-                        tableBody.appendChild(clonedRow);
+                sortedRows.forEach((row, index) => {
+                    row.querySelector('td:first-child').textContent = index + 1;
+                    tableBody.appendChild(row);
+                });
+
+                tableBody.appendChild(noDataRow);
+            };
+
+            const filterTable = () => {
+                const searchTerm = searchBox.value.toLowerCase();
+                const statusFilter = filterRole.value;
+                const yearFilter = filterYear.value;
+
+                rows = [...originalRows];
+
+                rows = rows.filter(row => {
+                    const text = row.textContent.toLowerCase();
+                    const status = row.getAttribute('data-status');
+                    const rowYear = row.getAttribute('data-year');
+
+                    const statusMatch = statusFilter === 'all' || status === statusFilter;
+                    const yearMatch = yearFilter === 'all' || rowYear === yearFilter;
+                    const searchMatch = text.includes(searchTerm);
+
+                    return searchMatch && statusMatch && yearMatch;
+                });
+
+                tableBody.innerHTML = '';
+
+                if (rows.length > 0) {
+                    rows.forEach((row, index) => {
+                        row.querySelector('td:first-child').textContent = index + 1;
+                        tableBody.appendChild(row);
                     });
+                    noDataRow.style.display = 'none';
                 } else {
-                    tableBody.innerHTML = noDataMessage;
+                    noDataRow.style.display = '';
                 }
-            }
+
+                tableBody.appendChild(noDataRow);
+            };
+
+            searchBox.addEventListener('input', filterTable);
+            filterRole.addEventListener('change', filterTable);
+            filterYear.addEventListener('change', filterTable);
+
+            sortRowsByYear();
         });
-    </script>
+        </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
