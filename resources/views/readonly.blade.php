@@ -144,30 +144,6 @@
             box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -1px rgba(37, 99, 235, 0.06);
         }
 
-        .pagination {
-            margin-top: 2rem;
-            gap: 0.5rem;
-        }
-
-        .pagination .page-link {
-            border-radius: var(--border-radius);
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            border: 1px solid #e2e8f0;
-            transition: all var(--transition-speed);
-        }
-
-        .pagination .page-link:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .pagination .page-item.active .page-link {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -209,29 +185,32 @@
             background: var(--primary-color);
         }
         .status-badge {
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-    }
+            font-weight: 500;
+            font-size: 0.675rem;
+            text-align: justify;
+        }
 
-    .status-active {
-        background-color: #dcfce7;
-        color: #166534;
-    }
+        td.status-cell-inactive {
+            background-color: #e24d4d !important;
+            color: white !important;
+            text-align: justify !important;
+        }
+        td.status-cell-active {
+            text-align: justify !important;
+        }
 
-    .status-inactive {
-        background-color: #fee2e2;
-        color: #991b1b;
-    }
+        .status-active {
+            background-color: transparent;
+            color: inherit;
+            text-align: justify !important;
+        }
 
-    .status-note {
-        font-size: 0.75rem;
-        color: #666;
-        display: block;
-        margin-top: 0.25rem;
-    }
-
+        .table-striped tbody tr:nth-of-type(odd) td.status-cell-inactive,
+        .table-striped tbody tr:nth-of-type(even) td.status-cell-inactive,
+        .table tbody tr:hover td.status-cell-inactive {
+            background-color:  #f8d7da!important;
+            color: #721c24 !important;
+        }
     </style>
 </head>
 
@@ -248,8 +227,8 @@
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                    <option value="tidak aktif" {{ request('status') == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -287,42 +266,33 @@
                         <th style="min-width: 100px;">Jurusan</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($magangList as $index => $magang)
-                        @php
-                            $isOverdue = \Carbon\Carbon::parse($magang->tanggal_selesai)->isPast();
-                            $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
-                            $status = $isOverdue ? 'tidak aktif' : $magang->status;
-
-                            // Format tanggal untuk keterangan
-                            $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai)->format('d F Y');
-                        @endphp
-                        <tr class="{{ $isOverdue ? 'table-danger' : '' }}" data-year="{{ $startYear }}">
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $magang->nama_lengkap }}</td>
-                            <td>{{ $magang->institusi->nama_institusi }}</td>
-                            <td>{{ $magang->tanggal_mulai }}</td>
-                            <td>{{ $magang->tanggal_selesai }}</td>
-                            <td>
-                                <span class="status-badge {{ $isOverdue ? 'status-inactive' : 'status-active' }}">
-                                    {{ ucfirst($status) }}
-                                </span>
-                                @if ($isOverdue)
-                                    <span class="status-note">
-                                        Magang telah berakhir pada {{ $endDate }}
-                                    </span>
-                                @endif
-                            </td>
-                            <td>{{ $magang->jurusan }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                 <tbody>
+            @foreach ($magangList as $index => $magang)
+                @php
+                    $now = \Carbon\Carbon::now();
+                    $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai);
+                    $isActive = $endDate->isFuture();
+                    $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                @endphp
+                 <tr data-year="{{ $startYear }}" data-status="{{ $isActive ? 'active' : 'inactive' }}">
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $magang->nama_lengkap }}</td>
+                    <td>{{ $magang->institusi->nama_institusi }}</td>
+                    <td>{{ $magang->tanggal_mulai }}</td>
+                    <td>{{ $magang->tanggal_selesai }}</td>
+                    <td class="{{ !$isActive ? 'status-cell-inactive' : 'status-cell-active' }}">
+                        {{ $isActive ? 'Aktif' : 'Tidak Aktif' }}
+                    </td>
+                    <td>{{ $magang->jurusan }}</td>
+                </tr>
+            @endforeach
+        </tbody>
             </table>
         </div>
 
         <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            {{ $magangList->links() }}
+        <div>
+            {{ $magangList->links('pagination::bootstrap-5') }}
         </div>
 
         <div class="text-center mt-3">
@@ -343,92 +313,37 @@
     const searchBox = document.getElementById('searchBox');
     const filterRole = document.getElementById('filterRole');
     const filterYear = document.getElementById('filterYear');
-    const tableBody = document.querySelector('tbody');
 
-    // Store original rows for reference
-    const originalRows = Array.from(document.querySelectorAll('tbody tr'));
-    let rows = [...originalRows]; // Create a copy of original rows for manipulation
-
-    // Mencegah form submit saat menekan Enter
-    filterForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-    });
-
-    // Elemen untuk pesan "Data tidak ditemukan"
-    const noDataRow = document.createElement('tr');
-    noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
-    noDataRow.style.display = 'none';
-    tableBody.appendChild(noDataRow);
-
-    const sortRowsByYear = () => {
-        const sortedRows = rows.sort((a, b) => {
-            const yearA = parseInt(a.getAttribute('data-year'));
-            const yearB = parseInt(b.getAttribute('data-year'));
-            return yearB - yearA;
-        });
-
-        tableBody.innerHTML = ''; // Bersihkan semua baris
-        sortedRows.forEach((row, index) => {
-            row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
-            tableBody.appendChild(row);
-        });
-
-        tableBody.appendChild(noDataRow); // Tambahkan elemen "Data tidak ditemukan" di akhir
+    // Function to handle filter changes
+    const handleFilterChange = () => {
+        filterForm.submit();
     };
 
-    const filterTable = () => {
-        const searchTerm = searchBox.value.toLowerCase();
-        const roleFilter = filterRole.value;
-        const yearFilter = filterYear.value;
-        let visibleRowCount = 0;
+    // Add debounce function for search
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
 
-        // Reset rows to original state
-        rows = [...originalRows];
+    // Debounced search handler
+    const debouncedSearch = debounce(() => {
+        handleFilterChange();
+    }, 500);
 
-        // Apply filters
-        rows = rows.filter(row => {
-            const text = row.textContent.toLowerCase();
-            const role = row.cells[5].textContent.toLowerCase();
-            const rowYear = row.getAttribute('data-year');
-
-            return (
-                text.includes(searchTerm) &&
-                (roleFilter === 'all' || role === roleFilter) &&
-                (yearFilter === 'all' || rowYear === yearFilter)
-            );
-        });
-
-        // Update table display
-        tableBody.innerHTML = ''; // Clear the table
-
-        if (rows.length > 0) {
-            rows.forEach((row, index) => {
-                row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
-                tableBody.appendChild(row);
-            });
-            noDataRow.style.display = 'none';
-        } else {
-            noDataRow.style.display = '';
-        }
-
-        tableBody.appendChild(noDataRow);
-    };
-
-    // Add event listeners
-    searchBox.addEventListener('input', filterTable);
-    filterRole.addEventListener('change', filterTable);
-    filterYear.addEventListener('change', filterTable);
-
-    // Initial sort
-    sortRowsByYear();
-});x
+    // Event listeners
+    searchBox.addEventListener('input', debouncedSearch);
+    filterRole.addEventListener('change', handleFilterChange);
+    filterYear.addEventListener('change', handleFilterChange);
+});
         </script>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-</body>
-
-</html>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>

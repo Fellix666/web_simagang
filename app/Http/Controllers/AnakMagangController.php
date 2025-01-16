@@ -7,6 +7,7 @@ use App\Models\Berkas;
 use App\Models\Institusi;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AnakMagangController extends Controller
 {
@@ -81,28 +82,51 @@ class AnakMagangController extends Controller
     return redirect()->route('magang.index')->with('success', 'Data berhasil dihapus');
 }
 
-    public function readOnly(Request $request)
-    {
-        $query = AnakMagang::query();
+public function readOnly(Request $request)
+{
+    $query = AnakMagang::query()->with(['institusi', 'divisi', 'berkas']);
 
-        if ($request->has('status') && $request->status !== 'all') {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->has('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('nama_lengkap', 'like', '%' . $request->search . '%')
-                    ->orWhereHas('institusi', function ($subQuery) use ($request) {
-                        $subQuery->where('nama', 'like', '%' . $request->search . '%');
-                    });
-            });
-        }
-
-        // Gunakan paginate untuk hasil paginasi
-        $magangList = $query->with('institusi')->paginate(10);
-
-        return view('readonly', compact('magangList'));
+    // Search functionality
+    if ($request->filled('search')) {
+        $searchTerm = $request->search;
+        $query->where(function($q) use ($searchTerm) {
+            $q->where('nama_lengkap', 'like', "%{$searchTerm}%")
+              ->orWhere('nomor_induk', 'like', "%{$searchTerm}%")
+              ->orWhere('jurusan', 'like', "%{$searchTerm}%")
+              ->orWhereHas('institusi', function($subQuery) use ($searchTerm) {
+                  $subQuery->where('nama_institusi', 'like', "%{$searchTerm}%");
+              });
+        });
     }
+
+    // Status filter
+    if ($request->filled('status') && $request->status !== 'all') {
+        $now = Carbon::now();
+        if ($request->status === 'active') {
+            $query->where('tanggal_selesai', '>=', $now);
+        } else {
+            $query->where('tanggal_selesai', '<', $now);
+        }
+    }
+
+    // Year filter
+    if ($request->filled('year') && $request->year !== 'all') {
+        $query->whereYear('tanggal_mulai', $request->year);
+    }
+
+    // Get unique years for the filter dropdown
+    $uniqueYears = AnakMagang::selectRaw('YEAR(tanggal_mulai) as year')
+        ->distinct()
+        ->orderBy('year', 'desc')
+        ->pluck('year');
+
+    // Get paginated results with query string parameters preserved
+    $magangList = $query->orderBy('tanggal_mulai', 'desc')
+        ->paginate(5)  // Increased from 2 to 10 for better usability
+        ->withQueryString();
+
+    return view('readonly', compact('magangList', 'uniqueYears'));
+}
 
     public function show($id)
     {
