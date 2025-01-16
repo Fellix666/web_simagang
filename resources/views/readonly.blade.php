@@ -184,6 +184,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-color);
         }
+
         .status-badge {
             font-weight: 500;
             font-size: 0.675rem;
@@ -195,6 +196,7 @@
             color: white !important;
             text-align: justify !important;
         }
+
         td.status-cell-active {
             text-align: justify !important;
         }
@@ -208,7 +210,7 @@
         .table-striped tbody tr:nth-of-type(odd) td.status-cell-inactive,
         .table-striped tbody tr:nth-of-type(even) td.status-cell-inactive,
         .table tbody tr:hover td.status-cell-inactive {
-            background-color:  #f8d7da!important;
+            background-color: #f8d7da !important;
             color: #721c24 !important;
         }
     </style>
@@ -219,7 +221,8 @@
         <h1 class="mb-4 text-center">Data Peserta Magang</h1>
 
         <!-- Filter Section -->
-        <form id="filterForm" method="GET" action="{{ route('readonly') }}" class="row g-2 justify-content-center mb-3">
+        <form id="filterForm" method="GET" action="{{ route('readonly') }}"
+            class="row g-2 justify-content-center mb-3">
             <div class="col-md-4">
                 <input type="text" name="search" id="searchBox" class="form-control"
                     placeholder="Cari nama atau instansi..." value="{{ request('search') }}">
@@ -228,7 +231,8 @@
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
                     <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
-                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif
+                    </option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -266,27 +270,27 @@
                         <th style="min-width: 100px;">Jurusan</th>
                     </tr>
                 </thead>
-                 <tbody>
-            @foreach ($magangList as $index => $magang)
-                @php
-                    $now = \Carbon\Carbon::now();
-                    $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai);
-                    $isActive = $endDate->isFuture();
-                    $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
-                @endphp
-                 <tr data-year="{{ $startYear }}" data-status="{{ $isActive ? 'active' : 'inactive' }}">
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $magang->nama_lengkap }}</td>
-                    <td>{{ $magang->institusi->nama_institusi }}</td>
-                    <td>{{ $magang->tanggal_mulai }}</td>
-                    <td>{{ $magang->tanggal_selesai }}</td>
-                    <td class="{{ !$isActive ? 'status-cell-inactive' : 'status-cell-active' }}">
-                        {{ $isActive ? 'Aktif' : 'Tidak Aktif' }}
-                    </td>
-                    <td>{{ $magang->jurusan }}</td>
-                </tr>
-            @endforeach
-        </tbody>
+                <tbody>
+                    @foreach ($magangList as $index => $magang)
+                        @php
+                            $now = \Carbon\Carbon::now();
+                            $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai);
+                            $isActive = $endDate->isFuture();
+                            $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                        @endphp
+                        <tr data-year="{{ $startYear }}" data-status="{{ $isActive ? 'active' : 'inactive' }}">
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $magang->nama_lengkap }}</td>
+                            <td>{{ $magang->institusi->nama_institusi }}</td>
+                            <td>{{ $magang->tanggal_mulai }}</td>
+                            <td>{{ $magang->tanggal_selesai }}</td>
+                            <td class="{{ !$isActive ? 'status-cell-inactive' : 'status-cell-active' }}">
+                                {{ $isActive ? 'Aktif' : 'Tidak Aktif' }}
+                            </td>
+                            <td>{{ $magang->jurusan }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
 
@@ -309,41 +313,152 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const filterForm = document.getElementById('filterForm');
-    const searchBox = document.getElementById('searchBox');
-    const filterRole = document.getElementById('filterRole');
-    const filterYear = document.getElementById('filterYear');
-
-    // Function to handle filter changes
-    const handleFilterChange = () => {
-        filterForm.submit();
-    };
-
-    // Add debounce function for search
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
+            // Cache DOM elements
+            const elements = {
+                filterForm: document.getElementById('filterForm'),
+                searchBox: document.getElementById('searchBox'),
+                filterRole: document.getElementById('filterRole'),
+                filterYear: document.getElementById('filterYear'),
+                tableBody: document.querySelector('tbody')
             };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
 
-    // Debounced search handler
-    const debouncedSearch = debounce(() => {
-        handleFilterChange();
-    }, 500);
+            // Store original table state
+            const originalTableHTML = elements.tableBody.innerHTML;
 
-    // Event listeners
-    searchBox.addEventListener('input', debouncedSearch);
-    filterRole.addEventListener('change', handleFilterChange);
-    filterYear.addEventListener('change', handleFilterChange);
-});
-        </script>
+            // Create no data message
+            const noDataMessage = `
+        <tr>
+            <td colspan="7" class="text-center text-secondary">
+                <div class="py-3">
+                    <div class="font-medium">Tidak ada data yang ditemukan</div>
+                </div>
+            </td>
+        </tr>
+    `;
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    </html>
+            // Event Listeners
+            elements.searchBox.addEventListener('input', handleSearch);
+            elements.filterRole.addEventListener('change', handleFilter);
+            elements.filterYear.addEventListener('change', handleFilter);
+
+            function handleSearch(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+
+                // Reset to original if search is empty
+                if (searchTerm === '') {
+                    resetTableWithFilters();
+                    return;
+                }
+
+                // Client-side filter for short searches
+                if (searchTerm.length < 2) {
+                    filterTable(searchTerm);
+                } else {
+                    // Server-side search
+                    debounce(() => elements.filterForm.submit(), 500)();
+                }
+            }
+
+            function handleFilter() {
+                const searchTerm = elements.searchBox.value.trim();
+
+                if (searchTerm.length >= 2) {
+                    elements.filterForm.submit();
+                } else {
+                    resetTableWithFilters();
+                }
+            }
+
+            function resetTableWithFilters() {
+                // Restore original table content
+                elements.tableBody.innerHTML = originalTableHTML;
+
+                // Get all rows
+                let rows = Array.from(elements.tableBody.querySelectorAll('tr'));
+
+                // Apply current filters
+                const statusFilter = elements.filterRole.value;
+                const yearFilter = elements.filterYear.value;
+
+                rows = rows.filter(row => {
+                    const status = row.getAttribute('data-status');
+                    const year = row.getAttribute('data-year');
+
+                    const statusMatch = statusFilter === 'all' || status === statusFilter;
+                    const yearMatch = yearFilter === 'all' || year === yearFilter;
+
+                    return statusMatch && yearMatch;
+                });
+
+                // Sort by year
+                rows.sort((a, b) => {
+                    const yearA = parseInt(a.getAttribute('data-year'));
+                    const yearB = parseInt(b.getAttribute('data-year'));
+                    return yearB - yearA;
+                });
+
+                // Update display
+                if (rows.length === 0) {
+                    elements.tableBody.innerHTML = noDataMessage;
+                } else {
+                    elements.tableBody.innerHTML = '';
+                    rows.forEach((row, index) => {
+                        const newRow = row.cloneNode(true);
+                        newRow.querySelector('td:first-child').textContent = index + 1;
+                        elements.tableBody.appendChild(newRow);
+                    });
+                }
+            }
+
+            function filterTable(searchTerm) {
+                let rows = Array.from(elements.tableBody.querySelectorAll('tr'));
+                const statusFilter = elements.filterRole.value;
+                const yearFilter = elements.filterYear.value;
+
+                rows = rows.filter(row => {
+                    const text = row.textContent.toLowerCase();
+                    const status = row.getAttribute('data-status');
+                    const year = row.getAttribute('data-year');
+
+                    const searchMatch = text.includes(searchTerm);
+                    const statusMatch = statusFilter === 'all' || status === statusFilter;
+                    const yearMatch = yearFilter === 'all' || year === yearFilter;
+
+                    return searchMatch && statusMatch && yearMatch;
+                });
+
+                // Sort by year
+                rows.sort((a, b) => {
+                    const yearA = parseInt(a.getAttribute('data-year'));
+                    const yearB = parseInt(b.getAttribute('data-year'));
+                    return yearB - yearA;
+                });
+
+                // Update display
+                if (rows.length === 0) {
+                    elements.tableBody.innerHTML = noDataMessage;
+                } else {
+                    elements.tableBody.innerHTML = '';
+                    rows.forEach((row, index) => {
+                        const newRow = row.cloneNode(true);
+                        newRow.querySelector('td:first-child').textContent = index + 1;
+                        elements.tableBody.appendChild(newRow);
+                    });
+                }
+            }
+
+            // Utility function
+            function debounce(func, wait) {
+                let timeout;
+                return function(...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), wait);
+                };
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

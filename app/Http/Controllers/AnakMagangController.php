@@ -122,7 +122,7 @@ public function readOnly(Request $request)
 
     // Get paginated results with query string parameters preserved
     $magangList = $query->orderBy('tanggal_mulai', 'desc')
-        ->paginate(10)  // Increased from 2 to 10 for better usability
+        ->paginate(5)  // Increased from 2 to 10 for better usability
         ->withQueryString();
 
     return view('readonly', compact('magangList', 'uniqueYears'));
