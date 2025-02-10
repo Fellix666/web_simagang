@@ -16,10 +16,18 @@ class DashboardAdminController extends Controller
         $totalInstitusi = Institusi::count();
         $totalDivisi = Divisi::count();
 
-        // Statistik magang per bulan untuk tahun saat ini
-        $currentYear = date('Y');
-        $magangPerBulan = collect(range(1, 12))->map(function($bulan) use ($currentYear) {
-            $count = AnakMagang::whereYear('tanggal_mulai', $currentYear)
+        // Get available years
+        $availableYears = AnakMagang::selectRaw('YEAR(tanggal_mulai) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        // Get selected year from request or use current year as default
+        $selectedYear = request('year', date('Y'));
+
+        // Statistik magang per bulan untuk tahun yang dipilih
+        $magangPerBulan = collect(range(1, 12))->map(function($bulan) use ($selectedYear) {
+            $count = AnakMagang::whereYear('tanggal_mulai', $selectedYear)
                 ->whereMonth('tanggal_mulai', $bulan)
                 ->count();
             return [
@@ -59,12 +67,14 @@ class DashboardAdminController extends Controller
         ];
 
         return view('dashboard.index', compact(
-            'totalMagang', 
-            'totalInstitusi', 
-            'totalDivisi', 
+            'totalMagang',
+            'totalInstitusi',
+            'totalDivisi',
             'chartDataMonthly',
-            'chartDataYearly', 
-            'statusMagang'
+            'chartDataYearly',
+            'statusMagang',
+            'availableYears',
+            'selectedYear'
         ));
     }
 }

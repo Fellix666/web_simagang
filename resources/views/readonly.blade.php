@@ -144,30 +144,6 @@
             box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -1px rgba(37, 99, 235, 0.06);
         }
 
-        .pagination {
-            margin-top: 2rem;
-            gap: 0.5rem;
-        }
-
-        .pagination .page-link {
-            border-radius: var(--border-radius);
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            border: 1px solid #e2e8f0;
-            transition: all var(--transition-speed);
-        }
-
-        .pagination .page-link:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .pagination .page-item.active .page-link {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -224,8 +200,8 @@
             <div class="col-md-2">
                 <select name="status" id="filterRole" class="form-select">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="mahasiswa" {{ request('status') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
-                    <option value="siswa" {{ request('status') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -264,9 +240,29 @@
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     @if ($magangList->isEmpty())
                         <tr>
                             <td colspan="7" class="text-center text-secondary">Data belum ada</td>
+=======
+                    @foreach ($magangList as $index => $magang)
+                        @php
+                            $now = \Carbon\Carbon::now();
+                            $endDate = \Carbon\Carbon::parse($magang->tanggal_selesai);
+                            $isActive = $endDate->isFuture();
+                            $startYear = \Carbon\Carbon::parse($magang->tanggal_mulai)->year;
+                        @endphp
+                        <tr class="{{ !$isActive ? 'table-danger' : '' }}" 
+                            data-year="{{ $startYear }}"
+                            data-status="{{ $isActive ? 'active' : 'inactive' }}">
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $magang->nama_lengkap }}</td>
+                            <td>{{ $magang->institusi->nama_institusi }}</td>
+                            <td>{{ $magang->tanggal_mulai }}</td>
+                            <td>{{ $magang->tanggal_selesai }}</td>
+                            <td>{{ $isActive ? 'Aktif' : 'Tidak Aktif' }}</td>
+                            <td>{{ $magang->jurusan }}</td>
+>>>>>>> origin/mc
                         </tr>
                     @else
                         @foreach ($magangList as $index => $magang)
@@ -290,8 +286,8 @@
         </div>
 
         <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            {{ $magangList->links() }}
+        <div>
+            {{ $magangList->links('pagination::bootstrap-5') }}
         </div>
 
         <div class="text-center mt-3">
@@ -307,6 +303,7 @@
     </div>
 
     <script>
+<<<<<<< HEAD
     document.addEventListener('DOMContentLoaded', () => {
     const filterForm = document.getElementById('filterForm');
     const searchBox = document.getElementById('searchBox');
@@ -379,8 +376,26 @@
             rows.forEach((row, index) => {
                 row.querySelector('td:first-child').textContent = index + 1; // Reset nomor urut
                 tableBody.appendChild(row);
+=======
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterForm = document.getElementById('filterForm');
+            const searchBox = document.getElementById('searchBox');
+            const filterRole = document.getElementById('filterRole');
+            const filterYear = document.getElementById('filterYear');
+            const tableBody = document.querySelector('tbody');
+    
+            const originalRows = Array.from(document.querySelectorAll('tbody tr'));
+            let rows = [...originalRows];
+    
+            filterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+>>>>>>> origin/mc
             });
+    
+            const noDataRow = document.createElement('tr');
+            noDataRow.innerHTML = `<td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>`;
             noDataRow.style.display = 'none';
+<<<<<<< HEAD
         } else {
             noDataRow.style.display = '';
         }
@@ -396,13 +411,68 @@
     // Initial sort
     sortRowsByYear();
 });x
+=======
+            tableBody.appendChild(noDataRow);
+    
+            const sortRowsByYear = () => {
+                const sortedRows = rows.sort((a, b) => {
+                    const yearA = parseInt(a.getAttribute('data-year'));
+                    const yearB = parseInt(b.getAttribute('data-year'));
+                    return yearB - yearA;
+                });
+    
+                tableBody.innerHTML = '';
+                sortedRows.forEach((row, index) => {
+                    row.querySelector('td:first-child').textContent = index + 1;
+                    tableBody.appendChild(row);
+                });
+    
+                tableBody.appendChild(noDataRow);
+            };
+    
+            const filterTable = () => {
+                const searchTerm = searchBox.value.toLowerCase();
+                const statusFilter = filterRole.value;
+                const yearFilter = filterYear.value;
+    
+                rows = [...originalRows];
+    
+                rows = rows.filter(row => {
+                    const text = row.textContent.toLowerCase();
+                    const status = row.getAttribute('data-status');
+                    const rowYear = row.getAttribute('data-year');
+    
+                    const statusMatch = statusFilter === 'all' || status === statusFilter;
+                    const yearMatch = yearFilter === 'all' || rowYear === yearFilter;
+                    const searchMatch = text.includes(searchTerm);
+    
+                    return searchMatch && statusMatch && yearMatch;
+                });
+    
+                tableBody.innerHTML = '';
+    
+                if (rows.length > 0) {
+                    rows.forEach((row, index) => {
+                        row.querySelector('td:first-child').textContent = index + 1;
+                        tableBody.appendChild(row);
+                    });
+                    noDataRow.style.display = 'none';
+                } else {
+                    noDataRow.style.display = '';
+                }
+    
+                tableBody.appendChild(noDataRow);
+            };
+    
+            searchBox.addEventListener('input', filterTable);
+            filterRole.addEventListener('change', filterTable);
+            filterYear.addEventListener('change', filterTable);
+    
+            sortRowsByYear();
+        });
+>>>>>>> origin/mc
         </script>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-</body>
-
-</html>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
