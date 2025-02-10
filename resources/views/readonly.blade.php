@@ -144,30 +144,6 @@
             box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -1px rgba(37, 99, 235, 0.06);
         }
 
-        .pagination {
-            margin-top: 2rem;
-            gap: 0.5rem;
-        }
-
-        .pagination .page-link {
-            border-radius: var(--border-radius);
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            border: 1px solid #e2e8f0;
-            transition: all var(--transition-speed);
-        }
-
-        .pagination .page-link:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .pagination .page-item.active .page-link {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -288,8 +264,8 @@
         </div>
 
         <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            {{ $magangList->links() }}
+        <div>
+            {{ $magangList->links('pagination::bootstrap-5') }}
         </div>
 
         <div class="text-center mt-3">

@@ -28,22 +28,25 @@ class AnakMagangController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
+{
+    $validated = $request->validate([
         'id_institusi' => 'required',
         'id_divisi' => 'required',
         'id_berkas' => 'required',
-        'nomor_induk' => 'required|max:15',
+        'nomor_induk' => 'required|max:15|unique:anak_magang,nomor_induk',
         'nama_lengkap' => 'required|max:50',
         'jenis_kelamin' => 'required|in:l,p',
         'jurusan' => 'required|max:50',
         'tanggal_mulai' => 'required|date',
         'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-        'status' => 'required|in:mahasiswa,siswa']);
+        'status' => 'required|in:mahasiswa,siswa'
+    ], [
+        'nomor_induk.unique' => 'Nomor Induk sudah ada. Harap gunakan nomor Induk lain.'
+    ]);
 
-        AnakMagang::create($validated);
-        return redirect()->route('magang.index')->with('success', 'Data berhasil ditambahkan');
-    }
+    AnakMagang::create($validated);
+    return redirect()->route('magang.index')->with('success', 'Data berhasil ditambahkan');
+}
 
     public function edit($id)
     {
